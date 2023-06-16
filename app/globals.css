@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  ul,
+  ol {
+    @apply list-disc pl-4;
+  }
+}
+
+@layer components {
+  .bgColor {
+    background-color: white;
+  }
+}
