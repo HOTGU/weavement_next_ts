@@ -1,5 +1,4 @@
 import Navbar from "@/components/navbar/Navbar";
-import { Toaster } from "react-hot-toast";
 import getCurrentUser from "@/actions/getCurrentUser";
 
 export const metadata = {

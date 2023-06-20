@@ -1,14 +1,13 @@
 "use client";
 
 import React from "react";
-import { currentUserProps } from "@/types";
+import { CurrentUserProps } from "@/types";
 import { signOut } from "next-auth/react";
 
 import Container from "../Container";
-import ContactNav from "../admin/contact/ContactNav";
 import Link from "next/link";
 
-const AdminNav = ({ currentUser }: currentUserProps) => {
+const AdminNav = ({ currentUser }: CurrentUserProps) => {
   return (
     <div className={`w-full bg-white z-10 fixed text-black`}>
       <div className="py-1 border-b">

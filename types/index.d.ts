@@ -1,8 +1,13 @@
-import { IUser } from "./next-auth";
 import { Prisma } from "@prisma/client";
 
-export interface currentUserProps {
-  currentUser?: IUser | null;
+interface User {
+  id: string;
+  admin_id: string;
+  isAdmin: boolean;
+}
+
+export interface CurrentUserProps {
+  currentUser?: User | null;
 }
 
 export type ContactWithClients = Prisma.ContactGetPayload<{

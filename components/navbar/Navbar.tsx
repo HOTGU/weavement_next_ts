@@ -5,14 +5,14 @@ import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { MdAdminPanelSettings } from "react-icons/md";
 
-import { currentUserProps } from "@/types";
+import { CurrentUserProps } from "@/types";
 import Container from "../Container";
 import Logo from "./Logo";
 import Menu from "./Menu";
 import SliderMenu from "./SliderMenu";
 import { FaBars, FaTimes } from "react-icons/fa";
 
-const Navbar = ({ currentUser }: currentUserProps) => {
+const Navbar = ({ currentUser }: CurrentUserProps) => {
   const pathname = usePathname();
   const [isSlider, setIsSlider] = useState(false);
 
@@ -61,7 +61,7 @@ const Navbar = ({ currentUser }: currentUserProps) => {
             <Menu />
           </div>
         </div>
-        {currentUser && (
+        {currentUser && currentUser.isAdmin && (
           <Link
             href="/admin"
             className="fixed bottom-10 right-1/2 translate-x-1/2 flex gap-1 text-black items-center bg-white rounded-full px-4 py-1 shadow-lg cursor hover:scale-105 transition cursor-pointer"
