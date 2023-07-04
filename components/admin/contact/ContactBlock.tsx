@@ -14,7 +14,7 @@ const ContactBlock = ({ contact }: ContactBlockProps) => {
 
   return (
     <div
-      className={`relative whitespace-nowrap p-2 rounded shadow-sm border flex flex-col gap-1 transition cursor-pointer ${
+      className={`w-full max-w-[200px] relative whitespace-nowrap p-2 rounded shadow-sm border flex flex-col gap-1 transition cursor-pointer ${
         useContact.current?.id === contact.id
           ? "border-black border"
           : "border-neutral-300"
@@ -28,9 +28,7 @@ const ContactBlock = ({ contact }: ContactBlockProps) => {
           <div>{contact.state}</div>
         </div>
       </div>
-      <div>
-        <span>{contact.clientCompany}</span>
-      </div>
+      <div className="truncate">{contact.clientCompany}</div>
       {(contact.pm === "미정" || contact.pm === "") && (
         <span className="absolute flex h-3 w-3 -top-1 -right-1">
           <span className="absolute animate-ping inline-flex bg-accent w-3 h-3 top-0 right-0 rounded-full"></span>

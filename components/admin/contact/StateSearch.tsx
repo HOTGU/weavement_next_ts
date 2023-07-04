@@ -22,7 +22,7 @@ const StateSearch = () => {
   const params = useSearchParams();
 
   return (
-    <div className="w-full sm:w-fit flex items-center justify-between gap-4">
+    <div className="w-full sm:w-fit flex items-center justify-center gap-4">
       {status.map((state) => (
         <StateBlock
           key={state.label}

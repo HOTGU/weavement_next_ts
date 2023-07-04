@@ -4,17 +4,34 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { MdAdminPanelSettings } from "react-icons/md";
+import { FaBars, FaTimes } from "react-icons/fa";
+import {
+  useMotionValueEvent,
+  useScroll,
+  motion,
+  AnimatePresence,
+} from "framer-motion";
 
 import { CurrentUserProps } from "@/types";
 import Container from "../Container";
 import Logo from "./Logo";
 import Menu from "./Menu";
 import SliderMenu from "./SliderMenu";
-import { FaBars, FaTimes } from "react-icons/fa";
+import { sliderNav } from "@/libs/framer";
 
 const Navbar = ({ currentUser }: CurrentUserProps) => {
   const pathname = usePathname();
+  const { scrollY } = useScroll();
   const [isSlider, setIsSlider] = useState(false);
+  const [isScroll, setIsScroll] = useState(false);
+
+  useMotionValueEvent(scrollY, "change", (scroll) => {
+    if (scroll === 0) {
+      setIsScroll(false);
+    } else {
+      setIsScroll(true);
+    }
+  });
 
   useEffect(() => {
     setIsSlider(false);
@@ -24,13 +41,9 @@ const Navbar = ({ currentUser }: CurrentUserProps) => {
 
   return (
     <div
-      className={`w-full h-16 border-b z-10 fixed shadow-sm transition
+      className={`w-full h-10 border-b z-10 fixed shadow-sm transition duration-500
       ${
-        isHome
-          ? isSlider
-            ? "text-black bg-white"
-            : "text-white"
-          : "text-black bg-white"
+        !isHome || isScroll || isSlider ? "text-black bg-white" : "text-white"
       }`}
     >
       <Container>
@@ -42,11 +55,9 @@ const Navbar = ({ currentUser }: CurrentUserProps) => {
             >
               <Logo
                 src={
-                  isHome
-                    ? isSlider
-                      ? "/red_logo.webp"
-                      : "/white_logo.webp"
-                    : "/red_logo.webp"
+                  !isHome || isScroll || isSlider
+                    ? "/red_logo.webp"
+                    : "/white_logo.webp"
                 }
               />
             </Link>
@@ -55,7 +66,18 @@ const Navbar = ({ currentUser }: CurrentUserProps) => {
             <div onClick={() => setIsSlider(!isSlider)}>
               {isSlider ? <FaTimes size={25} /> : <FaBars size={25} />}
             </div>
-            <SliderMenu show={isSlider} />
+            <AnimatePresence>
+              {isSlider ? (
+                <motion.div
+                  variants={sliderNav}
+                  initial={sliderNav.hidden}
+                  animate={sliderNav.visible}
+                  exit={sliderNav.exit}
+                >
+                  <SliderMenu />
+                </motion.div>
+              ) : null}
+            </AnimatePresence>
           </div>
           <div className="hidden sm:block">
             <Menu />

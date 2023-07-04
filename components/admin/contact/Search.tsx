@@ -56,16 +56,20 @@ const Search = () => {
   }, [term]);
 
   return (
-    <div
-      onClick={searchModal.onOpen}
-      className="flex items-center px-4 py-1 rounded-full shadow border text-gray-600 text-sm border-zinc-200 hover:shadow-md cursor-pointer transition"
-    >
-      <div className="px-6 font-semibold">{rangeLabel}</div>
-      <div className="px-6 border-x-[1px] font-semibold">{pmLabel}</div>
-      <div className="pl-6 pr-2 flex items-center gap-3">
-        <div>{termLabel}</div>
+    <div onClick={searchModal.onOpen}>
+      <div className="hidden sm:flex items-center px-4 py-1 rounded-full shadow border text-gray-600 text-sm border-zinc-200 hover:shadow-md cursor-pointer transition">
+        <div className="px-6 font-semibold">{rangeLabel}</div>
+        <div className="px-6 border-x-[1px] font-semibold">{pmLabel}</div>
+        <div className="pl-6 pr-2 flex items-center gap-3">
+          <div>{termLabel}</div>
+          <div className="p-2 bg-accent rounded-full text-white">
+            <BiSearch size={18} />
+          </div>
+        </div>
+      </div>
+      <div className="block sm:hidden">
         <div className="p-2 bg-accent rounded-full text-white">
-          <BiSearch size={18} />
+          <BiSearch size={20} />
         </div>
       </div>
     </div>

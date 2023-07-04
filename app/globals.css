@@ -14,3 +14,7 @@
     background-color: white;
   }
 }
+
+.homeColumn {
+  @apply py-40;
+}

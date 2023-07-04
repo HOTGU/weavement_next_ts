@@ -20,7 +20,7 @@ export async function POST(request: Request) {
     });
     const thumb = data.get("thumb") as File;
     const title = data.get("title") as string;
-    const isRep = data.get("isRep");
+    const isRep = data.get("isRep") ? true : false;
     const description = data.get("description") as string;
 
     const thumbLocation = await s3PutImage({
@@ -28,6 +28,7 @@ export async function POST(request: Request) {
       file: thumb,
       type: "PORTFOLIO",
       resizeWidth: 2560,
+      isRep: true,
     });
 
     for (let i = 0; i < images.length; i++) {
@@ -36,6 +37,7 @@ export async function POST(request: Request) {
         file: images[i],
         resizeWidth: 768,
         type: "PORTFOLIO",
+        isRep: false,
       });
       imagesLocation.push(imageLocation);
     }
@@ -44,7 +46,7 @@ export async function POST(request: Request) {
       data: {
         title,
         description,
-        isRep: isRep ? true : false,
+        isRep,
         thumb: thumbLocation,
         images: imagesLocation,
       },

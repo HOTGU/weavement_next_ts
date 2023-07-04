@@ -17,6 +17,7 @@ interface PutImageParams {
   file: File;
   type: "CONTACT" | "PORTFOLIO";
   resizeWidth?: number;
+  isRep?: boolean;
 }
 
 export default async ({
@@ -24,6 +25,7 @@ export default async ({
   file,
   type,
   resizeWidth,
+  isRep = false,
 }: PutImageParams) => {
   let bufferData = (await file.arrayBuffer()) as Buffer;
 
@@ -36,7 +38,9 @@ export default async ({
       Bucket: process.env.AWS_S3_BUCKET,
       Key: `${type}/${
         process.env.NODE_ENV
-      }/${folderName}/${returnCurrentDate()}__${file.name}`,
+      }/${folderName}/${returnCurrentDate()}__${file.name}${
+        isRep && "__대표사진"
+      }`,
       Body: bufferData,
     };
 

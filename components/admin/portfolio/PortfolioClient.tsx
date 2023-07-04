@@ -23,8 +23,8 @@ const PortfolioClient = ({
   const updatePortfolio = useUpdatePortfolio();
 
   return (
-    <div className="flex h-[calc(100vh-50px)] gap-8">
-      <div className="w-1/3 h-full py-6 flex flex-col border rounded">
+    <div className="flex flex-col sm:flex-row h-full sm:h-[calc(100vh-50px)] gap-8">
+      <div className="w-full md:w-1/3 h-full max-h-[400px] sm:h-full sm:max-h-full overflow-y-auto py-6 flex flex-col border rounded">
         <div className="h-full">
           {portfolios.map((portfolio) => (
             <PortfolioBlock portfolio={portfolio} key={portfolio.id} />
@@ -32,7 +32,7 @@ const PortfolioClient = ({
         </div>
         <PortfolioPagination allPage={allPage} currentPage={currentPage} />
       </div>
-      <div className="w-2/3 h-full border rounded">
+      <div className="hidden sm:block w-full sm:w-2/3 h-full border rounded">
         {updatePortfolio.isUpdate ? <PortfolioUpdate /> : <PortfolioUpload />}
       </div>
     </div>

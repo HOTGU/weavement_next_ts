@@ -28,6 +28,7 @@
     "dompurify": "^3.0.3",
     "eslint": "8.39.0",
     "eslint-config-next": "13.3.4",
+    "framer-motion": "^10.12.17",
     "jotai": "^2.1.0",
     "lodash": "^4.17.21",
     "next": "13.3.4",

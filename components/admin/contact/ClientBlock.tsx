@@ -12,7 +12,10 @@ const ClientBlock = ({ client }: ClientBlockProps) => {
   const useConfirm = useDeleteClientConfirm();
 
   return (
-    <div key={client.name} className="flex items-center gap-4">
+    <div
+      key={client.name}
+      className="flex items-center gap-4 overflow-x-auto whitespace-nowrap py-2 sm:py-0"
+    >
       <span className=" w-24">
         {client.name}
         {client.position ? ` ${client.position}` : " 님"}

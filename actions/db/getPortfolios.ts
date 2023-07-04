@@ -1,19 +1,24 @@
 import prisma from "@/libs/prismadb";
 
 export interface IPortfolioParams {
-  term?: string;
+  isRep?: boolean;
   page?: number;
 }
 
-export default async ({ term, page }: IPortfolioParams) => {
+export default async ({ isRep = false, page }: IPortfolioParams) => {
   try {
-    const TAKE = 10;
+    const TAKE = 8;
     let SKIP = 0;
+    const query: any = {};
     if (page) {
       SKIP = TAKE * (page - 1);
     }
+    if (isRep) {
+      query.isRep = true;
+    }
     const allPortfolios = await prisma.portfolio.count();
     const portfolios = await prisma.portfolio.findMany({
+      where: query,
       take: TAKE,
       skip: SKIP,
     });

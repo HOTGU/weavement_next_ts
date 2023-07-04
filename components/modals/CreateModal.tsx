@@ -128,7 +128,7 @@ const CreateModal = () => {
 
   let bodyContent = (
     <div className="flex flex-col gap-4">
-      <div className="flex gap-4">
+      <div className="flex flex-col sm:flex-row gap-4">
         <Calendar
           value={createdAt}
           onChange={(date) => setValue("createdAt", date)}
@@ -167,7 +167,7 @@ const CreateModal = () => {
           disabled={isLoading}
         />
       </div>
-      <div className="flex gap-4">
+      <div className="flex flex-col sm:flex-row gap-4">
         <Select
           placeholder="예산"
           label="예산"
@@ -292,7 +292,7 @@ const CreateModal = () => {
           />
           <Input name="size" control={control} errors={errors} label="크기" />
         </div>
-        <div className="flex gap-4">
+        <div className="flex flex-col sm:flex-row gap-4">
           <Input
             name="orderCompany"
             control={control}

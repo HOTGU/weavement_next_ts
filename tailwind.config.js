@@ -9,6 +9,7 @@ module.exports = {
     extend: {
       fontFamily: {
         racing: ["var(--racing)"],
+        pretendard: ["var(--pretendard)"],
       },
       colors: {
         accent: "#A6192E",

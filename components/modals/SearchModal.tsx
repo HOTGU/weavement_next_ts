@@ -60,7 +60,7 @@ const SearchModal = () => {
   const initFilter = useCallback(() => {
     searchModal.onClose();
     reset();
-    router.push("/admin");
+    router.push("/admin/contact");
   }, [router, reset]);
 
   const dateInit = useCallback(() => {

@@ -7,11 +7,9 @@ import PlusContact from "./PlusContact";
 
 const ContactNav = () => {
   return (
-    <div className="flex flex-col sm:flex-row gap-2 sm:gap-6 py-4 justify-start items-center">
-      <div className="flex gap-4">
-        <PlusContact />
-        <Search />
-      </div>
+    <div className="flex gap-2 sm:gap-6 py-4 justify-start items-center">
+      <PlusContact />
+      <Search />
       <StateSearch />
     </div>
   );

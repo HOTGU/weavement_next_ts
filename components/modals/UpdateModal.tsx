@@ -73,8 +73,8 @@ const UpdateModal = () => {
 
   if (updateModal.step === "INFO") {
     bodyContent = (
-      <div className="flex flex-col gap-4">
-        <div className="flex gap-4">
+      <div className="flex flex-col gap-4 py-2 overflow-y-auto">
+        <div className="flex flex-col sm:flex-row gap-4">
           <Select
             control={control}
             errors={errors}
@@ -84,6 +84,14 @@ const UpdateModal = () => {
             label="상태"
             disabled={isLoading}
           />
+          <Input
+            control={control}
+            errors={errors}
+            name="clientCompany"
+            label="고객명"
+          />
+        </div>
+        <div className="flex flex-col sm:flex-row gap-4">
           <Select
             options={selectOptions.knowPlatformOptions}
             control={control}
@@ -104,7 +112,7 @@ const UpdateModal = () => {
           />
         </div>
 
-        <div className="flex gap-4">
+        <div className="flex flex-col sm:flex-row gap-4">
           <Select
             options={selectOptions.stepOptions}
             control={control}
@@ -124,7 +132,7 @@ const UpdateModal = () => {
             disabled={isLoading}
           />
         </div>
-        <div className="flex gap-4">
+        <div className="flex flex-col sm:flex-row gap-4">
           <Select
             options={selectOptions.costOptions}
             control={control}
@@ -163,8 +171,8 @@ const UpdateModal = () => {
   if (updateModal.step === "PROJECT") {
     bodyContent = (
       <div className="flex flex-col gap-4">
-        <div className="flex gap-4">
-          <div className="w-3/4">
+        <div className="flex flex-col sm:flex-row gap-4">
+          <div className="w-full sm:w-3/4">
             <Select
               control={control}
               errors={errors}
@@ -175,7 +183,7 @@ const UpdateModal = () => {
               isMulti
             />
           </div>
-          <div className="w-1/4">
+          <div className="w-full sm:w-1/4">
             <Select
               control={control}
               errors={errors}
@@ -203,7 +211,7 @@ const UpdateModal = () => {
             disabled={isLoading}
           />
         </div>
-        <div className="flex gap-4">
+        <div className="flex flex-col sm:flex-row gap-4">
           <Calendar
             value={deadline ? new Date(deadline) : undefined}
             onChange={(date) => setValue("deadline", date)}

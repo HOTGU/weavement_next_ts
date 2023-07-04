@@ -160,6 +160,7 @@ const PortfolioUpload = () => {
         <label className="flex items-center gap-2">
           <input
             type="checkbox"
+            checked={Boolean(isRep)}
             onChange={(e) => {
               if (e.target.checked) {
                 setIsRep("on");

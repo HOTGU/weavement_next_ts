@@ -90,16 +90,18 @@ const ContactDetail = () => {
         setShow={setShowImage}
       />
       <div>
-        <div className="flex justify-between">
-          <span className="text-5xl font-bold">{current.clientCompany}</span>
+        <div className="flex items-center justify-between whitespace-nowrap">
+          <span className="text-3xl sm:text-5xl font-bold truncate">
+            {current.clientCompany}
+          </span>
           <span
-            className=" self-start bg-rose-500 text-white px-2 rounded cursor-pointer hover:opacity-70 transition"
+            className=" bg-rose-500 text-white px-2 rounded cursor-pointer hover:opacity-70 transition"
             onClick={() => deleteContactConfirm.onOpen(current.id)}
           >
             삭제
           </span>
         </div>
-        <div className="mb-9 mt-2 flex gap-4">
+        <div className="mb-4 sm:mb-9 mt-0 sm:mt-2 flex flex-col sm:flex-row gap-0 sm:gap-4">
           <div
             className="text-neutral-400 cursor-pointer hover:underline"
             onClick={addClientModal.onOpen}
@@ -112,9 +114,9 @@ const ContactDetail = () => {
             ))}
           </div>
         </div>
-        <div className="flex gap-4">
+        <div className="flex flex-col sm:flex-row gap-4">
           <div className="flex-1">
-            <div className="text-xl font-semibold mb-4  flex items-center gap-4">
+            <div className="text-xl font-semibold mb-2 sm:mb-4 flex items-center gap-4">
               <span
                 className="cursor-pointer hover:underline"
                 onClick={() => updateModal.onOpen("INFO")}
@@ -137,23 +139,21 @@ const ContactDetail = () => {
                 </div>
               )}
             </div>
-            <div className="flex gap-4">
+            <div className="flex flex-wrap gap-2">
               <Item label="단계" item={current.step} />
               <Item label="디자인" item={current.hasDesign} />
               <Item label="예산" item={current.cost} />
-            </div>
-            <div className="flex gap-4 my-2">
               <Item label="일정" item={current.schedule} />
               <Item label="문의경로" item={current.contactPath} />
               <Item label="알게된경로" item={current.knowPlatform} />
-            </div>
-            <div
-              onClick={() => {
-                updateModal.onOpen("DESC");
-              }}
-              className="cursor-pointer hover:underline"
-            >
-              <Item label="본문내용" item={current.description} column full />
+              <div
+                onClick={() => {
+                  updateModal.onOpen("DESC");
+                }}
+                className="w-full cursor-pointer hover:underline"
+              >
+                <Item label="본문내용" item={current.description} column full />
+              </div>
             </div>
           </div>
           <div className="flex-1">
@@ -164,7 +164,7 @@ const ContactDetail = () => {
               상담내용
             </div>
             <div className="flex-1">
-              <div className="flex gap-4">
+              <div className="flex flex-wrap gap-2">
                 <Item
                   label="소재"
                   item={current.meterial
@@ -173,19 +173,23 @@ const ContactDetail = () => {
                 />
                 <Item label="콘텐츠" item={current.content} />
                 <Item label="크기" item={current.size} />
-              </div>
-              <div className="flex gap-4 my-2">
                 <Item label="납기일" item={current?.deadline} isDate />
                 <Item label="협력사" item={current.orderCompany} />
                 <Item label="담당자" item={current.pm} />
-              </div>
-              <div
-                onClick={() => {
-                  updateModal.onOpen("NOTE");
-                }}
-                className="cursor-pointer hover:underline"
-              >
-                <Item label="상담노트" item={current.note} full column isNote />
+                <div
+                  onClick={() => {
+                    updateModal.onOpen("NOTE");
+                  }}
+                  className="w-full cursor-pointer hover:underline"
+                >
+                  <Item
+                    label="상담노트"
+                    item={current.note}
+                    full
+                    column
+                    isNote
+                  />
+                </div>
               </div>
             </div>
           </div>

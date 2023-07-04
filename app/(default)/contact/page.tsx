@@ -3,7 +3,7 @@ import React from "react";
 
 const ContactPage = () => {
   return (
-    <div className="pt-16 h-full">
+    <div className="pt-10 h-full">
       <ContactClient />
     </div>
   );
