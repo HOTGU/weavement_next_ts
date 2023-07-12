@@ -15,7 +15,7 @@ const AnimateText = ({ text, delay = 0 }: AnimateTextProps) => {
     <span className=" h-fit font-racing overflow-hidden">
       {textArr.map((item, index) => (
         <motion.span
-          viewport={{ once: false }}
+          viewport={{ once: true }}
           key={index}
           initial={{ opacity: 0, y: "200%" }}
           whileInView={{

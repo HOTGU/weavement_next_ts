@@ -40,6 +40,8 @@ export default () => {
     { value: "인스타", label: "인스타" },
     { value: "페이스북", label: "페이스북" },
     { value: "지인추천", label: "지인추천" },
+    { value: "유튜브", label: "유튜브" },
+    { value: "알수없음", label: "알수없음" },
   ];
 
   const stateOptions: OptionType[] = [

@@ -1,15 +1,14 @@
 "use client";
 
 import React from "react";
-import { motion } from "framer-motion";
 import Image from "next/legacy/image";
-
-import { Portfolio } from "@prisma/client";
-import Container from "../Container";
-import Button from "../Button";
 import Link from "next/link";
-import { HiOutlineArrowRight } from "react-icons/hi2";
+import { motion } from "framer-motion";
+import { Portfolio } from "@prisma/client";
+
+import Container from "../Container";
 import SlidingText from "../framer/SlidingText";
+import ScaleBtn from "../framer/ScaleBtn";
 
 interface HomePortfolioProps {
   portfolios: Portfolio[];
@@ -21,7 +20,7 @@ const HomePortfolio = ({ portfolios }: HomePortfolioProps) => {
       <div className="flex flex-col items-center justify-center">
         <SlidingText text="Portfolio" />
         <div className="w-full columns-2">
-          {portfolios.map((portfolio, index) => (
+          {portfolios.map((portfolio) => (
             <motion.div
               key={portfolio.id}
               initial={{ opacity: 0, y: 50 }}
@@ -31,10 +30,10 @@ const HomePortfolio = ({ portfolios }: HomePortfolioProps) => {
                 transition: {
                   type: "tween",
                   duration: 1,
-                  delay: 0.5,
+                  delay: 0.2,
                 },
               }}
-              viewport={{ once: false }}
+              viewport={{ once: true }}
               className="w-full aspect-video relative mb-4"
             >
               <Image
@@ -46,22 +45,9 @@ const HomePortfolio = ({ portfolios }: HomePortfolioProps) => {
             </motion.div>
           ))}
         </div>
-        {/* <Link href="/portfolio">
-          <motion.div
-            viewport={{ once: false }}
-            initial={{ opacity: 0, scale: 0.3 }}
-            whileInView={{
-              opacity: 1,
-              scale: 1,
-              y: 50,
-              transition: { delay: 0.3, duration: 0.5, type: "tween" },
-            }}
-            className="flex items-center gap-2"
-          >
-            All Portfolios
-            <HiOutlineArrowRight />
-          </motion.div>
-        </Link> */}
+        <Link href="/portfolio">
+          <ScaleBtn text="더 보기" />
+        </Link>
       </div>
     </Container>
   );

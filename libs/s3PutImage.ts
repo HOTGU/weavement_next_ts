@@ -38,8 +38,8 @@ export default async ({
       Bucket: process.env.AWS_S3_BUCKET,
       Key: `${type}/${
         process.env.NODE_ENV
-      }/${folderName}/${returnCurrentDate()}__${file.name}${
-        isRep && "__대표사진"
+      }/${folderName}/${returnCurrentDate()}${isRep ? "__대표사진__" : "__"}${
+        file.name
       }`,
       Body: bufferData,
     };

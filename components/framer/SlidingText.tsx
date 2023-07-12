@@ -12,8 +12,8 @@ const SlidingText = ({ text }: SlidingTextProps) => {
     <motion.div
       initial={{ opacity: 0, x: "-100%" }}
       whileInView={{ opacity: 1, x: 0 }}
-      viewport={{ once: false }}
-      className="text-6xl mb-12 font-racing"
+      viewport={{ once: true }}
+      className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl mb-6 sm:mb-8 md:mb-10 lg:mb-12 font-racing"
     >
       {text}
     </motion.div>

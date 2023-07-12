@@ -10,7 +10,7 @@ const SliderMenu = () => {
 
   return (
     <>
-      <div className={`absolute w-full right-0 top-16 bg-white`}>
+      <div className={`absolute w-full right-0 top-9 bg-white`}>
         <Container>
           <div className="flex flex-col w-full h-full text-zinc-600">
             <Link

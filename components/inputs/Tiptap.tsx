@@ -28,14 +28,15 @@ const Tiptap = ({ name, control, disabled }: TiptapProps) => {
     },
     editorProps: {
       attributes: {
-        class: "p-4 border border-neutral-300 pt-12 rounded h-64 ",
+        class:
+          "p-4 pt-0 border border-neutral-300 h-64 overflow-y-auto border-t-0 rounded-b",
       },
     },
   });
 
   return (
     <div className="relative">
-      <div className="flex z-10 absolute top-0 items-center gap-2 p-4  ">
+      <div className="flex items-center gap-2 p-4 border border-neutral-300 border-b-0 rounded-t">
         <span
           onClick={() => editor?.chain().focus().toggleBulletList().run()}
           className={`${

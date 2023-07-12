@@ -1,5 +1,6 @@
 import Navbar from "@/components/navbar/Navbar";
 import getCurrentUser from "@/actions/getCurrentUser";
+import Footer from "@/components/Footer";
 
 export const metadata = {
   title: "Weavement",
@@ -14,8 +15,13 @@ export default async function RootLayout({
   const currentUser = await getCurrentUser();
   return (
     <main lang="en">
-      <Navbar currentUser={currentUser} />
-      {children}
+      <div className=" min-h-screen">
+        <Navbar currentUser={currentUser} />
+        {children}
+        <div className=" sticky top-[100vh]">
+          <Footer />
+        </div>
+      </div>
     </main>
   );
 }
