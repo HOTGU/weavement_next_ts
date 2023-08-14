@@ -1,5 +1,4 @@
 import localFont from "next/font/local";
-import { Racing_Sans_One } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "react-hot-toast";
 
@@ -13,12 +12,6 @@ const pretendard = localFont({
   preload: true,
 });
 
-const racingSansOne = Racing_Sans_One({
-  subsets: ["latin"],
-  weight: ["400"],
-  variable: "--racing",
-});
-
 export default async function RootLayout({
   children,
 }: {
@@ -26,9 +19,7 @@ export default async function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body
-        className={`${pretendard.className} ${racingSansOne.variable} bgColor`}
-      >
+      <body className={`${pretendard.className} bgColor`}>
         <Toaster />
         {children}
       </body>

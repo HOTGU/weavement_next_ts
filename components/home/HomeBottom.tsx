@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 
 import Container from "../Container";
@@ -14,7 +15,9 @@ const HomeBottom = () => {
         <div className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-racing">
           <AnimateText text="WEAVEMENT" />
         </div>
-        <ScaleBtn text="문의하기" isWhite />
+        <Link href="/contact">
+          <ScaleBtn text="문의하기" isWhite />
+        </Link>
       </div>
     </Container>
   );

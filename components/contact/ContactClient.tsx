@@ -13,6 +13,7 @@ import Input from "../inputs/Input";
 import Textarea from "../inputs/Textarea";
 import { useRouter } from "next/navigation";
 import File from "../inputs/File";
+import RacingFont from "../RacingFont";
 
 enum STEPS {
   INFO = 0,
@@ -311,7 +312,7 @@ const ContactClient = () => {
       <div className="flex my-2 md:my-4 lg:my-8 2xl:my-10 md:gap-4 lg:gap-8 md:justify-center md:items-center h-full">
         <div className="hidden flex-1 md:flex flex-col md:text-center md:gap-4 lg:gap-6 h-full">
           <div className="md:text-6xl lg:text-7xl xl:text-8xl font-racing font-semibold">
-            Contact
+            <RacingFont>Contact</RacingFont>
           </div>
           <div className=" font-semibold md:text-xs lg:text-sm xl:text-base">
             감각적인 제조가 필요하신가요? <br />
