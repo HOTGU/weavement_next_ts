@@ -25,7 +25,7 @@ const Footer = () => {
                 </div>
                 <div className="flex items-center gap-2">
                   <CiPhone />
-                  <span>010 . 6803 . 7181</span>
+                  <span>010 . 2770 . 7181</span>
                 </div>
               </div>
             </div>
