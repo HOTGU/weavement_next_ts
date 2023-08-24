@@ -11,7 +11,6 @@ const PortfolioBlock = ({ portfolio }: PortfolioBlockProps) => {
   return (
     <Link
       href={`/portfolio/${portfolio.id}`}
-      target="_blank"
       className=" overflow-hidden rounded w-full aspect-video"
     >
       <div
