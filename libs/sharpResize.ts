@@ -5,7 +5,6 @@ export default async (buffer: ArrayBuffer, width: number) => {
     .resize({ width })
     .toFormat("webp", {
       quality: 90,
-      lossless: true,
     })
     .toBuffer();
 
