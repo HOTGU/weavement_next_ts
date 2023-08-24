@@ -4,6 +4,9 @@ import HomeBottom from "@/components/home/HomeBottom";
 import HomePortfolio from "@/components/home/HomePortfolio";
 import HomeProcess from "@/components/home/HomeProcess";
 import HomeScreen from "@/components/home/HomeScreen";
+import { homeMetadata } from "@/constants/metadata";
+
+export const metadata = homeMetadata;
 
 export default async function Home() {
   const data = await getPortfolios({});

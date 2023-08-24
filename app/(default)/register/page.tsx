@@ -4,7 +4,7 @@ import React from "react";
 
 const page = () => {
   return (
-    <div className="pt-16">
+    <div className="pt-16 min-h-screen">
       <Code>
         <RegisterForm />
       </Code>

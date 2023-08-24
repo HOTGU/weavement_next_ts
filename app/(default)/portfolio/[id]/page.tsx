@@ -1,16 +1,59 @@
+import React from "react";
+import { Metadata } from "next";
+import Image from "next/legacy/image";
+
 import getPortfolio, { IParams } from "@/actions/db/getPortfolio";
 import getPortfolios from "@/actions/db/getPortfolios";
 import Container from "@/components/Container";
-import Image from "next/legacy/image";
-import React from "react";
+import { defaultPortfolioDetailMetadata } from "@/constants/metadata";
 
-export async function generateStaticParams() {
+export const generateMetadata = async ({
+  params,
+}: {
+  params: IParams;
+}): Promise<Metadata> => {
+  const { id } = params;
+  const portfolio = await getPortfolio({ id });
+
+  if (!portfolio) {
+    return defaultPortfolioDetailMetadata;
+  }
+
+  return {
+    title: `위브먼트 | ${portfolio.metaTitle}`,
+    description: portfolio.metaDescription,
+    icons: {
+      icon: "/favicon.png",
+    },
+    keywords: portfolio.metaKeywords,
+    alternates: {
+      canonical: "https://weavement.co.kr/portfolio",
+    },
+    openGraph: {
+      title: `위브먼트 | ${portfolio.metaTitle}`,
+      // @ts-ignore
+      description: portfolio.metaDescription,
+      locale: "ko_KR",
+      // @ts-ignore
+      type: "website",
+      siteName: "위브먼트",
+      url: "https://weavement.co.kr/portfolio",
+      images: [
+        {
+          url: "/meta_img.png",
+        },
+      ],
+    },
+  };
+};
+
+export const generateStaticParams = async () => {
   const { portfolios } = await getPortfolios({});
 
   return portfolios.map((portfolio) => ({
     id: String(portfolio.id),
   }));
-}
+};
 
 const page = async ({ params }: { params: IParams }) => {
   const { id } = params;

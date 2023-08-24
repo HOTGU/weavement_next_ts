@@ -4,7 +4,7 @@ import React from "react";
 
 import { GiLoveLetter } from "react-icons/gi";
 import { BiHeadphone } from "react-icons/bi";
-import { FaHandshake, FaSadTear } from "react-icons/fa";
+import { FaHandshake, FaPhoneSlash, FaSadTear } from "react-icons/fa";
 import { ImHappy2 } from "react-icons/im";
 
 import { useSearchParams } from "next/navigation";
@@ -14,6 +14,7 @@ export const status = [
   { label: "문의", icon: GiLoveLetter },
   { label: "상담", icon: BiHeadphone },
   { label: "계약", icon: FaHandshake },
+  { label: "미수신", icon: FaPhoneSlash },
   { label: "불발", icon: FaSadTear },
   { label: "완료", icon: ImHappy2 },
 ];

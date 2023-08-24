@@ -89,9 +89,7 @@ const Modal: React.FC<ModalProps> = ({
                 <div className="text-xl font-semibold">{title}</div>
               </div>
               {/* BODY */}
-              <div className=" p-6 relative overflow-y-auto flex-auto">
-                {body}
-              </div>
+              <div className=" p-6 relative flex-auto">{body}</div>
               {/* FOOTER */}
               <div className="flex flex-col gap-2 p-6">
                 <div className=" flex items-center gap-4 w-full">

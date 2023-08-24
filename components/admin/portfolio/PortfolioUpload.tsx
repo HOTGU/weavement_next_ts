@@ -31,7 +31,13 @@ const PortfolioUpload = () => {
     setFiles([]);
     setThumb([]);
     setIsRep("");
-    reset({ title: "", description: "" });
+    reset({
+      title: "",
+      description: "",
+      metaTitle: "",
+      metaDescription: "",
+      metaKeywords: "",
+    });
   }, [router]);
 
   const title = watch("title");
@@ -54,6 +60,9 @@ const PortfolioUpload = () => {
     fd.append("title", data.title);
     fd.append("description", data.description);
     fd.append("isRep", isRep);
+    fd.append("metaTitle", data.metaTitle);
+    fd.append("metaDescription", data.metaDescription);
+    fd.append("metaKeywords", data.metaKeywords);
 
     axios
       .post("/api/portfolio", fd)
@@ -172,6 +181,30 @@ const PortfolioUpload = () => {
           />
           메인페이지 등록
         </label>
+        <Input
+          control={control}
+          errors={errors}
+          required
+          name="metaTitle"
+          label="SEO제목"
+          disabled={loading}
+        />
+        <Textarea
+          control={control}
+          errors={errors}
+          required
+          name="metaDescription"
+          label="SEO본문"
+          disabled={loading}
+        />
+        <Input
+          control={control}
+          errors={errors}
+          required
+          name="metaKeywords"
+          label="SEO키워드"
+          disabled={loading}
+        />
         <Button
           label="포트폴리오 생성"
           disabled={loading}

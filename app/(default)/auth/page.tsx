@@ -12,7 +12,7 @@ const authPage = async () => {
   if (currentUser) redirect("/");
 
   return (
-    <div className="pt-16">
+    <div className="pt-16 min-h-screen">
       <Container>
         <Code>
           <LoginForm />

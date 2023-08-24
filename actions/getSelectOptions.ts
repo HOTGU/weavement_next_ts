@@ -35,12 +35,14 @@ export default () => {
   ];
 
   const knowPlatformOptions: OptionType[] = [
-    { value: "네이버", label: "네이버" },
-    { value: "구글", label: "구글" },
-    { value: "인스타", label: "인스타" },
+    { value: "블로그", label: "블로그" },
+    { value: "홈페이지", label: "홈페이지" },
+    { value: "인스타그램", label: "인스타그램" },
     { value: "페이스북", label: "페이스북" },
-    { value: "지인추천", label: "지인추천" },
     { value: "유튜브", label: "유튜브" },
+    { value: "기존고객", label: "기존고객" },
+    { value: "소개", label: "소개" },
+    { value: "기타", label: "기타" },
     { value: "알수없음", label: "알수없음" },
   ];
 
@@ -48,6 +50,7 @@ export default () => {
     { value: "문의", label: "문의" },
     { value: "상담", label: "상담" },
     { value: "계약", label: "계약" },
+    { value: "미수신", label: "미수신" },
     { value: "불발", label: "불발" },
     { value: "완료", label: "완료" },
   ];
@@ -60,15 +63,18 @@ export default () => {
 
   const contactPathOptions: OptionType[] = [
     { value: "홈페이지", label: "홈페이지" },
-    { value: "대표전화", label: "대표전화" },
-    { value: "문자", label: "문자" },
+    { value: "대표전화(HP)", label: "대표전화(HP)" },
+    { value: "블로그(전화)", label: "블로그(전화)" },
+    { value: "블로그(문자)", label: "블로그(문자)" },
     { value: "이메일", label: "이메일" },
     { value: "카카오톡", label: "카카오톡" },
     { value: "카카오톡(채널)", label: "카카오톡(채널)" },
     { value: "인스타(전화)", label: "인스타(전화)" },
+    { value: "인스타(문자)", label: "인스타(문자)" },
     { value: "인스타(DM)", label: "인스타(DM)" },
-    { value: "기존고객", label: "기존고객" },
-    { value: "소개", label: "소개" },
+    { value: "유튜브(전화)", label: "유튜브(전화)" },
+    { value: "유튜브(문자)", label: "유튜브(문자)" },
+    { value: "기타", label: "기타" },
   ];
 
   const meterialOptions: OptionType[] = [

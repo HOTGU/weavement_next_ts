@@ -22,6 +22,11 @@ export async function POST(request: Request) {
     const title = data.get("title") as string;
     const isRep = data.get("isRep") ? true : false;
     const description = data.get("description") as string;
+    const metaTitle = data.get("metaTitle") as string;
+    const metaDescription = data.get("metaDescription") as string;
+    const dataMetaKeywords = data.get("metaKeywords") as string;
+
+    const metaKeywords = dataMetaKeywords ? dataMetaKeywords.split(",") : [];
 
     const thumbLocation = await s3PutImage({
       folderName: title,
@@ -49,6 +54,9 @@ export async function POST(request: Request) {
         isRep,
         thumb: thumbLocation,
         images: imagesLocation,
+        metaTitle,
+        metaDescription,
+        metaKeywords,
       },
     });
 

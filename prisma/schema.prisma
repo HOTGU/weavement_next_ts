@@ -16,53 +16,55 @@ enum Role {
 }
 
 model User {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  admin_id String @unique
-  password String 
-  isAdmin Boolean @default(false)
+  id       String  @id @default(auto()) @map("_id") @db.ObjectId
+  admin_id String  @unique
+  password String
+  isAdmin  Boolean @default(false)
 }
 
 model Contact {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  step String?
-  hasDesign String?
-  cost String?
-  schedule String?
-  description String?
-  images String[]
-  knowPlatform String?
-  contactPath String @default("홈페이지")
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  step          String?
+  hasDesign     String?
+  cost          String?
+  schedule      String?
+  description   String?
+  images        String[]
+  knowPlatform  String?
+  contactPath   String    @default("홈페이지")
   clientCompany String?
   clientRequest String?
-  createdAt DateTime @default(now())
-  state String? @default("문의")
-  pm String? @default("미정")
-  meterial String[]
-  content String?
-  size String?
-  due String?
-  orderCompany String?
-  deadline DateTime?
-  note String?
-  client Client[]
+  createdAt     DateTime  @default(now())
+  state         String?   @default("문의")
+  pm            String?   @default("미정")
+  meterial      String[]
+  content       String?
+  size          String?
+  due           String?
+  orderCompany  String?
+  deadline      DateTime?
+  note          String?
+  client        Client[]
 }
 
-
 model Client {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  name String?
-  phone String?
-  email String?
-  position String?
-  contactId String @db.ObjectId
-  contact Contact @relation(fields:[contactId], references:[id], onDelete:Cascade)
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  name      String?
+  phone     String?
+  email     String?
+  position  String?
+  contactId String  @db.ObjectId
+  contact   Contact @relation(fields: [contactId], references: [id], onDelete: Cascade)
 }
 
 model Portfolio {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  images String[]
-  thumb String
-  title String
-  description String
-  isRep Boolean @default(false)
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  images          String[]
+  thumb           String
+  title           String
+  description     String
+  isRep           Boolean  @default(false)
+  metaTitle       String?
+  metaDescription String?
+  metaKeywords    String[]
 }

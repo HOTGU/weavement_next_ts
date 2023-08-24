@@ -1,8 +1,9 @@
+import React from "react";
+
 import getContacts, { IContactParams } from "@/actions/db/getContacts";
 import Container from "@/components/Container";
 import ContactBlock from "@/components/admin/contact/ContactBlock";
 import ContactDetail from "@/components/admin/contact/ContactDetail";
-import React from "react";
 
 interface AdminProps {
   searchParams: IContactParams;

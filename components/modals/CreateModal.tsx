@@ -216,7 +216,7 @@ const CreateModal = () => {
         <Textarea
           control={control}
           errors={errors}
-          label="본문내용"
+          label="문의노트"
           name="description"
           disabled={isLoading}
         />

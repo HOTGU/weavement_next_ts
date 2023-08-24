@@ -6,6 +6,7 @@ import { signOut } from "next-auth/react";
 
 import Container from "../Container";
 import Link from "next/link";
+import RacingFont from "../RacingFont";
 
 const AdminNav = ({ currentUser }: CurrentUserProps) => {
   return (
@@ -14,8 +15,12 @@ const AdminNav = ({ currentUser }: CurrentUserProps) => {
         <Container>
           <div className="flex items-center justify-between h-full">
             <div className=" font-racing flex items-end">
-              <span className="text-4xl text-accent">WM</span>
-              <span className="text-sm">Admin</span>
+              <RacingFont>
+                <Link href="/">
+                  <span className="text-4xl text-accent">WM</span>
+                </Link>
+                <span className="text-sm">Admin</span>
+              </RacingFont>
             </div>
             <div className="flex gap-4">
               <Link href="/admin/contact">문의</Link>
