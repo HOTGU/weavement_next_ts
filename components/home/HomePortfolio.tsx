@@ -21,9 +21,12 @@ const HomePortfolio = ({ portfolios }: HomePortfolioProps) => {
         <SlidingText text="Portfolio" />
         <div className="w-full columns-2">
           {portfolios.map((portfolio) => (
-            <Link href={`/portfolio/${portfolio.id}`} target="_blank">
+            <Link
+              href={`/portfolio/${portfolio.id}`}
+              target="_blank"
+              key={portfolio.id}
+            >
               <motion.div
-                key={portfolio.id}
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{
                   opacity: 1,
