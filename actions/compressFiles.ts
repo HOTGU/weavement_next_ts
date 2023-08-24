@@ -7,7 +7,7 @@ export default async (
 ) => {
   const imageOption = {
     maxSizeMB: 1,
-    maxWidthOrHeight: width || 1440,
+    maxWidthOrHeight: width || 2560,
     webWorker: true,
   };
 

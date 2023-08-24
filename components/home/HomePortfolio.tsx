@@ -21,28 +21,30 @@ const HomePortfolio = ({ portfolios }: HomePortfolioProps) => {
         <SlidingText text="Portfolio" />
         <div className="w-full columns-2">
           {portfolios.map((portfolio) => (
-            <motion.div
-              key={portfolio.id}
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{
-                opacity: 1,
-                y: 0,
-                transition: {
-                  type: "tween",
-                  duration: 1,
-                  delay: 0.2,
-                },
-              }}
-              viewport={{ once: true }}
-              className="w-full aspect-video relative mb-4"
-            >
-              <Image
-                src={portfolio.thumb}
-                layout="fill"
-                objectFit="cover"
-                className="rounded cursor-pointer hover:opacity-70 transition"
-              />
-            </motion.div>
+            <Link href={`/portfolio/${portfolio.id}`} target="_blank">
+              <motion.div
+                key={portfolio.id}
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{
+                  opacity: 1,
+                  y: 0,
+                  transition: {
+                    type: "tween",
+                    duration: 1,
+                    delay: 0.2,
+                  },
+                }}
+                viewport={{ once: true }}
+                className="w-full aspect-video relative mb-4"
+              >
+                <Image
+                  src={portfolio.thumb}
+                  layout="fill"
+                  objectFit="cover"
+                  className="rounded cursor-pointer hover:opacity-70 transition"
+                />
+              </motion.div>
+            </Link>
           ))}
         </div>
         <Link href="/portfolio">

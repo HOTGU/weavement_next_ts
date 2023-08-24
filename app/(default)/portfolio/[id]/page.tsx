@@ -71,13 +71,14 @@ const page = async ({ params }: { params: IParams }) => {
               layout="fill"
               objectFit="cover"
               className="rounded-md"
+              sizes="100vw"
             />
           </div>
           <div className="flex flex-col gap-2 md:gap-4 xl:gap-6 items-center justify-center">
             <div className="text-md sm:text-lg md:text-xl lg:text-2xl font-semibold">
               {portfolio.title}
             </div>
-            <div className="text-sm md:text-md lg:text-lg whitespace-pre-wrap">
+            <div className="text-sm md:text-md lg:text-lg whitespace-pre-wrap text-center">
               {portfolio.description}
             </div>
           </div>

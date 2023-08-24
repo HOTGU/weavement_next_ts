@@ -134,7 +134,7 @@ const PortfolioUpload = () => {
             files={thumb}
             setFiles={setThumb}
             label="대표사진선택"
-            compressWidth={2560}
+            // compressWidth={2560}
             hiddenFiles
             disabled={loading}
             onlyOne
