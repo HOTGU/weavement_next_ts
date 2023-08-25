@@ -1,8 +1,8 @@
 import ContactClient from "@/components/contact/ContactClient";
 import React from "react";
-import { contactMetadata } from "@/constants/metadata";
+import metadataConfig from "@/constants/metadataConfig";
 
-export const metadata = contactMetadata;
+export const metadata = metadataConfig.contactMetadata;
 
 const ContactPage = () => {
   return (

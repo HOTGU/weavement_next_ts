@@ -1,4 +1,4 @@
-export const homeMetadata = {
+const homeMetadata = {
   title: "조형물 제조 - 위브먼트",
   description:
     "감각적인 제조 위브먼트. FRP,스티로폼, 패브릭, 금속, 목재, 3D프린팅, ALC 등 맞춤형 조형물 제조 서비스",
@@ -34,7 +34,7 @@ export const homeMetadata = {
   },
 };
 
-export const portfolioMetadata = {
+const portfolioMetadata = {
   title: "위브먼트 | 포트폴리오",
   description:
     "고객의 니즈를 완벽히 충족시키는 위브먼트만의 다양하고 감각적인 결과물들을 소개합니다.",
@@ -70,7 +70,7 @@ export const portfolioMetadata = {
   },
 };
 
-export const contactMetadata = {
+const contactMetadata = {
   title: "위브먼트 | 문의하기",
   description:
     "감각적인 제조가 필요하신가요? 업계 최초 고객 맞춤형, 선택하는 문의 접수를 이용해보세요.",
@@ -106,7 +106,7 @@ export const contactMetadata = {
   },
 };
 
-export const defaultPortfolioDetailMetadata = {
+const defaultPortfolioDetailMetadata = {
   title: "위브먼트 | 포트폴리오 상세화면",
   description:
     "고객의 니즈를 완벽히 충족시키는 위브먼트만의 감각적인 결과물을 소개합니다.",
@@ -140,4 +140,11 @@ export const defaultPortfolioDetailMetadata = {
       },
     ],
   },
+};
+
+export default {
+  homeMetadata,
+  portfolioMetadata,
+  contactMetadata,
+  defaultPortfolioDetailMetadata,
 };

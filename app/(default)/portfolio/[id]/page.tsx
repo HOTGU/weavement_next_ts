@@ -5,7 +5,7 @@ import Image from "next/legacy/image";
 import getPortfolio, { IParams } from "@/actions/db/getPortfolio";
 import getPortfolios from "@/actions/db/getPortfolios";
 import Container from "@/components/Container";
-import { defaultPortfolioDetailMetadata } from "@/constants/metadata";
+import metadataConfig from "@/constants/metadataConfig";
 
 export const generateMetadata = async ({
   params,
@@ -16,7 +16,7 @@ export const generateMetadata = async ({
   const portfolio = await getPortfolio({ id });
 
   if (!portfolio) {
-    return defaultPortfolioDetailMetadata;
+    return metadataConfig.defaultPortfolioDetailMetadata;
   }
 
   return {

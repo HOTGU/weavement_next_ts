@@ -1,6 +1,9 @@
 "use client";
 
 import React, { useCallback, useState, useEffect } from "react";
+import axios from "axios";
+import Image from "next/legacy/image";
+import { useRouter } from "next/navigation";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { HiXMark } from "react-icons/hi2";
@@ -9,17 +12,17 @@ import Button from "@/components/Button";
 import File from "@/components/inputs/File";
 import Input from "@/components/inputs/Input";
 import Textarea from "@/components/inputs/Textarea";
-import axios from "axios";
-import Image from "next/legacy/image";
-import { useRouter } from "next/navigation";
+import getTotalFileSize from "@/utils/getTotalFileSize";
 
 const PortfolioUpload = () => {
   const router = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
   const [thumb, setThumb] = useState<File[]>([]);
   const [previewThumb, setPreviewThumb] = useState<string[]>([]);
+  const [thumbSize, setThumbSize] = useState<number>(0);
   const [files, setFiles] = useState<File[]>([]);
   const [previewFiles, setPreviewFiles] = useState<string[]>([]);
+  const [filesSize, setFilesSize] = useState<number>(0);
   const [isRep, setIsRep] = useState("");
 
   const {
@@ -54,6 +57,8 @@ const PortfolioUpload = () => {
       const preview = URL.createObjectURL(thumb[i]);
       previewArr.push(preview);
     }
+    const thumbMbSize = getTotalFileSize(thumb);
+    setThumbSize(thumbMbSize);
     setPreviewThumb(previewArr);
   }, [thumb]);
 
@@ -63,6 +68,8 @@ const PortfolioUpload = () => {
       const preview = URL.createObjectURL(files[i]);
       previewArr.push(preview);
     }
+    const filesMbSize = getTotalFileSize(files);
+    setFilesSize(filesMbSize);
     setPreviewFiles(previewArr);
   }, [files]);
 
@@ -117,6 +124,18 @@ const PortfolioUpload = () => {
   return (
     <div className="flex gap-6 h-[calc(100vh-50px)] p-6 overflow-y-auto relative">
       <div className="w-2/3 h-fit flex flex-col gap-4 items-center">
+        <div className="flex flex-col items-center">
+          {thumbSize + filesSize > 4 && (
+            <div className="text-xs text-rose-500">
+              사진이 4MB를 초과했습니다.
+            </div>
+          )}
+          <span className="text-xs">
+            {(thumbSize + filesSize).toFixed(2)}MB / 4MB (썸네일: {thumbSize}MB
+            하위사진:
+            {filesSize}MB )
+          </span>
+        </div>
         <div className="relative w-full aspect-video">
           {previewThumb[0] && (
             <>

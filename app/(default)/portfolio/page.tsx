@@ -5,9 +5,9 @@ import { IPortfolioParams } from "@/actions/db/getPortfolios";
 import Container from "@/components/Container";
 import PortfolioBlock from "@/components/portfolio/PortfolioBlock";
 import PortfolioPagination from "@/components/portfolio/PortfolioPagination";
-import { portfolioMetadata } from "@/constants/metadata";
+import metadataConfig from "@/constants/metadataConfig";
 
-export const metadata = portfolioMetadata;
+export const metadata = metadataConfig.portfolioMetadata;
 
 interface PortfolioParams {
   searchParams: IPortfolioParams;

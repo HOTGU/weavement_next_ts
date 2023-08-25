@@ -14,7 +14,7 @@ import { BarLoader } from "react-spinners";
 
 interface FileProps {
   files: File[];
-  setFiles: Dispatch<SetStateAction<File[]>>;
+  setFiles: Dispatch<SetStateAction<any>>;
   label?: string;
   multiple?: boolean;
   compressWidth?: number;
@@ -35,12 +35,6 @@ const File = ({
 }: FileProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [loading, setLoading] = useState(false);
-  const [size, setSize] = useState(0);
-  useEffect(() => {
-    const mbSize = sumFilesSize(files);
-    setSize(mbSize);
-  }, [files]);
-
   const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const target = e.target;
     const inputFiles = target.files;
@@ -81,17 +75,6 @@ const File = ({
 
     setFiles(deletedFiles);
   };
-
-  const sumFilesSize = (files: File[]) => {
-    let sumSize = 0;
-    files.forEach((file) => {
-      console.log(file);
-      sumSize += file.size;
-    });
-    const convertMb = Math.floor((sumSize / 1024 / 1024) * 100) / 100;
-    return convertMb;
-  };
-
   return (
     <div>
       <input
@@ -116,7 +99,6 @@ const File = ({
       >
         {loading ? <BarLoader /> : label}
       </div>
-      <div>{size}</div>
       {files.length > 0 && !hiddenFiles && (
         <div className="flex flex-wrap gap-2 pt-4">
           {files.map((file, index) => (
