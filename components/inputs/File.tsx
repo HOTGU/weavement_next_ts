@@ -1,6 +1,12 @@
 "use client";
 
-import React, { Dispatch, SetStateAction, useRef, useState } from "react";
+import React, {
+  Dispatch,
+  SetStateAction,
+  useRef,
+  useState,
+  useEffect,
+} from "react";
 import { HiXMark } from "react-icons/hi2";
 
 import compressFiles from "@/actions/compressFiles";
@@ -18,10 +24,10 @@ interface FileProps {
 }
 
 const File = ({
-  multiple,
   files,
-  label = "사진선택",
   setFiles,
+  multiple,
+  label = "사진선택",
   compressWidth = 960,
   onlyOne = false,
   hiddenFiles,
@@ -29,6 +35,11 @@ const File = ({
 }: FileProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [loading, setLoading] = useState(false);
+  const [size, setSize] = useState(0);
+  useEffect(() => {
+    const mbSize = sumFilesSize(files);
+    setSize(mbSize);
+  }, [files]);
 
   const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const target = e.target;
@@ -37,16 +48,29 @@ const File = ({
     if (!inputFiles) return;
 
     setLoading(true);
-    const compressedFiles = await compressFiles(
-      inputFiles,
-      files,
-      compressWidth
-    );
+
+    const filesNameArr = files.map((file) => {
+      return file?.name;
+    });
+
+    let compressedFiles = [];
+
+    for (let i = 0; i < inputFiles.length; i++) {
+      if (!filesNameArr.includes(inputFiles[i].name)) {
+        const compressedFile = await compressFiles(
+          inputFiles[i],
+          compressWidth
+        );
+        compressedFiles.push(compressedFile);
+      }
+    }
+
     if (onlyOne) {
       setFiles([compressedFiles[compressedFiles.length - 1]]);
     } else {
-      setFiles((files) => [...files, ...compressedFiles]);
+      setFiles([...files, ...compressedFiles]);
     }
+
     setLoading(false);
   };
 
@@ -56,6 +80,16 @@ const File = ({
     );
 
     setFiles(deletedFiles);
+  };
+
+  const sumFilesSize = (files: File[]) => {
+    let sumSize = 0;
+    files.forEach((file) => {
+      console.log(file);
+      sumSize += file.size;
+    });
+    const convertMb = Math.floor((sumSize / 1024 / 1024) * 100) / 100;
+    return convertMb;
   };
 
   return (
@@ -82,6 +116,7 @@ const File = ({
       >
         {loading ? <BarLoader /> : label}
       </div>
+      <div>{size}</div>
       {files.length > 0 && !hiddenFiles && (
         <div className="flex flex-wrap gap-2 pt-4">
           {files.map((file, index) => (

@@ -1,5 +1,10 @@
 "use client";
 
+import React, { useCallback, useState, useEffect } from "react";
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
+import { toast } from "react-hot-toast";
+import { HiXMark } from "react-icons/hi2";
+
 import Button from "@/components/Button";
 import File from "@/components/inputs/File";
 import Input from "@/components/inputs/Input";
@@ -7,16 +12,14 @@ import Textarea from "@/components/inputs/Textarea";
 import axios from "axios";
 import Image from "next/legacy/image";
 import { useRouter } from "next/navigation";
-import React, { useCallback, useState } from "react";
-import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
-import { toast } from "react-hot-toast";
-import { HiXMark } from "react-icons/hi2";
 
 const PortfolioUpload = () => {
   const router = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
   const [thumb, setThumb] = useState<File[]>([]);
+  const [previewThumb, setPreviewThumb] = useState<string[]>([]);
   const [files, setFiles] = useState<File[]>([]);
+  const [previewFiles, setPreviewFiles] = useState<string[]>([]);
   const [isRep, setIsRep] = useState("");
 
   const {
@@ -29,7 +32,9 @@ const PortfolioUpload = () => {
 
   const resetInput = useCallback(() => {
     setFiles([]);
+    setPreviewFiles([]);
     setThumb([]);
+    setPreviewThumb([]);
     setIsRep("");
     reset({
       title: "",
@@ -42,6 +47,24 @@ const PortfolioUpload = () => {
 
   const title = watch("title");
   const description = watch("description");
+
+  useEffect(() => {
+    let previewArr = [];
+    for (let i = 0; i < thumb.length; i++) {
+      const preview = URL.createObjectURL(thumb[i]);
+      previewArr.push(preview);
+    }
+    setPreviewThumb(previewArr);
+  }, [thumb]);
+
+  useEffect(() => {
+    let previewArr = [];
+    for (let i = 0; i < files.length; i++) {
+      const preview = URL.createObjectURL(files[i]);
+      previewArr.push(preview);
+    }
+    setPreviewFiles(previewArr);
+  }, [files]);
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     if (!thumb[0]) return toast.error("대표사진을 선택해주세요");
@@ -85,22 +108,32 @@ const PortfolioUpload = () => {
   const deleteFile = (target: number) => {
     const deletedFiles = files.filter((__, index) => target !== index);
     setFiles(deletedFiles);
+    const deletedPreviewFiles = previewFiles.filter(
+      (__, index) => target !== index
+    );
+    setPreviewFiles(deletedPreviewFiles);
   };
 
   return (
     <div className="flex gap-6 h-[calc(100vh-50px)] p-6 overflow-y-auto relative">
       <div className="w-2/3 h-fit flex flex-col gap-4 items-center">
         <div className="relative w-full aspect-video">
-          {thumb[0] && (
+          {previewThumb[0] && (
             <>
               <Image
                 objectFit="cover"
                 layout="fill"
-                src={URL.createObjectURL(thumb[0])}
+                src={previewThumb[0]}
+                onLoad={() => {
+                  URL.revokeObjectURL(previewThumb[0]);
+                }}
                 className="rounded-md"
               />
               <div
-                onClick={() => setThumb([])}
+                onClick={() => {
+                  setPreviewThumb([]);
+                  setThumb([]);
+                }}
                 className="absolute top-1 right-1 text-rose-500 bg-white/70 rounded-full cursor-pointer"
               >
                 <HiXMark />
@@ -112,13 +145,19 @@ const PortfolioUpload = () => {
         <div className=" whitespace-pre-line font-light text-center">
           {description}
         </div>
-        {files.length > 0 && (
+        {previewFiles.length > 0 && (
           <div className=" columns-3">
-            {files.map((file, index) => (
-              <div className="relative" key={file.size}>
-                <img src={URL.createObjectURL(file)} className="mb-4" />
+            {previewFiles.map((preview, index) => (
+              <div className="relative" key={preview}>
+                <img
+                  src={preview}
+                  className="mb-4"
+                  onLoad={() => URL.revokeObjectURL(preview)}
+                />
                 <div
-                  onClick={() => deleteFile(index)}
+                  onClick={() => {
+                    deleteFile(index);
+                  }}
                   className="absolute top-1 right-1 text-rose-500 bg-white/70 rounded-full cursor-pointer"
                 >
                   <HiXMark />
@@ -134,7 +173,7 @@ const PortfolioUpload = () => {
             files={thumb}
             setFiles={setThumb}
             label="대표사진선택"
-            // compressWidth={2560}
+            compressWidth={2560}
             hiddenFiles
             disabled={loading}
             onlyOne

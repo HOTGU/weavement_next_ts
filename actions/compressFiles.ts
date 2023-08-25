@@ -1,27 +1,16 @@
 import imageCompression from "browser-image-compression";
 
 export default async (
-  inputFiles: FileList,
-  stateFiles: File[],
+  // inputFiles: FileList,
+  // stateFiles: File[],
+  inputFile: File,
   width: number
 ) => {
   const imageOption = {
-    maxSizeMB: 1,
-    maxWidthOrHeight: width || 2560,
+    maxSizeMB: 0.5,
+    maxWidthOrHeight: width || 1920,
     webWorker: true,
   };
-
-  const filesNameArr = stateFiles.map((file) => {
-    return file?.name;
-  });
-
-  let compressedFiles = [];
-
-  for (let i = 0; i < inputFiles.length; i++) {
-    if (!filesNameArr.includes(inputFiles[i].name)) {
-      const compressedFile = await imageCompression(inputFiles[i], imageOption);
-      compressedFiles.push(compressedFile);
-    }
-  }
-  return compressedFiles;
+  const compressedFile = await imageCompression(inputFile, imageOption);
+  return compressedFile;
 };

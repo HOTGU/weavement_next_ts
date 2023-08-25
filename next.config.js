@@ -4,7 +4,10 @@ const nextConfig = {
     appDir: true,
   },
   images: {
-    domains: ["weavement.s3.ap-northeast-2.amazonaws.com"],
+    domains: [
+      "weavement.s3.ap-northeast-2.amazonaws.com",
+      "weavement-test.s3.ap-northeast-2.amazonaws.com",
+    ],
   },
 };
 
