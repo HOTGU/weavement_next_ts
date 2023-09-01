@@ -30,13 +30,13 @@ const ContactImages = ({ images, show, setShow }: ContactImagsProps) => {
             <IoMdClose size={32} />
           </div>
           <div
-            className="text-white absolute right-10 top-10 cursor-pointer hover:opacity-70 transition bg-accent p-2 rounded"
+            className="absolute right-10 top-10 cursor-pointer hover:opacity-70 transition bg-neutral-200 p-2 rounded"
             onClick={() => {
               setShow(false);
               fileModal.onOpen();
             }}
           >
-            <ImFolderUpload />
+            📁파일수정
           </div>
           <Slider images={images} />
         </div>

@@ -11,7 +11,7 @@ export default () => {
   ];
 
   const hasDesignOptions: OptionType[] = [
-    { value: "2D디자인", label: "2D디자인" },
+    { value: "2D디자인(사진포함)", label: "2D디자인(사진포함)" },
     { value: "3D디자인", label: "3D디자인" },
     { value: "도면", label: "도면" },
     { value: "아니오", label: "아니오" },
@@ -26,12 +26,14 @@ export default () => {
     { value: "5000만원이하", label: "2000만원~5000만원" },
     { value: "1억원이하", label: "5000만원~1억원" },
     { value: "1억원이상", label: "1억원이상" },
+    { value: "알수없음", label: "알수없음" },
   ];
 
   const scheduleOptions: OptionType[] = [
     { value: "1개월내", label: "시급해요!(1개월내)" },
     { value: "3개월내", label: "1개월~3개월" },
     { value: "3개월이상", label: "3개월이상" },
+    { value: "알수없음", label: "알수없음" },
   ];
 
   const knowPlatformOptions: OptionType[] = [
@@ -66,7 +68,7 @@ export default () => {
     { value: "대표전화(HP)", label: "대표전화(HP)" },
     { value: "블로그(전화)", label: "블로그(전화)" },
     { value: "블로그(문자)", label: "블로그(문자)" },
-    { value: "이메일", label: "이메일" },
+    { value: "대표메일", label: "대표메일" },
     { value: "카카오톡", label: "카카오톡" },
     { value: "카카오톡(채널)", label: "카카오톡(채널)" },
     { value: "인스타(전화)", label: "인스타(전화)" },
@@ -78,15 +80,19 @@ export default () => {
   ];
 
   const meterialOptions: OptionType[] = [
-    { value: "FRP", label: "FRP" },
-    { value: "스리로폼", label: "스티로폼" },
+    { value: "EPS", label: "EPS" },
     { value: "목재", label: "목재" },
+    { value: "FRP", label: "FRP" },
     { value: "금속", label: "금속" },
     { value: "3D프린팅", label: "3D프린팅" },
-    { value: "복합소재", label: "복합소재" },
     { value: "패브릭", label: "패브릭" },
     { value: "에어", label: "에어" },
-    { value: "미정", label: "미정" },
+    { value: "ALC", label: "ALC" },
+    { value: "폼보드", label: "폼보드" },
+    { value: "포맥스", label: "포맥스" },
+    { value: "종이", label: "종이" },
+    { value: "레진", label: "레진" },
+    { value: "디자인", label: "디자인" },
     { value: "기타", label: "기타" },
   ];
 

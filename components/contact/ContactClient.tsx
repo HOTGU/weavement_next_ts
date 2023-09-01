@@ -8,7 +8,7 @@ import { toast } from "react-hot-toast";
 import ContactCreateForm from "../forms/ContactCreateForm";
 import Container from "../Container";
 import Select from "../inputs/Select";
-import getSelectOptions from "@/actions/getSelectOptions";
+import getSelectOptions, { OptionType } from "@/actions/getSelectOptions";
 import Input from "../inputs/Input";
 import Textarea from "../inputs/Textarea";
 import { useRouter } from "next/navigation";
@@ -146,6 +146,12 @@ const ContactClient = () => {
     title: "환영합니다",
     subtitle: "아래항목을 체크해주세요",
   };
+
+  // 알 수 없음 목록에서 삭제
+
+  costOptions.splice(costOptions.length - 1, 1);
+  scheduleOptions.splice(scheduleOptions.length - 1, 1);
+
   let content = (
     <div className="flex flex-col gap-5">
       <Select

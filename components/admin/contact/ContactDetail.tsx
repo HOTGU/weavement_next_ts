@@ -3,8 +3,6 @@
 import React, { useState } from "react";
 import { format } from "date-fns";
 import DOMpurify from "dompurify";
-import { BsFillImageFill } from "react-icons/bs";
-import { ImFolderUpload } from "react-icons/im";
 
 import useCurrentContact from "@/hooks/useCurrentContact";
 import useUpdateModal from "@/hooks/useUpdateModal";
@@ -48,7 +46,7 @@ const Item = ({
             {item ? (
               format(new Date(item), "MM월dd일 hh시mm분")
             ) : (
-              <span className="text-gray-600 font-light">안정해짐</span>
+              <span className="text-gray-600 font-light">알수없음</span>
             )}
           </>
         ) : (
@@ -125,17 +123,17 @@ const ContactDetail = () => {
               </span>
               {current.images.length > 0 ? (
                 <div
-                  className="hover:text-accent transition cursor-pointer"
+                  className="text-xs cursor-pointer hover:opacity-70 transition bg-neutral-200 px-2 py-1 rounded"
                   onClick={() => setShowImage(true)}
                 >
-                  <BsFillImageFill />
+                  📂파일보기
                 </div>
               ) : (
                 <div
-                  className="hover:text-accent transition cursor-pointer"
+                  className="text-xs cursor-pointer hover:opacity-70 transition bg-neutral-200 px-2 py-1 rounded"
                   onClick={() => fileModal.onOpen()}
                 >
-                  <ImFolderUpload />
+                  📁파일업로드
                 </div>
               )}
             </div>
