@@ -27,11 +27,12 @@ const ContactCreateForm = ({
   headingContent,
 }: ContactCreateFormProps) => {
   return (
-    <div className=" w-full md:w-3/5 lg:w-1/2 xl:w-2/5 mx-auto rounded flex flex-col border border-zinc-200 min-h-[75vh]">
+    <div className=" mx-auto rounded flex flex-col border border-zinc-200 min-h-[75vh]">
       <div className="p-4">
         <Heading
           title={headingContent.title}
           subtitle={headingContent.subtitle}
+          small
         />
       </div>
       <hr />

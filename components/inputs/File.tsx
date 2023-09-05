@@ -1,12 +1,6 @@
 "use client";
 
-import React, {
-  Dispatch,
-  SetStateAction,
-  useRef,
-  useState,
-  useEffect,
-} from "react";
+import React, { Dispatch, SetStateAction, useRef, useState } from "react";
 import { HiXMark } from "react-icons/hi2";
 
 import compressFiles from "@/actions/compressFiles";
@@ -20,6 +14,7 @@ interface FileProps {
   compressWidth?: number;
   onlyOne?: boolean;
   hiddenFiles?: boolean;
+  showInfo?: boolean;
   disabled?: boolean;
 }
 
@@ -31,6 +26,7 @@ const File = ({
   compressWidth = 960,
   onlyOne = false,
   hiddenFiles,
+  showInfo,
   disabled,
 }: FileProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -99,6 +95,11 @@ const File = ({
       >
         {loading ? <BarLoader /> : label}
       </div>
+      {showInfo && (
+        <span className="text-xs text-neutral-500">
+          ⚠️이미지 확장자(jpg, png, webp 등)만 가능합니다
+        </span>
+      )}
       {files.length > 0 && !hiddenFiles && (
         <div className="flex flex-wrap gap-2 pt-4">
           {files.map((file, index) => (

@@ -150,7 +150,13 @@ const ContactDetail = () => {
                 }}
                 className="w-full cursor-pointer hover:underline"
               >
-                <Item label="문의노트" item={current.description} column full />
+                <Item
+                  label="문의노트"
+                  item={current.description}
+                  column
+                  full
+                  isNote
+                />
               </div>
             </div>
           </div>

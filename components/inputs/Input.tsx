@@ -62,11 +62,12 @@ const Input: React.FC<InputProps> = ({
             ? "border-rose-300 focus:border-rose-500"
             : " border-neutral-300 focus:border-black"
         }`}
+        autoComplete="off"
       />
       <label
         htmlFor={name}
         onClick={() => inputRef.current?.focus()}
-        className={`absolute text-md duration-150 transform top-0 -translate-y-1/2 scale-75 z-[0] bg-white origin-[0] left-5 hover:cursor-text peer-placeholder-shown:scale-100 peer-placeholder-shown:top-4 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:top-0 peer-focus:-translate-y-1/2 peer-focus:bg-white ${
+        className={`absolute text-md duration-150 px-1 transform top-0 -translate-y-1/2 scale-75 z-[0] bg-white origin-[0] left-5 hover:cursor-text peer-placeholder-shown:scale-100 peer-placeholder-shown:top-4 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:top-0 peer-focus:-translate-y-1/2 peer-focus:bg-white ${
           errors[name] ? "text-rose-500" : "text-zinc-400 peer-focus:text-black"
         }`}
       >

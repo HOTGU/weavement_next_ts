@@ -213,11 +213,10 @@ const CreateModal = () => {
   if (step === STEPS.DESC) {
     bodyContent = (
       <div className="flex flex-col gap-4">
-        <Textarea
-          control={control}
-          errors={errors}
+        <Tiptap
           label="문의노트"
           name="description"
+          control={control}
           disabled={isLoading}
         />
       </div>
@@ -314,7 +313,7 @@ const CreateModal = () => {
   }
 
   if (step === STEPS.NOTE) {
-    bodyContent = <Tiptap name="note" control={control} />;
+    bodyContent = <Tiptap label="상담노트" name="note" control={control} />;
   }
 
   return (

@@ -4,11 +4,12 @@ import React, { useEffect, useMemo, useState } from "react";
 import axios from "axios";
 import { useForm, SubmitHandler, FieldValues } from "react-hook-form";
 import { toast } from "react-hot-toast";
+import { FaCheck } from "react-icons/fa";
 
 import ContactCreateForm from "../forms/ContactCreateForm";
 import Container from "../Container";
 import Select from "../inputs/Select";
-import getSelectOptions, { OptionType } from "@/actions/getSelectOptions";
+import getSelectOptions from "@/actions/getSelectOptions";
 import Input from "../inputs/Input";
 import Textarea from "../inputs/Textarea";
 import { useRouter } from "next/navigation";
@@ -18,9 +19,8 @@ import RacingFont from "../RacingFont";
 enum STEPS {
   INFO = 0,
   DESC = 1,
-  FILE = 2,
-  CLIENT = 3,
-  ACCEPT = 4,
+  CLIENT = 2,
+  ACCEPT = 3,
 }
 
 export const contactDefaultValues = {
@@ -91,7 +91,7 @@ const ContactClient = () => {
     }
 
     setIsLoading(true);
-    const loadingToast = toast.loading("문의생성중..");
+    const loadingToast = toast.loading("문의중..");
 
     if (files.length > 0) {
       const fd = new FormData();
@@ -144,13 +144,14 @@ const ContactClient = () => {
 
   let headingContent = {
     title: "환영합니다",
-    subtitle: "아래항목을 체크해주세요",
+    subtitle: "아래항목을 체크해주세요!",
   };
 
   // 알 수 없음 목록에서 삭제
 
   costOptions.splice(costOptions.length - 1, 1);
   scheduleOptions.splice(scheduleOptions.length - 1, 1);
+  knowPlatformOptions.splice(knowPlatformOptions.length - 1, 1);
 
   let content = (
     <div className="flex flex-col gap-5">
@@ -196,7 +197,7 @@ const ContactClient = () => {
   if (step === STEPS.DESC) {
     headingContent = {
       title: "문의내용",
-      subtitle: "문의내용은 상세할수록 좋습니다",
+      subtitle: "규격, 납기일, 컨텐츠, 희망 소재, 파일 등 상세히 기입해주세요!",
     };
     content = (
       <div className="flex flex-col gap-5">
@@ -207,25 +208,20 @@ const ContactClient = () => {
           label="본문내용 *"
           required
         />
-      </div>
-    );
-  }
-
-  if (step === STEPS.FILE) {
-    headingContent = {
-      title: "사진 업로드",
-      subtitle: "참고할 디자인,도면,사진을 올려주세요",
-    };
-    content = (
-      <div>
-        <File files={files} setFiles={setFiles} />
+        <File
+          label="사진(선택)"
+          files={files}
+          setFiles={setFiles}
+          compressWidth={1480}
+          showInfo
+        />
       </div>
     );
   }
 
   if (step === STEPS.CLIENT) {
     headingContent = {
-      title: "개인정보",
+      title: "문의자정보",
       subtitle: "아래정보로 회신드리겠습니다!",
     };
     content = (
@@ -275,8 +271,8 @@ const ContactClient = () => {
 
   if (step === STEPS.ACCEPT) {
     headingContent = {
-      title: "마지막단계입니다",
-      subtitle: "문의해주셔서 감사합니다",
+      title: "개인정보동의",
+      subtitle: "문의해주셔서 감사합니다!",
     };
     content = (
       <div className="flex flex-col gap-5">
@@ -327,15 +323,53 @@ const ContactClient = () => {
             편안한 마음으로 문의해주세요!
           </div>
         </div>
-        <ContactCreateForm
-          disabled={isLoading}
-          content={content}
-          headingContent={headingContent}
-          actionLabel={actionLabel}
-          onSubmit={handleSubmit(onSubmit)}
-          secondaryActionLabel={secondaryActionLabel}
-          secondaryAction={step === STEPS.INFO ? undefined : onBack}
-        />
+        <div className="w-full md:w-1/2 lg:w-1/2 xl:w-2/5 ">
+          <div className="flex justify-around items-center mb-2 font-bold">
+            <div
+              className={`w-10 h-10 flex items-center justify-center rounded-full border ${
+                step === STEPS.INFO
+                  ? "bg-accent text-white"
+                  : "bg-accent/70 text-white"
+              }`}
+            >
+              {step === STEPS.INFO ? "1" : <FaCheck />}
+            </div>
+            <div
+              className={`w-10 h-10 flex items-center justify-center rounded-full border ${
+                step === STEPS.DESC
+                  ? "bg-accent text-white"
+                  : step > STEPS.DESC && "bg-accent/70 text-white"
+              }`}
+            >
+              {step > STEPS.DESC ? <FaCheck /> : "2"}
+            </div>
+            <div
+              className={`w-10 h-10 flex items-center justify-center rounded-full border ${
+                step === STEPS.CLIENT
+                  ? "bg-accent text-white"
+                  : step > STEPS.CLIENT && "bg-accent/70 text-white"
+              }`}
+            >
+              {step > STEPS.CLIENT ? <FaCheck /> : "3"}
+            </div>
+            <div
+              className={`w-10 h-10 flex items-center justify-center rounded-full border ${
+                step === STEPS.ACCEPT ? "bg-accent text-white" : ""
+              }`}
+            >
+              4
+            </div>
+          </div>
+          <ContactCreateForm
+            disabled={isLoading}
+            content={content}
+            headingContent={headingContent}
+            actionLabel={actionLabel}
+            onSubmit={handleSubmit(onSubmit)}
+            secondaryActionLabel={secondaryActionLabel}
+            secondaryAction={step === STEPS.INFO ? undefined : onBack}
+          />
+        </div>
       </div>
     </Container>
   );

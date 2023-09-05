@@ -158,11 +158,17 @@ const UpdateModal = () => {
 
   if (updateModal.step === "DESC") {
     bodyContent = (
-      <Textarea
-        control={control}
-        errors={errors}
+      // <Textarea
+      //   control={control}
+      //   errors={errors}
+      //   name="description"
+      //   label="문의노트"
+      //   disabled={isLoading}
+      // />
+      <Tiptap
         name="description"
         label="문의노트"
+        control={control}
         disabled={isLoading}
       />
     );
@@ -233,7 +239,14 @@ const UpdateModal = () => {
   }
 
   if (updateModal.step === "NOTE") {
-    bodyContent = <Tiptap name="note" control={control} disabled={isLoading} />;
+    bodyContent = (
+      <Tiptap
+        label="상담노트"
+        name="note"
+        control={control}
+        disabled={isLoading}
+      />
+    );
   }
 
   return (

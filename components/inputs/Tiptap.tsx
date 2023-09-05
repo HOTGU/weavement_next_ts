@@ -12,11 +12,12 @@ import StarterKit from "@tiptap/starter-kit";
 
 interface TiptapProps {
   name: string;
+  label: string;
   disabled?: boolean;
   control: Control<FieldValues>;
 }
 
-const Tiptap = ({ name, control, disabled }: TiptapProps) => {
+const Tiptap = ({ name, label, control, disabled }: TiptapProps) => {
   const { field } = useController({ name, control });
 
   const editor = useEditor({
@@ -29,13 +30,16 @@ const Tiptap = ({ name, control, disabled }: TiptapProps) => {
     editorProps: {
       attributes: {
         class:
-          "p-4 pt-0 border border-neutral-300 h-64 overflow-y-auto border-t-0 rounded-b",
+          "peer p-4 pt-0 border border-neutral-300 h-64 overflow-y-auto border-t-0 rounded-b outline-none",
       },
     },
   });
 
   return (
     <div className="relative">
+      <div className="absolute top-0 -translate-y-1/2 scale-75 left-5 bg-white text-zinc-400 origin-[0] px-1 ">
+        {label}
+      </div>
       <div className="flex items-center gap-2 p-4 border border-neutral-300 border-b-0 rounded-t">
         <span
           onClick={() => editor?.chain().focus().toggleBulletList().run()}
