@@ -170,7 +170,7 @@ const PortfolioUpload = () => {
               <div className="relative" key={preview}>
                 <img
                   src={preview}
-                  className="mb-4"
+                  className="mb-4 rounded"
                   onLoad={() => URL.revokeObjectURL(preview)}
                 />
                 <div

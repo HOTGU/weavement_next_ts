@@ -15,7 +15,7 @@ const ContactPage = async ({ searchParams }: AdminProps) => {
   return (
     <Container>
       <div className="flex gap-4 sm:gap-8 flex-col sm:flex-row">
-        <div className="w-full sm:w-fit flex flex-row sm:flex-col gap-4 h-auto sm:h-[calc(100vh-126px)] overflow-x-auto sm:overflow-y-auto pr-4 py-2">
+        <div className="w-full sm:w-fit flex flex-row sm:flex-col gap-2 h-auto sm:h-[calc(100vh-126px)] overflow-x-auto sm:overflow-y-auto pr-4 py-2">
           {contacts.map((contact) => (
             <ContactBlock contact={contact} key={contact.id} />
           ))}

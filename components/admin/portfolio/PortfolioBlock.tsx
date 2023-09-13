@@ -27,7 +27,7 @@ const PortfolioBlock = ({ portfolio }: PortfolioBlockProps) => {
       <Link
         href={`/portfolio/${portfolio.id}`}
         target="_blank"
-        className="text-xl font-bold flex-1 hover:underline "
+        className="text-xl font-bold flex-1 hover:underline truncate"
       >
         {portfolio.title}
       </Link>

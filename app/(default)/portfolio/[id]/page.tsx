@@ -63,7 +63,7 @@ const page = async ({ params }: { params: IParams }) => {
 
   return (
     <Container>
-      <div className="py-16">
+      <div className="py-8">
         <div className=" flex flex-col items-center gap-6 md:gap-8 lg:gap-10 xl:gap-24 py-2 sm:py-4 md:py-6 lg:py-8 xl:py-10">
           <div className="w-full aspect-video relative">
             <Image

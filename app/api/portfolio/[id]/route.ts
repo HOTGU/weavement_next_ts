@@ -24,6 +24,9 @@ export async function PUT(request: Request, { params }: { params: IParams }) {
     const title = data.get("title") as string;
     const isRep = data.get("isRep");
     const description = data.get("description") as string;
+    const metaTitle = data.get("metaTitle") as string;
+    const metaDescription = data.get("metaDescription") as string;
+    const metaKeywords = data.get("metaKeywords") as string;
 
     data.forEach((value, key) => {
       if (key === "oldImages") {
@@ -64,6 +67,9 @@ export async function PUT(request: Request, { params }: { params: IParams }) {
         isRep: isRep ? true : false,
         thumb: thumbLocation,
         images: imagesLocation,
+        metaTitle,
+        metaDescription,
+        metaKeywords,
       },
     });
 

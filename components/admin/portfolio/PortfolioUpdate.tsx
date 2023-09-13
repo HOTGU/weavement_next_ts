@@ -13,6 +13,7 @@ import Button from "@/components/Button";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import getTotalFileSize from "@/utils/getTotalFileSize";
 
 const PortfolioUpdate = () => {
   const updatePortfolio = useUpdatePortfolio();
@@ -24,8 +25,14 @@ const PortfolioUpdate = () => {
   const [oldFiles, setOldFiles] = useState<string[]>(
     updatePortfolio.target?.images || []
   );
+
   const [thumb, setThumb] = useState<File[]>([]);
+  const [previewThumb, setPreviewThumb] = useState<string[]>([]);
+  const [thumbSize, setThumbSize] = useState<number>(0);
   const [files, setFiles] = useState<File[]>([]);
+  const [previewFiles, setPreviewFiles] = useState<string[]>([]);
+  const [filesSize, setFilesSize] = useState<number>(0);
+
   const [isRep, setIsRep] = useState("");
   const {
     reset,
@@ -37,6 +44,9 @@ const PortfolioUpdate = () => {
     defaultValues: {
       title: updatePortfolio.target?.title,
       description: updatePortfolio.target?.description,
+      metaTitle: updatePortfolio.target?.metaTitle,
+      metaDescription: updatePortfolio.target?.metaDescription,
+      metaKeywords: updatePortfolio.target?.metaKeywords,
     },
   });
 
@@ -47,6 +57,9 @@ const PortfolioUpdate = () => {
       reset({
         title: updatePortfolio.target?.title,
         description: updatePortfolio.target?.description,
+        metaTitle: updatePortfolio.target?.metaTitle,
+        metaDescription: updatePortfolio.target?.metaDescription,
+        metaKeywords: updatePortfolio.target?.metaKeywords,
       });
       setThumb([]);
       setFiles([]);
@@ -56,6 +69,28 @@ const PortfolioUpdate = () => {
 
   const title = watch("title");
   const description = watch("description");
+
+  useEffect(() => {
+    let previewArr = [];
+    for (let i = 0; i < thumb.length; i++) {
+      const preview = URL.createObjectURL(thumb[i]);
+      previewArr.push(preview);
+    }
+    const thumbMbSize = getTotalFileSize(thumb);
+    setThumbSize(thumbMbSize);
+    setPreviewThumb(previewArr);
+  }, [thumb]);
+
+  useEffect(() => {
+    let previewArr = [];
+    for (let i = 0; i < files.length; i++) {
+      const preview = URL.createObjectURL(files[i]);
+      previewArr.push(preview);
+    }
+    const filesMbSize = getTotalFileSize(files);
+    setFilesSize(filesMbSize);
+    setPreviewFiles(previewArr);
+  }, [files]);
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     if (updatePortfolio.target) {
@@ -82,6 +117,9 @@ const PortfolioUpdate = () => {
       fd.append("title", data.title);
       fd.append("description", data.description);
       fd.append("isRep", isRep);
+      fd.append("metaTitle", data.metaTitle);
+      fd.append("metaDescription", data.metaDescription);
+      fd.append("metaKeywords", data.metaKeywords);
 
       axios
         .put(`/api/portfolio/${updatePortfolio.target.id}`, fd)
@@ -117,13 +155,28 @@ const PortfolioUpdate = () => {
   return (
     <div className="flex gap-6 h-[calc(100vh-50px)] p-6 overflow-y-auto relative">
       <div className="w-2/3 h-fit flex flex-col gap-4 items-center">
+        <div className="flex flex-col items-center">
+          {thumbSize + filesSize > 4 && (
+            <div className="text-xs text-rose-500">
+              사진이 4MB를 초과했습니다.
+            </div>
+          )}
+          <span className="text-xs">
+            {(thumbSize + filesSize).toFixed(2)}MB / 4MB (썸네일: {thumbSize}MB
+            하위사진:
+            {filesSize}MB )
+          </span>
+        </div>
         <div className="relative w-full aspect-video">
-          {thumb[0] ? (
+          {previewThumb[0] ? (
             <>
               <Image
                 objectFit="cover"
                 layout="fill"
-                src={URL.createObjectURL(thumb[0])}
+                src={previewThumb[0]}
+                onLoad={() => {
+                  URL.revokeObjectURL(previewThumb[0]);
+                }}
                 className="rounded-md"
               />
               <div
@@ -157,7 +210,7 @@ const PortfolioUpdate = () => {
             <>
               {oldFiles.map((image, index) => (
                 <div className="relative" key={image}>
-                  <img src={image} className="mb-4" />
+                  <img src={image} className="mb-4 rounded" />
                   <div
                     onClick={() => deleteOldFile(index)}
                     className="absolute top-1 right-1 text-rose-500 bg-white/70 rounded-full cursor-pointer"
@@ -168,9 +221,16 @@ const PortfolioUpdate = () => {
               ))}
             </>
           )}
-          {files.map((file, index) => (
-            <div className="relative" key={file.size}>
-              <img src={URL.createObjectURL(file)} className="mb-4" />
+
+          {previewFiles.map((preview, index) => (
+            <div className="relative" key={preview}>
+              <img
+                src={preview}
+                className="mb-4 rounded"
+                onLoad={() => {
+                  URL.revokeObjectURL(preview);
+                }}
+              />
               <div
                 onClick={() => deleteFile(index)}
                 className="absolute top-1 right-1 text-rose-500 bg-white/70 rounded-full cursor-pointer"
@@ -234,6 +294,30 @@ const PortfolioUpdate = () => {
           />
           메인페이지 등록
         </label>
+        <Input
+          control={control}
+          errors={errors}
+          required
+          name="metaTitle"
+          label="SEO제목"
+          disabled={loading}
+        />
+        <Textarea
+          control={control}
+          errors={errors}
+          required
+          name="metaDescription"
+          label="SEO본문"
+          disabled={loading}
+        />
+        <Input
+          control={control}
+          errors={errors}
+          required
+          name="metaKeywords"
+          label="SEO키워드"
+          disabled={loading}
+        />
         <Button
           label="포트폴리오 수정"
           disabled={loading}
