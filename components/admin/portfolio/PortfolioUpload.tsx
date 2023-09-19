@@ -192,7 +192,7 @@ const PortfolioUpload = () => {
             files={thumb}
             setFiles={setThumb}
             label="대표사진선택"
-            compressWidth={2560}
+            // compressWidth={2560} //대표사진은 노압축이 화질이 좋음
             hiddenFiles
             disabled={loading}
             onlyOne

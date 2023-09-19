@@ -23,7 +23,7 @@ const File = ({
   setFiles,
   multiple,
   label = "사진선택",
-  compressWidth = 960,
+  compressWidth,
   onlyOne = false,
   hiddenFiles,
   showInfo,
@@ -47,11 +47,15 @@ const File = ({
 
     for (let i = 0; i < inputFiles.length; i++) {
       if (!filesNameArr.includes(inputFiles[i].name)) {
-        const compressedFile = await compressFiles(
-          inputFiles[i],
-          compressWidth
-        );
-        compressedFiles.push(compressedFile);
+        if (compressWidth) {
+          const compressedFile = await compressFiles(
+            inputFiles[i],
+            compressWidth
+          );
+          compressedFiles.push(compressedFile);
+        } else {
+          compressedFiles.push(inputFiles[i]);
+        }
       }
     }
 
