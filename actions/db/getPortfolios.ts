@@ -25,6 +25,8 @@ export default async ({ isRep = false, page }: IPortfolioParams) => {
 
     const PAGE = Math.ceil(allPortfolios / TAKE);
 
+    portfolios.reverse(); // 최신순 order by
+
     return { portfolios, allPage: PAGE };
   } catch (error: any) {
     if (process.env.NODE_ENV === "development") {
