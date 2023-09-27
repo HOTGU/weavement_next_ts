@@ -67,4 +67,5 @@ model Portfolio {
   metaTitle       String?
   metaDescription String?
   metaKeywords    String[]
+  createdAt       DateTime @default(now())
 }

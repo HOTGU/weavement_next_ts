@@ -21,11 +21,10 @@ export default async ({ isRep = false, page }: IPortfolioParams) => {
       where: query,
       take: TAKE,
       skip: SKIP,
+      orderBy: { createdAt: "desc" },
     });
 
     const PAGE = Math.ceil(allPortfolios / TAKE);
-
-    portfolios.reverse(); // 최신순 order by
 
     return { portfolios, allPage: PAGE };
   } catch (error: any) {
