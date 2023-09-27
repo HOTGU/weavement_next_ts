@@ -103,6 +103,7 @@ const CreateModal = () => {
         createModal.onClose();
         router.refresh();
         setStep(STEPS.INFO);
+        setFiles([]);
         reset();
       })
       .catch((error: any) => toast.error("문의생성 실패", { id: loadingToast }))

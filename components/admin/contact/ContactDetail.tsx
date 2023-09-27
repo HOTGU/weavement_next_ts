@@ -40,7 +40,7 @@ const Item = ({
       onClick={onClick}
     >
       <span className="text-neutral-400">{label}</span>
-      <span className=" whitespace-pre-wrap">
+      <span className=" whitespace-pre-line">
         {isDate ? (
           <>
             {item ? (
@@ -53,9 +53,9 @@ const Item = ({
           <>
             {item ? (
               isNote ? (
-                <span
+                <div
                   dangerouslySetInnerHTML={{ __html: DOMpurify.sanitize(item) }}
-                ></span>
+                ></div>
               ) : (
                 item
               )

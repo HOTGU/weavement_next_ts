@@ -20,8 +20,17 @@ interface TiptapProps {
 const Tiptap = ({ name, label, control, disabled }: TiptapProps) => {
   const { field } = useController({ name, control });
 
+  const CustomStarterKit = StarterKit.configure({
+    // ...
+    paragraph: {
+      HTMLAttributes: {
+        class: "min-h-[1rem]",
+      },
+    },
+  });
+
   const editor = useEditor({
-    extensions: [StarterKit],
+    extensions: [CustomStarterKit],
     content: field.value,
     onUpdate({ editor }) {
       const value = editor.getHTML();

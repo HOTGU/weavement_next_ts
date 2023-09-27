@@ -66,6 +66,7 @@ export default () => {
   const contactPathOptions: OptionType[] = [
     { value: "홈페이지", label: "홈페이지" },
     { value: "대표전화(HP)", label: "대표전화(HP)" },
+    { value: "대표문자(HP)", label: "대표문자(HP)" },
     { value: "블로그(전화)", label: "블로그(전화)" },
     { value: "블로그(문자)", label: "블로그(문자)" },
     { value: "대표메일", label: "대표메일" },
