@@ -14,6 +14,12 @@ export default async function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <meta
+          name="google-site-verification"
+          content="nttY9KvKnF19jp-g2LLo0bbUYN7HOUMLEeDJGlpHE74"
+        />
+      </head>
       <body className={`${pretendard.className} bgColor`}>
         <Toaster />
         {children}
