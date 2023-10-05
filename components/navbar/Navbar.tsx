@@ -52,6 +52,7 @@ const Navbar = ({ currentUser }: CurrentUserProps) => {
             <Link
               href="/"
               className={`flex items-center h-full ${!isHome && "w-full"}`}
+              passHref
             >
               <Logo
                 src={

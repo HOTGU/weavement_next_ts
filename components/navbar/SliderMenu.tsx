@@ -18,6 +18,7 @@ const SliderMenu = () => {
               className={`h-full flex items-center py-3 ${
                 pathname === "/contact" && "text-accent "
               }`}
+              passHref
             >
               문의하기
             </Link>
@@ -26,6 +27,7 @@ const SliderMenu = () => {
               className={`h-full flex items-center py-3 ${
                 pathname === "/portfolio" && "text-accent"
               }`}
+              passHref
             >
               포트폴리오
             </Link>

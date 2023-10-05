@@ -3,15 +3,15 @@ import prisma from "@/libs/prismadb";
 export interface IPortfolioParams {
   isRep?: boolean;
   page?: number;
+  take?: number;
 }
 
-export default async ({ isRep = false, page }: IPortfolioParams) => {
+export default async ({ isRep = false, page, take = 10 }: IPortfolioParams) => {
   try {
-    const TAKE = 8;
-    let SKIP = 0;
+    let skip = 0;
     const query: any = {};
     if (page) {
-      SKIP = TAKE * (page - 1);
+      skip = take * (page - 1);
     }
     if (isRep) {
       query.isRep = true;
@@ -19,12 +19,12 @@ export default async ({ isRep = false, page }: IPortfolioParams) => {
     const allPortfolios = await prisma.portfolio.count();
     const portfolios = await prisma.portfolio.findMany({
       where: query,
-      take: TAKE,
-      skip: SKIP,
+      take,
+      skip,
       orderBy: { createdAt: "desc" },
     });
 
-    const PAGE = Math.ceil(allPortfolios / TAKE);
+    const PAGE = Math.ceil(allPortfolios / take);
 
     return { portfolios, allPage: PAGE };
   } catch (error: any) {

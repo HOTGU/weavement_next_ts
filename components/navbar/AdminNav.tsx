@@ -1,5 +1,3 @@
-"use client";
-
 import React from "react";
 import { CurrentUserProps } from "@/types";
 import { signOut } from "next-auth/react";
@@ -7,6 +5,7 @@ import { signOut } from "next-auth/react";
 import Container from "../Container";
 import Link from "next/link";
 import RacingFont from "../RacingFont";
+import AdminMenu from "./AdminMenu";
 
 const AdminNav = ({ currentUser }: CurrentUserProps) => {
   return (
@@ -16,18 +15,14 @@ const AdminNav = ({ currentUser }: CurrentUserProps) => {
           <div className="flex items-center justify-between h-full">
             <div className=" font-racing flex items-end">
               <RacingFont>
-                <Link href="/">
+                <Link href="/" passHref>
                   <span className="text-4xl text-accent">WM</span>
                 </Link>
                 <span className="text-sm">Admin</span>
               </RacingFont>
             </div>
             <div className="flex gap-4">
-              <Link href="/admin/contact">문의</Link>
-              <Link href="/admin/portfolio">포트폴리오</Link>
-              <div onClick={() => signOut()} className=" cursor-pointer">
-                로그아웃
-              </div>
+              <AdminMenu />
             </div>
           </div>
         </Container>

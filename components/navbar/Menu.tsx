@@ -17,6 +17,7 @@ const Menu = () => {
           className={`h-full flex items-center ${
             pathname === "/contact" && "text-accent "
           }`}
+          passHref
         >
           문의하기
         </Link>
@@ -25,10 +26,11 @@ const Menu = () => {
           className={`h-full flex items-center ${
             pathname === "/portfolio" && "text-accent"
           }`}
+          passHref
         >
           포트폴리오
         </Link>
-        <Link href="/" className="h-full flex items-center">
+        <Link href="/" className="h-full flex items-center" passHref>
           전문가 칼럼
         </Link>
       </ul>

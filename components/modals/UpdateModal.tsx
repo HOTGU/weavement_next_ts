@@ -35,6 +35,7 @@ const UpdateModal = () => {
   });
 
   const deadline = watch("deadline");
+  const createdAt = watch("createdAt");
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     setIsLoading(true);
@@ -74,6 +75,13 @@ const UpdateModal = () => {
   if (updateModal.step === "INFO") {
     bodyContent = (
       <div className="flex flex-col gap-4 py-2">
+        <Calendar
+          value={createdAt ? new Date(createdAt) : undefined}
+          onChange={(date) => setValue("createdAt", date)}
+          placeholder="문의시각"
+          disabled={isLoading}
+          showTime
+        />
         <div className="flex flex-col sm:flex-row gap-4">
           <Input
             control={control}
@@ -158,13 +166,6 @@ const UpdateModal = () => {
 
   if (updateModal.step === "DESC") {
     bodyContent = (
-      // <Textarea
-      //   control={control}
-      //   errors={errors}
-      //   name="description"
-      //   label="문의노트"
-      //   disabled={isLoading}
-      // />
       <Tiptap
         name="description"
         label="문의노트"
