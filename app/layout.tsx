@@ -21,7 +21,7 @@ export default async function RootLayout({
         />
         <meta
           name="naver-site-verification"
-          content="29eb30f0c079373b21f2db64368078076cce4c86"
+          content="e0cdc465ab3662b580c637f908b0f730cd900dba"
         />
       </head>
       <body className={`${pretendard.className} bgColor`}>
