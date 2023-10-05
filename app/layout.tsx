@@ -19,6 +19,10 @@ export default async function RootLayout({
           name="google-site-verification"
           content="nttY9KvKnF19jp-g2LLo0bbUYN7HOUMLEeDJGlpHE74"
         />
+        <meta
+          name="naver-site-verification"
+          content="29eb30f0c079373b21f2db64368078076cce4c86"
+        />
       </head>
       <body className={`${pretendard.className} bgColor`}>
         <Toaster />
