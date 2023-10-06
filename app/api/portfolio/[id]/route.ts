@@ -10,12 +10,26 @@ interface IParams {
 export async function PUT(request: Request, { params }: { params: IParams }) {
   try {
     const currentUser = await getCurrentUser();
-    if (!currentUser) return NextResponse.error();
-    if (!currentUser.isAdmin) return NextResponse.error();
+
+    if (!currentUser)
+      return NextResponse.json(
+        { message: "인증되지 않은 경로입니다" },
+        { status: 401 }
+      );
+
+    if (!currentUser.isAdmin)
+      return NextResponse.json(
+        { message: "인증되지 않은 경로입니다" },
+        { status: 401 }
+      );
 
     const { id } = params;
 
-    if (!id || typeof id !== "string") return new Error("Invalid ID");
+    if (!id || typeof id !== "string")
+      return NextResponse.json(
+        { message: "인증되지 않은 경로입니다" },
+        { status: 401 }
+      );
 
     const data = await request.formData();
     const images = new Array();
@@ -73,12 +87,12 @@ export async function PUT(request: Request, { params }: { params: IParams }) {
       },
     });
 
-    return NextResponse.json(portfolio);
+    return NextResponse.json(portfolio, { status: 200 });
   } catch (error) {
     if (process.env.NODE_ENV === "development") {
       console.log(error);
     }
-    return new NextResponse("서버 오류발생", { status: 500 });
+    return NextResponse.json("서버 오류발생", { status: 500 });
   }
 }
 
@@ -88,20 +102,34 @@ export async function DELETE(
 ) {
   try {
     const currentUser = await getCurrentUser();
-    if (!currentUser) return NextResponse.error();
-    if (!currentUser.isAdmin) return NextResponse.error();
+
+    if (!currentUser)
+      return NextResponse.json(
+        { message: "인증되지 않은 경로입니다" },
+        { status: 401 }
+      );
+
+    if (!currentUser.isAdmin)
+      return NextResponse.json(
+        { message: "인증되지 않은 경로입니다" },
+        { status: 401 }
+      );
 
     const { id } = params;
 
-    if (!id || typeof id !== "string") return new Error("Invalid ID");
+    if (!id || typeof id !== "string")
+      return NextResponse.json(
+        { message: "인증되지 않은 경로입니다" },
+        { status: 401 }
+      );
 
     await prisma.portfolio.delete({ where: { id } });
 
-    return new NextResponse("삭제 성공", { status: 200 });
+    return NextResponse.json("삭제 성공", { status: 200 });
   } catch (error) {
     if (process.env.NODE_ENV === "development") {
       console.log(error);
     }
-    return new NextResponse("서버 오류발생", { status: 500 });
+    return NextResponse.json({ message: "서버 오류발생" }, { status: 500 });
   }
 }
