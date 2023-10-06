@@ -55,18 +55,18 @@ const SearchModal = () => {
       setValue("startDate", watchEndDate);
       setValue("endDate", watchStartDate);
     }
-  }, [watchStartDate, watchEndDate]);
+  }, [watchStartDate, watchEndDate, setValue]);
 
   const initFilter = useCallback(() => {
     searchModal.onClose();
     reset();
     router.push("/admin/contact");
-  }, [router, reset]);
+  }, [router, reset, searchModal]);
 
   const dateInit = useCallback(() => {
     setValue("startDate", null);
     setValue("endDate", null);
-  }, []);
+  }, [setValue]);
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     let currentQuery = {};

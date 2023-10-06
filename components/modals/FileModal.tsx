@@ -80,7 +80,7 @@ const FileModal = () => {
     if (current && current.images && current.images.length > 0) {
       setFilesStr(current?.images);
     }
-  }, [current]);
+  }, [current, reset]);
 
   if (!current) {
     return null;

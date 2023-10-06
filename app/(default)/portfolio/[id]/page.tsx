@@ -72,6 +72,7 @@ const page = async ({ params }: { params: IParams }) => {
               objectFit="cover"
               className="rounded-md"
               sizes="100vw"
+              alt="포트폴리오 썸네일"
             />
           </div>
           <div className="flex flex-col gap-2 md:gap-4 xl:gap-6 items-center justify-center">
@@ -84,7 +85,12 @@ const page = async ({ params }: { params: IParams }) => {
           </div>
           <div className="columns-2 lg:columns-3">
             {portfolio.images.map((image, index) => (
-              <img src={image} key={index} className="mb-6 rounded" />
+              <img
+                alt="포트폴리오 사진"
+                src={image}
+                key={index}
+                className="mb-6 rounded"
+              />
             ))}
           </div>
         </div>

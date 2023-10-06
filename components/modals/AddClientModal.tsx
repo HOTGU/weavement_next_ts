@@ -29,7 +29,7 @@ const AddClientModal = () => {
     if (currentContact.current) {
       setContactId(currentContact.current.id);
     }
-  }, [currentContact.current]);
+  }, [currentContact]);
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     const loadingToast = toast.loading("생성중..");

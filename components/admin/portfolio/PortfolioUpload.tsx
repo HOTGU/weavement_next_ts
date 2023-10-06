@@ -46,7 +46,7 @@ const PortfolioUpload = () => {
       metaDescription: "",
       metaKeywords: "",
     });
-  }, [router]);
+  }, [router, reset]);
 
   const title = watch("title");
   const description = watch("description");
@@ -142,6 +142,7 @@ const PortfolioUpload = () => {
               <Image
                 objectFit="cover"
                 layout="fill"
+                alt="포트폴리오 썸네일"
                 src={previewThumb[0]}
                 onLoad={() => {
                   URL.revokeObjectURL(previewThumb[0]);
@@ -170,6 +171,7 @@ const PortfolioUpload = () => {
               <div className="relative" key={preview}>
                 <img
                   src={preview}
+                  alt="포트폴리오 사진"
                   className="mb-4 rounded"
                   onLoad={() => URL.revokeObjectURL(preview)}
                 />

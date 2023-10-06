@@ -31,7 +31,7 @@ const DeleteClientConfirm = () => {
         toast.error("삭제 실패", { id: loadingToast });
       })
       .finally(() => setIsLoading(false));
-  }, [useConfirm]);
+  }, [useConfirm, currentContact, router]);
 
   return (
     <Confirm

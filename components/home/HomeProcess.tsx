@@ -56,7 +56,12 @@ const HomeProcess = () => {
             >
               <div className="absolute -top-[30px] lg:-top-[50px] w-[60px] lg:w-[100px] bg-accent rounded-full p-2 lg:p-4 aspect-square">
                 <div className="relative w-full h-full">
-                  <Image src={item.photo} layout="fill" objectFit="cover" />
+                  <Image
+                    alt={`${item.title} 이모티콘`}
+                    src={item.photo}
+                    layout="fill"
+                    objectFit="cover"
+                  />
                 </div>
               </div>
               <div className="font-semibold text-lg lg:text-xl mb-2 lg:mb-4 mt-2">

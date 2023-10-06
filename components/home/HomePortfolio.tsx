@@ -42,6 +42,7 @@ const HomePortfolio = ({ portfolios }: HomePortfolioProps) => {
               >
                 <Image
                   src={portfolio.thumb}
+                  alt="포트폴리오 썸네일"
                   layout="fill"
                   objectFit="cover"
                   className="rounded cursor-pointer hover:opacity-70 transition"

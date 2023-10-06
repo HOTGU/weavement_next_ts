@@ -22,7 +22,7 @@ const HomeScreen = ({ portfolios }: HomeScreenProps) => {
       setIndex((prev) => prev + 1);
     }, 3000);
     return () => clearInterval(interval);
-  }, [index]);
+  }, [index, portfolios.length]);
 
   return (
     <div className="w-full h-full overflow-hidden">
@@ -37,7 +37,12 @@ const HomeScreen = ({ portfolios }: HomeScreenProps) => {
             className="w-screen aspect-video max-h-[100vh] relative"
             key={i}
           >
-            <Image src={thumb} layout="fill" objectFit="cover" />
+            <Image
+              alt="포트폴리오 썸네일"
+              src={thumb}
+              layout="fill"
+              objectFit="cover"
+            />
           </motion.div>
         ))}
       </motion.div>

@@ -64,7 +64,7 @@ const UpdateModal = () => {
 
   useEffect(() => {
     reset(current);
-  }, [current]);
+  }, [current, reset]);
 
   if (!current) {
     return null;

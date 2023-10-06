@@ -9,7 +9,12 @@ const Footer = () => {
       <Container>
         <div className="py-12 ">
           <div className="hidden md:block">
-            <Image src="/red_logo.webp" width="80" height="51" />
+            <Image
+              alt="위브먼트로고"
+              src="/red_logo.webp"
+              width="80"
+              height="51"
+            />
           </div>
           <div className="flex flex-col-reverse md:flex-row justify-between items-center mt-0 md:mt-6 ">
             <div className="text-neutral-500 text-center md:text-start text-xs md:text-base">

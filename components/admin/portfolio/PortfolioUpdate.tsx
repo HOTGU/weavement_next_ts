@@ -65,7 +65,7 @@ const PortfolioUpdate = () => {
       setFiles([]);
       setIsRep(updatePortfolio.target.isRep ? "on" : "");
     }
-  }, [updatePortfolio.target]);
+  }, [updatePortfolio.target, reset]);
 
   const title = watch("title");
   const description = watch("description");
@@ -173,6 +173,7 @@ const PortfolioUpdate = () => {
               <Image
                 objectFit="cover"
                 layout="fill"
+                alt="포트폴리오 썸네일"
                 src={previewThumb[0]}
                 onLoad={() => {
                   URL.revokeObjectURL(previewThumb[0]);
@@ -192,6 +193,7 @@ const PortfolioUpdate = () => {
                 <>
                   <Image
                     objectFit="cover"
+                    alt="포트폴리오 썸네일"
                     layout="fill"
                     src={oldThumb}
                     className="rounded-md"
@@ -210,7 +212,11 @@ const PortfolioUpdate = () => {
             <>
               {oldFiles.map((image, index) => (
                 <div className="relative" key={image}>
-                  <img src={image} className="mb-4 rounded" />
+                  <img
+                    src={image}
+                    className="mb-4 rounded"
+                    alt="포트폴리오 사진"
+                  />
                   <div
                     onClick={() => deleteOldFile(index)}
                     className="absolute top-1 right-1 text-rose-500 bg-white/70 rounded-full cursor-pointer"
@@ -226,6 +232,7 @@ const PortfolioUpdate = () => {
             <div className="relative" key={preview}>
               <img
                 src={preview}
+                alt="포트폴리오 사진"
                 className="mb-4 rounded"
                 onLoad={() => {
                   URL.revokeObjectURL(preview);

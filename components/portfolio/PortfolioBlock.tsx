@@ -20,6 +20,7 @@ const PortfolioBlock = ({ portfolio }: PortfolioBlockProps) => {
         <Image
           src={portfolio.thumb}
           objectFit="cover"
+          alt="포트폴리오 썸네일"
           layout="fill"
           className="rounded"
         />
