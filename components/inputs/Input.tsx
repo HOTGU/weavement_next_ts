@@ -46,11 +46,19 @@ const Input: React.FC<InputProps> = ({
         onChange={
           formatterPhone
             ? (e) => {
-                const convertValue = e.target.value
-                  .slice(0, 13)
-                  .replace(/[^0-9]/g, "")
-                  .replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`);
+                let convertValue;
 
+                if (e.target.value.slice(0, 2) === "02") {
+                  convertValue = e.target.value
+                    .slice(0, 12)
+                    .replace(/[^0-9]/g, "")
+                    .replace(/^(\d{2})(\d{3,4})(\d{4})$/, `$1-$2-$3`);
+                } else {
+                  convertValue = e.target.value
+                    .slice(0, 13)
+                    .replace(/[^0-9]/g, "")
+                    .replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`);
+                }
                 field.onChange(convertValue);
               }
             : field.onChange
