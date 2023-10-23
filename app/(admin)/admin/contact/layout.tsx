@@ -6,6 +6,7 @@ import AddClientModal from "@/components/modals/AddClientModal";
 import CreateModal from "@/components/modals/CreateModal";
 import FileModal from "@/components/modals/FileModal";
 import SearchModal from "@/components/modals/SearchModal";
+import UpdateClientModal from "@/components/modals/UpdateClientModal";
 import UpdateModal from "@/components/modals/UpdateModal";
 
 export default async function RootLayout({
@@ -19,6 +20,7 @@ export default async function RootLayout({
       <SearchModal />
       <UpdateModal />
       <AddClientModal />
+      <UpdateClientModal />
       <DeleteClientConfirm />
       <DeleteContactConfirm />
       <FileModal />
