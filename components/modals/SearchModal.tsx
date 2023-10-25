@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useMemo } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { useRouter, useSearchParams } from "next/navigation";
 import formatISO from "date-fns/formatISO";
@@ -24,10 +24,10 @@ const SearchModal = () => {
   const router = useRouter();
   const params = useSearchParams();
 
-  const startDate = params?.get("startDate");
-  const endDate = params?.get("endDate");
-  const pm = params?.get("pm");
-  const term = params?.get("term");
+  const paramsStartDate = params?.get("startDate");
+  const paramsEndDate = params?.get("endDate");
+  const paramsPm = params?.get("pm");
+  const paramsTerm = params?.get("term");
 
   const {
     handleSubmit,
@@ -37,11 +37,11 @@ const SearchModal = () => {
     watch,
     reset,
   } = useForm<FieldValues>({
-    defaultValues: {
-      startDate: startDate ? new Date(startDate as string) : null,
-      endDate: endDate ? new Date(endDate as string) : null,
-      pm,
-      term,
+    values: {
+      startDate: paramsStartDate ? new Date(paramsStartDate as string) : null,
+      endDate: paramsEndDate ? new Date(paramsEndDate as string) : null,
+      pm: paramsPm,
+      term: paramsTerm,
     },
   });
 
@@ -58,10 +58,8 @@ const SearchModal = () => {
   }, [watchStartDate, watchEndDate, setValue]);
 
   const initFilter = useCallback(() => {
-    searchModal.onClose();
     reset();
-    router.push("/admin/contact");
-  }, [router, reset, searchModal]);
+  }, [reset, searchModal]);
 
   const dateInit = useCallback(() => {
     setValue("startDate", null);
