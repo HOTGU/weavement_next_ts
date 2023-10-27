@@ -42,7 +42,7 @@ const StateBlock = ({ icon: Icon, label, selected }: StateBlockProps) => {
   return (
     <div
       onClick={onClick}
-      className={`flex flex-col justify-center gap-1 items-center hover:text-accent transition cursor-pointer ${
+      className={`flex flex-col justify-center items-center hover:text-accent transition cursor-pointer ${
         selected ? "text-accent" : "text-neutral-500"
       }`}
     >
