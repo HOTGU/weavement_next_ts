@@ -1,10 +1,11 @@
 "use client";
 
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import axios from "axios";
 import { useForm, SubmitHandler, FieldValues } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { FaCheck } from "react-icons/fa";
+import { useRouter } from "next/navigation";
 
 import ContactCreateForm from "../forms/ContactCreateForm";
 import Container from "../Container";
@@ -12,9 +13,9 @@ import Select from "../inputs/Select";
 import getSelectOptions from "@/actions/getSelectOptions";
 import Input from "../inputs/Input";
 import Textarea from "../inputs/Textarea";
-import { useRouter } from "next/navigation";
 import File from "../inputs/File";
 import RacingFont from "../RacingFont";
+import FilesName from "../FilesName";
 
 enum STEPS {
   INFO = 0,
@@ -23,7 +24,7 @@ enum STEPS {
   ACCEPT = 3,
 }
 
-export const contactDefaultValues = {
+const defaultValues = {
   createdAt: undefined,
   contactPath: "홈페이지",
   state: "문의",
@@ -32,27 +33,19 @@ export const contactDefaultValues = {
   cost: "",
   schedule: "",
   pm: "미정",
-  knowPlatform: "",
-  description: "",
-  clientCompany: "",
+
   name: "",
   phone: "",
   position: "",
   email: "",
-  meterial: [],
-  content: "",
-  size: "",
-  deadline: undefined,
-  orderCompany: "",
-  note: "",
-  images: [],
+
+  files: [],
 };
 
 const ContactClient = () => {
   const [step, setStep] = useState(STEPS.INFO);
   const [isAccept, setIsAccept] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [files, setFiles] = useState<File[]>([]);
   const router = useRouter();
 
   const {
@@ -67,20 +60,17 @@ const ContactClient = () => {
     formState: { errors },
     control,
     reset,
+    watch,
+    setValue,
   } = useForm<FieldValues>({
-    defaultValues: contactDefaultValues,
+    defaultValues,
   });
 
-  useEffect(() => {
-    if (files.length > 5) {
-      const sliceArr = [...files].slice(0, 5);
-      toast.error("사진은 최대 5장입니다");
-      setFiles(sliceArr);
-    }
-  }, [files]);
+  const watchFiles = watch("files");
 
   const onNext = () => setStep((step) => step + 1);
   const onBack = () => setStep((step) => step - 1);
+
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     if (step !== STEPS.ACCEPT) {
       return onNext();
@@ -93,14 +83,22 @@ const ContactClient = () => {
     setIsLoading(true);
     const loadingToast = toast.loading("문의중..");
 
-    if (files.length > 0) {
+    if (data.files.length > 0) {
       const fd = new FormData();
-      files.map((file) => fd.append("files", file, file.name));
+
+      for (let key in data) {
+        if (key === "files") {
+          data.files.map((file: Blob) => fd.append("files", file, file.name));
+        }
+      }
+
       fd.append("company", data.clientCompany);
+
       try {
         const res = await axios.post("/api/contact/file-upload", fd);
         if (res.status === 200) {
           data.images = res.data;
+          delete data.files;
         }
       } catch (error) {
         toast.error("사진 올리는 도중 오류발생", { id: loadingToast });
@@ -208,13 +206,19 @@ const ContactClient = () => {
           label="본문내용 *"
           required
         />
-        <File
-          label="사진(선택)"
-          files={files}
-          setFiles={setFiles}
-          compressWidth={1480}
-          showInfo
-        />
+        <div className="flex flex-col gap-2">
+          <File
+            label="사진(선택)"
+            control={control}
+            name="files"
+            compressWidth={1480}
+            max={5}
+          />
+          <span className="text-xs text-neutral-500">
+            ⚠️이미지 확장자(jpg, png, webp 등)만 가능합니다
+          </span>
+          <FilesName type="files" setValue={setValue} files={watchFiles} />
+        </div>
       </div>
     );
   }

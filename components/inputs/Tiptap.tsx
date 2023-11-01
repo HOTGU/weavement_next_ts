@@ -15,9 +15,10 @@ interface TiptapProps {
   label: string;
   disabled?: boolean;
   control: Control<FieldValues>;
+  small?: boolean;
 }
 
-const Tiptap = ({ name, label, control, disabled }: TiptapProps) => {
+const Tiptap = ({ name, label, control, disabled, small }: TiptapProps) => {
   const { field } = useController({ name, control });
 
   const CustomStarterKit = StarterKit.configure({
@@ -38,8 +39,9 @@ const Tiptap = ({ name, label, control, disabled }: TiptapProps) => {
     },
     editorProps: {
       attributes: {
-        class:
-          "peer p-4 pt-0 border border-neutral-300 h-64 overflow-y-auto border-t-0 rounded-b outline-none",
+        class: `peer p-4 pt-0 border border-neutral-300 ${
+          small ? "h-36" : "h-64"
+        } overflow-y-auto border-t-0 rounded-b outline-none`,
       },
     },
   });

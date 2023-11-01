@@ -32,28 +32,27 @@ export async function PUT(request: Request, { params }: { params: IParams }) {
       );
 
     const data = await request.formData();
+
     const images = new Array();
     const imagesLocation = new Array();
 
-    const title = data.get("title") as string;
-    const isRep = data.get("isRep");
-    const description = data.get("description") as string;
-    const metaTitle = data.get("metaTitle") as string;
-    const metaDescription = data.get("metaDescription") as string;
-    const metaKeywords = data.get("metaKeywords") as string;
+    let body = {} as any;
 
     data.forEach((value, key) => {
       if (key === "oldImages") {
         imagesLocation.push(value);
-      }
-      if (key === "images") {
+      } else if (key === "images") {
         images.push(value);
+      } else if (key === "isRep") {
+        body[key] = value ? true : false;
+      } else {
+        body[key] = value;
       }
     });
 
     for (let i = 0; i < images.length; i++) {
       const imageLocation = await s3PutImage({
-        folderName: title,
+        folderName: body.title,
         file: images[i],
         resizeWidth: 768,
         type: "PORTFOLIO",
@@ -61,29 +60,25 @@ export async function PUT(request: Request, { params }: { params: IParams }) {
       imagesLocation.push(imageLocation);
     }
 
-    let thumbLocation = data.get("oldThumb") as string;
+    let thumbLocation = body.oldThumb;
 
-    if (data.get("thumb")) {
-      const thumb = data.get("thumb") as File;
+    if (body.thumb) {
       thumbLocation = await s3PutImage({
-        folderName: title,
-        file: thumb,
+        folderName: body.title,
+        file: body.thumb,
         type: "PORTFOLIO",
         resizeWidth: 2560,
       });
     }
 
+    delete body.oldThumb; // 지우지 않으면 포트폴리오 업데이트 시 프리즈마 오류발생
+
     const portfolio = await prisma.portfolio.update({
       where: { id },
       data: {
-        title,
-        description,
-        isRep: isRep ? true : false,
+        ...body,
         thumb: thumbLocation,
         images: imagesLocation,
-        metaTitle,
-        metaDescription,
-        metaKeywords,
       },
     });
 

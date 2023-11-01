@@ -5,41 +5,47 @@ import { HiXMark } from "react-icons/hi2";
 
 import compressFiles from "@/actions/compressFiles";
 import { BarLoader } from "react-spinners";
+import { Control, useController } from "react-hook-form";
+import { toast } from "react-hot-toast";
 
 interface FileProps {
-  files: File[];
-  setFiles: Dispatch<SetStateAction<any>>;
+  control?: Control;
   label?: string;
   multiple?: boolean;
   compressWidth?: number;
   onlyOne?: boolean;
-  hiddenFiles?: boolean;
-  showInfo?: boolean;
   disabled?: boolean;
+  name: string;
+  max?: number;
 }
 
 const File = ({
-  files,
-  setFiles,
   multiple,
   label = "사진선택",
   compressWidth,
   onlyOne = false,
-  hiddenFiles,
-  showInfo,
   disabled,
+  control,
+  name,
+  max,
 }: FileProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [loading, setLoading] = useState(false);
+  const { field } = useController({ name, control });
+
   const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const target = e.target;
     const inputFiles = target.files;
-
     if (!inputFiles) return;
+
+    if (max && field.value.length >= max) {
+      toast.error(`사진은 최대 ${max}장입니다.`);
+      return;
+    }
 
     setLoading(true);
 
-    const filesNameArr = files.map((file) => {
+    const filesNameArr = field.value.map((file: File) => {
       return file?.name;
     });
 
@@ -60,25 +66,19 @@ const File = ({
     }
 
     if (onlyOne) {
-      setFiles([compressedFiles[compressedFiles.length - 1]]);
+      field.onChange([compressedFiles[0]]);
     } else {
-      setFiles([...files, ...compressedFiles]);
+      field.onChange([...field.value, ...compressedFiles]);
     }
 
     setLoading(false);
   };
 
-  const handleDelete = async (targetIndex: number) => {
-    const deletedFiles = files.filter(
-      (__, fileIndex) => targetIndex !== fileIndex
-    );
-
-    setFiles(deletedFiles);
-  };
   return (
     <div>
       <input
         ref={inputRef}
+        name={field.name}
         type="file"
         onChange={handleChange}
         multiple={multiple}
@@ -99,28 +99,6 @@ const File = ({
       >
         {loading ? <BarLoader /> : label}
       </div>
-      {showInfo && (
-        <span className="text-xs text-neutral-500">
-          ⚠️이미지 확장자(jpg, png, webp 등)만 가능합니다
-        </span>
-      )}
-      {files.length > 0 && !hiddenFiles && (
-        <div className="flex flex-wrap gap-2 pt-4">
-          {files.map((file, index) => (
-            <div
-              key={file.size}
-              className="font-light text-zinc-500 px-4 py-2 bg-zinc-100 flex items-center gap-2"
-            >
-              <span>{file.name}</span>
-              <HiXMark
-                color="#c23616"
-                className="cursor-pointer"
-                onClick={() => handleDelete(index)}
-              />
-            </div>
-          ))}
-        </div>
-      )}
     </div>
   );
 };

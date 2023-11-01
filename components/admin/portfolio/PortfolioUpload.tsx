@@ -17,13 +17,9 @@ import getTotalFileSize from "@/utils/getTotalFileSize";
 const PortfolioUpload = () => {
   const router = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
-  const [thumb, setThumb] = useState<File[]>([]);
-  const [previewThumb, setPreviewThumb] = useState<string[]>([]);
+
   const [thumbSize, setThumbSize] = useState<number>(0);
-  const [files, setFiles] = useState<File[]>([]);
-  const [previewFiles, setPreviewFiles] = useState<string[]>([]);
   const [filesSize, setFilesSize] = useState<number>(0);
-  const [isRep, setIsRep] = useState("");
 
   const {
     handleSubmit,
@@ -31,65 +27,82 @@ const PortfolioUpload = () => {
     formState: { errors },
     watch,
     reset,
-  } = useForm<FieldValues>();
+    setValue,
+  } = useForm<FieldValues>({
+    defaultValues: {
+      title: "",
+      description: "",
+      metaTitle: "",
+      metaDescription: "",
+      metaKeywords: "",
+      files: [],
+      thumb: [],
+    },
+  });
 
   const resetInput = useCallback(() => {
-    setFiles([]);
-    setPreviewFiles([]);
-    setThumb([]);
-    setPreviewThumb([]);
-    setIsRep("");
     reset({
       title: "",
       description: "",
       metaTitle: "",
       metaDescription: "",
       metaKeywords: "",
+      isRep: "",
+      files: [],
+      filesPreview: [],
+      thumb: [],
+      thumbPreview: "",
     });
   }, [router, reset]);
 
   const title = watch("title");
   const description = watch("description");
+  const watchFiles = watch("files");
+  const watchThumb = watch("thumb");
+  const watchIsRep = watch("isRep");
+  const thumbPreview = watch("thumbPreview");
+  const filesPreview = watch("filesPreview");
 
   useEffect(() => {
-    let previewArr = [];
-    for (let i = 0; i < thumb.length; i++) {
-      const preview = URL.createObjectURL(thumb[i]);
-      previewArr.push(preview);
+    if (watchThumb[0]) {
+      const thumbPreview = URL.createObjectURL(watchThumb[0]);
+      setValue("thumbPreview", thumbPreview);
+
+      const thumbMbSize = getTotalFileSize(watchThumb);
+      setThumbSize(thumbMbSize);
+    } else {
+      setValue("thumbPreview", "");
+      setThumbSize(0);
     }
-    const thumbMbSize = getTotalFileSize(thumb);
-    setThumbSize(thumbMbSize);
-    setPreviewThumb(previewArr);
-  }, [thumb]);
+  }, [watchThumb]);
 
   useEffect(() => {
-    let previewArr = [];
-    for (let i = 0; i < files.length; i++) {
-      const preview = URL.createObjectURL(files[i]);
-      previewArr.push(preview);
-    }
-    const filesMbSize = getTotalFileSize(files);
+    const filesPreview = watchFiles.map((file: File) =>
+      URL.createObjectURL(file)
+    );
+    setValue("filesPreview", filesPreview);
+
+    const filesMbSize = getTotalFileSize(watchFiles);
     setFilesSize(filesMbSize);
-    setPreviewFiles(previewArr);
-  }, [files]);
+  }, [watchFiles]);
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    if (!thumb[0]) return toast.error("대표사진을 선택해주세요");
-    if (files.length === 0) return toast.error("하위사진을 선택해주세요");
+    if (!watchThumb[0]) return toast.error("대표사진을 선택해주세요");
+    if (watchFiles.length === 0) return toast.error("하위사진을 선택해주세요");
 
     setLoading(true);
 
     const loadingToast = toast.loading("포트폴리오 생성중..");
 
     const fd = new FormData();
-    fd.append("thumb", thumb[0], thumb[0].name);
+    fd.append("thumb", data.thumb[0], data.thumb[0].name);
 
-    for (let i = 0; i < files.length; i++) {
-      fd.append("images", files[i], files[i].name);
+    for (let i = 0; i < data.files.length; i++) {
+      fd.append("images", data.files[i], data.files[i].name);
     }
     fd.append("title", data.title);
     fd.append("description", data.description);
-    fd.append("isRep", isRep);
+    fd.append("isRep", data.isRep);
     fd.append("metaTitle", data.metaTitle);
     fd.append("metaDescription", data.metaDescription);
     fd.append("metaKeywords", data.metaKeywords);
@@ -113,12 +126,14 @@ const PortfolioUpload = () => {
   };
 
   const deleteFile = (target: number) => {
-    const deletedFiles = files.filter((__, index) => target !== index);
-    setFiles(deletedFiles);
-    const deletedPreviewFiles = previewFiles.filter(
-      (__, index) => target !== index
+    const deletedFiles = watchFiles.filter(
+      (__: any, index: number) => target !== index
     );
-    setPreviewFiles(deletedPreviewFiles);
+    setValue("files", deletedFiles);
+    const deleteFilesPreview = filesPreview.filter(
+      (__: any, index: number) => target !== index
+    );
+    setValue("filesPreview", deleteFilesPreview);
   };
 
   return (
@@ -137,22 +152,22 @@ const PortfolioUpload = () => {
           </span>
         </div>
         <div className="relative w-full aspect-video">
-          {previewThumb[0] && (
+          {thumbPreview && (
             <>
               <Image
                 objectFit="cover"
                 layout="fill"
                 alt="포트폴리오 썸네일"
-                src={previewThumb[0]}
+                src={thumbPreview}
                 onLoad={() => {
-                  URL.revokeObjectURL(previewThumb[0]);
+                  URL.revokeObjectURL(thumbPreview);
                 }}
                 className="rounded-md"
               />
               <div
                 onClick={() => {
-                  setPreviewThumb([]);
-                  setThumb([]);
+                  setValue("thumb", []);
+                  setValue("thumbPreview", "");
                 }}
                 className="absolute top-1 right-1 text-rose-500 bg-white/70 rounded-full cursor-pointer"
               >
@@ -165,9 +180,9 @@ const PortfolioUpload = () => {
         <div className=" whitespace-pre-line font-light text-center">
           {description}
         </div>
-        {previewFiles.length > 0 && (
-          <div className=" columns-3">
-            {previewFiles.map((preview, index) => (
+        <div className=" columns-3">
+          {filesPreview &&
+            filesPreview.map((preview: string, index: number) => (
               <div className="relative" key={preview}>
                 <img
                   src={preview}
@@ -185,27 +200,24 @@ const PortfolioUpload = () => {
                 </div>
               </div>
             ))}
-          </div>
-        )}
+        </div>
       </div>
       <div className="w-1/3 h-fit sticky top-0 flex flex-col gap-4 p-4 shadow-xl border rounded">
         <div className="flex gap-4">
           <File
-            files={thumb}
-            setFiles={setThumb}
+            control={control}
+            name="thumb"
             label="대표사진선택"
             // compressWidth={2560} //대표사진은 노압축이 화질이 좋음
-            hiddenFiles
             disabled={loading}
             onlyOne
           />
           <File
-            files={files}
-            setFiles={setFiles}
+            control={control}
+            name="files"
             label="사진선택"
             compressWidth={1024}
             multiple
-            hiddenFiles
             disabled={loading}
           />
         </div>
@@ -229,12 +241,12 @@ const PortfolioUpload = () => {
         <label className="flex items-center gap-2">
           <input
             type="checkbox"
-            checked={Boolean(isRep)}
+            checked={Boolean(watchIsRep)}
             onChange={(e) => {
               if (e.target.checked) {
-                setIsRep("on");
+                setValue("isRep", "on");
               } else {
-                setIsRep("");
+                setValue("isRep", "");
               }
             }}
             className="w-4 h-4"
