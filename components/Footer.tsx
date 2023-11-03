@@ -40,19 +40,22 @@ const Footer = () => {
           <div className="text-center mt-4 sm:mt-6 text-xs md:text-base">
             <div className="flex items-center justify-center gap-2 mb-2 md:mb-4">
               <Link
-                href="/"
+                href="https://blog.naver.com/weavement"
+                target="_blank"
                 className="w-9 h-9 md:w-12 md:h-12 flex rounded justify-center items-center border"
               >
                 <SiNaver size={20} color="#02c75a" />
               </Link>
               <Link
-                href="/"
+                href="https://www.instagram.com/weavement"
+                target="_blank"
                 className="w-9 h-9 md:w-12 md:h-12 flex rounded justify-center items-center border"
               >
                 <SiInstagram size={25} color="#F56040" />
               </Link>
               <Link
-                href="/"
+                href="https://www.youtube.com/@WEAVEMENT"
+                target="_blank"
                 className="w-9 h-9 md:w-12 md:h-12 flex rounded justify-center items-center border"
               >
                 <SiYoutube size={26} color="rgb(255,0,0)" />
