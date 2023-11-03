@@ -139,8 +139,8 @@ const CreateModal = () => {
     <div className="flex flex-col gap-4">
       <div className="flex flex-col sm:flex-row gap-4">
         <Calendar
-          value={createdAt}
-          onChange={(date) => setValue("createdAt", date)}
+          control={control}
+          name="createdAt"
           showTime
           placeholder="문의날짜"
           isClearable
@@ -308,8 +308,8 @@ const CreateModal = () => {
             label="협력사"
           />
           <Calendar
-            value={deadline}
-            onChange={(date) => setValue("deadline", new Date(date))}
+            control={control}
+            name="deadline"
             showTime
             placeholder="납기일"
             disabled={isLoading}

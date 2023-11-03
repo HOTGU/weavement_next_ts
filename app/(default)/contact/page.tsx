@@ -6,7 +6,7 @@ export const metadata = metadataConfig.contactMetadata;
 
 const ContactPage = () => {
   return (
-    <div className="pt-10 min-h-screen">
+    <div className="pt-14 min-h-screen">
       <ContactClient />
     </div>
   );

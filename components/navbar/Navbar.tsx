@@ -41,7 +41,7 @@ const Navbar = ({ currentUser }: CurrentUserProps) => {
 
   return (
     <div
-      className={`w-full h-10 border-b z-10 fixed shadow-sm transition duration-500
+      className={`w-full h-10 md:h-12 lg:h-14 border-b z-20 fixed shadow-sm transition duration-500
       ${
         !isHome || isScroll || isSlider ? "text-black bg-white" : "text-white"
       }`}

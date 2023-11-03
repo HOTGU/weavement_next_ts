@@ -16,6 +16,7 @@ import Calendar from "../inputs/Calendar";
 import Select from "../inputs/Select";
 import Input from "../inputs/Input";
 import useCurrentContact from "@/hooks/useCurrentContact";
+import parseISO from "date-fns/parseISO";
 
 const SearchModal = () => {
   const searchModal = useSearchModal();
@@ -38,8 +39,8 @@ const SearchModal = () => {
     reset,
   } = useForm<FieldValues>({
     values: {
-      startDate: paramsStartDate ? new Date(paramsStartDate as string) : null,
-      endDate: paramsEndDate ? new Date(paramsEndDate as string) : null,
+      startDate: paramsStartDate ? parseISO(paramsStartDate) : null,
+      endDate: paramsEndDate ? parseISO(paramsEndDate) : null,
       pm: paramsPm,
       term: paramsTerm,
     },
@@ -102,17 +103,9 @@ const SearchModal = () => {
   let bodyContent = (
     <div className="flex flex-col gap-4">
       <div className="flex items-center justify-between gap-4">
-        <Calendar
-          value={watchStartDate}
-          onChange={(date) => setValue("startDate", date)}
-          placeholder="시작날짜"
-        />
+        <Calendar control={control} name="startDate" placeholder="시작날짜" />
         <span className="">~</span>
-        <Calendar
-          value={watchEndDate}
-          onChange={(date) => setValue("endDate", date)}
-          placeholder="끝날짜"
-        />
+        <Calendar control={control} name="endDate" placeholder="끝날짜" />
         <div
           onClick={dateInit}
           className="flex items-center justify-center p-4 text-accent w-12 bg-zinc-200 rounded cursor-pointer transition hover:opacity-70"

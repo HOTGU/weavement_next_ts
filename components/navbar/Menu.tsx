@@ -30,7 +30,12 @@ const Menu = () => {
         >
           포트폴리오
         </Link>
-        <Link href="/" className="h-full flex items-center" passHref>
+        <Link
+          href="https://blog.naver.com/PostList.naver?blogId=weavement&from=postList&categoryNo=6"
+          className="h-full flex items-center"
+          target="_blank"
+          passHref
+        >
           전문가 칼럼
         </Link>
       </ul>

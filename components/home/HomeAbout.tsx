@@ -15,17 +15,18 @@ const HomeAbout = () => {
           variants={slidingText}
           initial={slidingText.hidden}
           whileInView={slidingText.visible}
-          className="text-xl sm:text-2xl md:text-3xl lg:text-5xl 2xl:text-7xl space-y-2 md:space-y-4 lg:space-y-6"
+          className="text-xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl space-y-2 md:space-y-4 lg:space-y-6"
         >
-          <div>우리는(WE) 고객이</div>
-          <div>나아갈 길(AVE.)을 제시하고</div>
-          <div>예술적인 결과(MENT)를 만드는</div>
+          <div>우리는 고객에게</div>
+          <div>길을 제시하고</div>
+          <div>예술적인 결과를 만드는</div>
           <div>
-            위브먼트{" "}
-            <span className=" text-accent">
+            감각적인 제조,{" "}
+            <span className="text-accent font-bold">위브먼트</span>입니다
+            {/* <span className=" text-accent whitespace-pre-line break-words">
               <AnimateText text="WEAVEMENT" delay={0.3} />{" "}
             </span>
-            입니다.
+            입니다. */}
           </div>
         </motion.div>
       </span>

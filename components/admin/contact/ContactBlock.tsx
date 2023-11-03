@@ -18,7 +18,7 @@ const ContactBlock = ({ contact }: ContactBlockProps) => {
         useContact.current?.id === contact.id
           ? "border-black border"
           : "border-neutral-300"
-      }  ${contact.pm === "SH" && "bg-rose-50"} ${
+      }  ${contact.pm === "SH" && "bg-pink-50"} ${
         contact.pm === "DW" && "bg-teal-50"
       }`}
       onClick={() => useContact.setCurrent(contact)}
@@ -36,18 +36,14 @@ const ContactBlock = ({ contact }: ContactBlockProps) => {
             {contact.pm}
           </div>
           <div
-            className={`px-1 bg-red-500 rounded text-white ${
-              contact.state === "문의"
-                ? "bg-green-600"
-                : contact.state === "상담"
-                ? "bg-amber-600"
-                : contact.state === "계약"
-                ? "bg-green-800"
-                : contact.state === "미수신"
-                ? "bg-rose-500"
+            className={`px-1 rounded font-bold ${
+              contact.state === "계약"
+                ? "bg-sky-400 text-white"
                 : contact.state === "불발"
-                ? "bg-red-700"
-                : "bg-sky-600" // 완료
+                ? "bg-red-700 text-white"
+                : contact.state === "완료"
+                ? "bg-blue-700 text-white"
+                : "text-black" // 완료
             }`}
           >
             {contact.state}
