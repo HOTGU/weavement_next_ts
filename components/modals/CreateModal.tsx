@@ -1,7 +1,9 @@
 "use client";
 
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
+import { toast } from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 import useCreateModal from "@/hooks/useCreateModal";
 import getSelectOptions from "@/actions/getSelectOptions";
@@ -9,21 +11,18 @@ import getSelectOptions from "@/actions/getSelectOptions";
 import Modal from "./Modal";
 import Calendar from "../inputs/Calendar";
 import Select from "../inputs/Select";
-import Textarea from "../inputs/Textarea";
 import File from "../inputs/File";
 import Input from "../inputs/Input";
 import Tiptap from "../inputs/Tiptap";
 import axios from "axios";
-import { toast } from "react-hot-toast";
-import { useRouter } from "next/navigation";
+import FilesName from "../FilesName";
 
 enum STEPS {
   INFO = 0,
   DESC = 1,
   CLIENT = 2,
-  FILE = 3,
-  PROJECT = 4,
-  NOTE = 5,
+  PROJECT = 3,
+  NOTE = 4,
 }
 
 const defaultValues = {
@@ -37,6 +36,7 @@ const defaultValues = {
   pm: "미정",
   knowPlatform: "",
   description: "",
+  files: [],
   clientCompany: "",
   name: "",
   phone: "",
@@ -54,7 +54,6 @@ const CreateModal = () => {
   const selectOptions = getSelectOptions();
   const router = useRouter();
   const [step, setStep] = useState(STEPS.INFO);
-  const [files, setFiles] = useState<File[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const createModal = useCreateModal();
   const {
@@ -67,8 +66,8 @@ const CreateModal = () => {
   } = useForm<FieldValues>({
     defaultValues,
   });
-  const createdAt = watch("createdAt");
-  const deadline = watch("deadline");
+
+  const watchFiles = watch("files");
 
   const onNext = () => setStep(step + 1);
   const onBack = () => setStep(step - 1);
@@ -80,14 +79,21 @@ const CreateModal = () => {
     setIsLoading(true);
     const loadingToast = toast.loading("문의 생성중");
 
-    if (files.length > 0) {
-      const fd = new FormData();
-      files.map((file) => fd.append("files", file, file.name));
+    if (data.files.length > 0) {
+      // file이 있을때만 분기처리
+      const fd = new FormData(); // file은 formdata만 받음
+
+      for (let key in data) {
+        if (key === "files") {
+          data.files.map((file: Blob) => fd.append("files", file, file.name));
+        }
+      }
       fd.append("company", data.clientCompany);
+
       try {
-        const res = await axios.post("/api/contact/file-upload", fd);
+        const res = await axios.post("/api/contact/file-upload", fd); // file만 업로드하는 api 호출
         if (res.status === 200) {
-          data.images = res.data;
+          data.images = res.data; // return 값은 image location array 형태
         }
       } catch (error) {
         toast.error("사진 올리는 도중 오류발생", { id: loadingToast });
@@ -96,21 +102,22 @@ const CreateModal = () => {
       }
     }
 
+    // delete data.files; // files를 지워야 prisma 에러 발생 안함
+
     axios
       .post("/api/contact", data)
       .then(() => {
         toast.success("문의생성 성공", { id: loadingToast });
-        createModal.onClose();
         router.refresh();
+        createModal.onClose();
         setStep(STEPS.INFO);
-        setFiles([]);
         reset();
       })
       .catch((error: any) => toast.error("문의생성 실패", { id: loadingToast }))
       .finally(() => {
         setIsLoading(false);
       });
-    return console.log(data);
+    return;
   };
 
   const actionLabel = useMemo(() => {
@@ -131,8 +138,8 @@ const CreateModal = () => {
     <div className="flex flex-col gap-4">
       <div className="flex flex-col sm:flex-row gap-4">
         <Calendar
-          value={createdAt}
-          onChange={(date) => setValue("createdAt", date)}
+          control={control}
+          name="createdAt"
           showTime
           placeholder="문의날짜"
           isClearable
@@ -213,19 +220,18 @@ const CreateModal = () => {
 
   if (step === STEPS.DESC) {
     bodyContent = (
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-2">
         <Tiptap
           label="문의노트"
           name="description"
           control={control}
           disabled={isLoading}
+          small
         />
+        <File control={control} name="files" multiple compressWidth={1480} />
+        <FilesName type="files" files={watchFiles} setValue={setValue} />
       </div>
     );
-  }
-
-  if (step === STEPS.FILE) {
-    bodyContent = <File multiple files={files} setFiles={setFiles} />;
   }
 
   if (step === STEPS.CLIENT) {
@@ -301,8 +307,8 @@ const CreateModal = () => {
             label="협력사"
           />
           <Calendar
-            value={deadline}
-            onChange={(date) => setValue("deadline", new Date(date))}
+            control={control}
+            name="deadline"
             showTime
             placeholder="납기일"
             disabled={isLoading}

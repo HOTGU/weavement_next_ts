@@ -1,4 +1,5 @@
 import prisma from "@/libs/prismadb";
+import addDays from "date-fns/addDays";
 
 export interface IContactParams {
   pm?: string;
@@ -32,13 +33,19 @@ export default async (params: IContactParams) => {
             { client: { some: { name: { contains: term } } } },
           ],
         },
+        {
+          description: { contains: term },
+        },
+        {
+          note: { contains: term },
+        },
       ];
     }
 
     if (startDate && endDate) {
       query.AND = [
-        { createdAt: { gte: startDate } },
-        { createdAt: { lte: endDate } },
+        { createdAt: { gte: new Date(startDate) } },
+        { createdAt: { lte: addDays(new Date(endDate), 1) } },
       ];
     }
 

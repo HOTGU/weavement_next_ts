@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 
 import useUpdatePortfolio from "@/hooks/useUpdatePortfolio";
@@ -19,104 +19,88 @@ const PortfolioUpdate = () => {
   const updatePortfolio = useUpdatePortfolio();
   const router = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
-  const [oldThumb, setOldThumb] = useState<string>(
-    updatePortfolio.target?.thumb || ""
-  );
-  const [oldFiles, setOldFiles] = useState<string[]>(
-    updatePortfolio.target?.images || []
-  );
-
-  const [thumb, setThumb] = useState<File[]>([]);
-  const [previewThumb, setPreviewThumb] = useState<string[]>([]);
   const [thumbSize, setThumbSize] = useState<number>(0);
-  const [files, setFiles] = useState<File[]>([]);
-  const [previewFiles, setPreviewFiles] = useState<string[]>([]);
   const [filesSize, setFilesSize] = useState<number>(0);
-
-  const [isRep, setIsRep] = useState("");
   const {
     reset,
     handleSubmit,
     control,
     formState: { errors },
     watch,
+    setValue,
   } = useForm<FieldValues>({
-    defaultValues: {
-      title: updatePortfolio.target?.title,
-      description: updatePortfolio.target?.description,
-      metaTitle: updatePortfolio.target?.metaTitle,
-      metaDescription: updatePortfolio.target?.metaDescription,
-      metaKeywords: updatePortfolio.target?.metaKeywords,
-    },
-  });
-
-  useEffect(() => {
-    if (updatePortfolio.target) {
-      setOldThumb(updatePortfolio.target?.thumb);
-      setOldFiles(updatePortfolio.target?.images);
-      reset({
+    values: useMemo(() => {
+      return {
         title: updatePortfolio.target?.title,
         description: updatePortfolio.target?.description,
         metaTitle: updatePortfolio.target?.metaTitle,
         metaDescription: updatePortfolio.target?.metaDescription,
         metaKeywords: updatePortfolio.target?.metaKeywords,
-      });
-      setThumb([]);
-      setFiles([]);
-      setIsRep(updatePortfolio.target.isRep ? "on" : "");
-    }
-  }, [updatePortfolio.target, reset]);
+        isRep: updatePortfolio.target?.isRep ? "on" : "",
+        oldFiles: updatePortfolio.target?.images,
+        oldThumb: updatePortfolio.target?.thumb,
+        files: [],
+        filesPreview: [],
+        thumb: [],
+        thumbPreview: "",
+      };
+    }, [updatePortfolio.target]),
+  });
 
   const title = watch("title");
   const description = watch("description");
+  const watchIsRep = watch("isRep");
+  const watchOldFiles = watch("oldFiles");
+  const watchOldThumb = watch("oldThumb");
+
+  const watchFiles = watch("files");
+  const watchFilesPreview = watch("filesPreview");
+  const watchThumb = watch("thumb");
+  const watchThumbPreview = watch("thumbPreview");
 
   useEffect(() => {
-    let previewArr = [];
-    for (let i = 0; i < thumb.length; i++) {
-      const preview = URL.createObjectURL(thumb[i]);
-      previewArr.push(preview);
+    if (watchThumb[0]) {
+      const thumbPreview = URL.createObjectURL(watchThumb[0]);
+      setValue("thumbPreview", thumbPreview);
+      const thumbMbSize = getTotalFileSize(watchThumb);
+      setThumbSize(thumbMbSize);
+    } else {
+      setValue("thumbPreview", "");
+      setThumbSize(0);
     }
-    const thumbMbSize = getTotalFileSize(thumb);
-    setThumbSize(thumbMbSize);
-    setPreviewThumb(previewArr);
-  }, [thumb]);
+  }, [watchThumb]);
 
   useEffect(() => {
-    let previewArr = [];
-    for (let i = 0; i < files.length; i++) {
-      const preview = URL.createObjectURL(files[i]);
-      previewArr.push(preview);
-    }
-    const filesMbSize = getTotalFileSize(files);
+    const filesPreview = watchFiles.map((file: File) =>
+      URL.createObjectURL(file)
+    );
+    setValue("filesPreview", filesPreview);
+    const filesMbSize = getTotalFileSize(watchFiles);
     setFilesSize(filesMbSize);
-    setPreviewFiles(previewArr);
-  }, [files]);
+  }, [watchFiles]);
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     if (updatePortfolio.target) {
-      if (oldFiles?.length === 0 && files.length === 0)
+      if (watchOldFiles?.length === 0 && watchFiles.length === 0)
         return toast.error("하위사진을 선택해주세요");
 
       setLoading(true);
-
       const loadingToast = toast.loading("포트폴리오 수정중..");
 
       const fd = new FormData();
-      fd.append("oldThumb", oldThumb);
-      if (thumb[0]) {
-        fd.append("thumb", thumb[0], thumb[0].name);
+      fd.append("oldThumb", data.oldThumb);
+      if (data.thumb[0]) {
+        fd.append("thumb", data.thumb[0], data.thumb[0].name);
       }
-
-      for (let i = 0; i < oldFiles.length; i++) {
-        fd.append("oldImages", oldFiles[i]);
+      for (let i = 0; i < data.oldFiles.length; i++) {
+        fd.append("oldImages", data.oldFiles[i]);
       }
-      for (let i = 0; i < files.length; i++) {
-        fd.append("images", files[i], files[i].name);
+      for (let i = 0; i < data.files.length; i++) {
+        fd.append("images", data.files[i], data.files[i].name);
       }
-
       fd.append("title", data.title);
       fd.append("description", data.description);
-      fd.append("isRep", isRep);
+      fd.append("isRep", data.isRep);
       fd.append("metaTitle", data.metaTitle);
       fd.append("metaDescription", data.metaDescription);
       fd.append("metaKeywords", data.metaKeywords);
@@ -141,15 +125,19 @@ const PortfolioUpdate = () => {
   };
 
   const deleteOldFile = (target: number) => {
-    if (oldFiles) {
-      const deletedFiles = oldFiles.filter((__, index) => target !== index);
-      setOldFiles(deletedFiles);
+    if (watchOldFiles) {
+      const deletedFiles = watchOldFiles.filter(
+        (__: string, index: number) => target !== index
+      );
+      setValue("oldFiles", deletedFiles);
     }
   };
 
   const deleteFile = (target: number) => {
-    const deletedFiles = files.filter((__, index) => target !== index);
-    setFiles(deletedFiles);
+    const deletedFiles = watchFiles.filter(
+      (__: any, index: number) => target !== index
+    );
+    setValue("files", deletedFiles);
   };
 
   return (
@@ -168,39 +156,33 @@ const PortfolioUpdate = () => {
           </span>
         </div>
         <div className="relative w-full aspect-video">
-          {previewThumb[0] ? (
+          {watchThumbPreview ? (
             <>
               <Image
                 objectFit="cover"
                 layout="fill"
                 alt="포트폴리오 썸네일"
-                src={previewThumb[0]}
+                src={watchThumbPreview}
                 onLoad={() => {
-                  URL.revokeObjectURL(previewThumb[0]);
+                  URL.revokeObjectURL(watchThumbPreview);
                 }}
                 className="rounded-md"
               />
               <div
-                onClick={() => setThumb([])}
+                onClick={() => setValue("thumb", [])}
                 className="absolute top-1 right-1 text-rose-500 bg-white/70 rounded-full cursor-pointer"
               >
                 <HiXMark />
               </div>
             </>
           ) : (
-            <>
-              {oldThumb && (
-                <>
-                  <Image
-                    objectFit="cover"
-                    alt="포트폴리오 썸네일"
-                    layout="fill"
-                    src={oldThumb}
-                    className="rounded-md"
-                  />
-                </>
-              )}
-            </>
+            <Image
+              objectFit="cover"
+              alt="포트폴리오 썸네일"
+              layout="fill"
+              src={watchOldThumb}
+              className="rounded-md"
+            />
           )}
         </div>
         <div className="font-semibold text-lg">{title}</div>
@@ -208,9 +190,9 @@ const PortfolioUpdate = () => {
           {description}
         </div>
         <div className=" columns-3">
-          {oldFiles && oldFiles.length > 0 && (
+          {watchOldFiles && watchOldFiles.length > 0 && (
             <>
-              {oldFiles.map((image, index) => (
+              {watchOldFiles.map((image: string, index: number) => (
                 <div className="relative" key={image}>
                   <img
                     src={image}
@@ -228,7 +210,7 @@ const PortfolioUpdate = () => {
             </>
           )}
 
-          {previewFiles.map((preview, index) => (
+          {watchFilesPreview.map((preview: string, index: number) => (
             <div className="relative" key={preview}>
               <img
                 src={preview}
@@ -251,21 +233,19 @@ const PortfolioUpdate = () => {
       <div className="w-1/3 h-fit sticky top-0 flex flex-col gap-4 p-4 shadow-xl border rounded">
         <div className="flex gap-4">
           <File
-            files={thumb}
-            setFiles={setThumb}
+            control={control}
+            name="thumb"
             label="대표사진선택"
             compressWidth={2560}
-            hiddenFiles
             disabled={loading}
             onlyOne
           />
           <File
-            files={files}
-            setFiles={setFiles}
+            control={control}
+            name="files"
             label="사진선택"
             compressWidth={1024}
             multiple
-            hiddenFiles
             disabled={loading}
           />
         </div>
@@ -291,12 +271,12 @@ const PortfolioUpdate = () => {
             type="checkbox"
             onChange={(e) => {
               if (e.target.checked) {
-                setIsRep("on");
+                setValue("isRep", "on");
               } else {
-                setIsRep("");
+                setValue("isRep", "");
               }
             }}
-            checked={Boolean(isRep)}
+            checked={Boolean(watchIsRep)}
             className="w-4 h-4"
           />
           메인페이지 등록

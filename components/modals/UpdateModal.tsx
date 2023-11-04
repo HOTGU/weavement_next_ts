@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import axios from "axios";
 import { toast } from "react-hot-toast";
@@ -11,7 +11,6 @@ import useUpdateModal from "@/hooks/useUpdateModal";
 import useCurrentContact from "@/hooks/useCurrentContact";
 import Select from "../inputs/Select";
 import getSelectOptions from "@/actions/getSelectOptions";
-import Textarea from "../inputs/Textarea";
 import Input from "../inputs/Input";
 import Calendar from "../inputs/Calendar";
 import Tiptap from "../inputs/Tiptap";
@@ -27,15 +26,9 @@ const UpdateModal = () => {
     handleSubmit,
     control,
     formState: { errors },
-    reset,
-    setValue,
-    watch,
   } = useForm<FieldValues>({
-    defaultValues: { ...current },
+    values: useMemo(() => current, [current]),
   });
-
-  const deadline = watch("deadline");
-  const createdAt = watch("createdAt");
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     setIsLoading(true);
@@ -54,17 +47,12 @@ const UpdateModal = () => {
         setCurrent(result.data);
       })
       .catch((error) => {
-        console.log(error);
         toast.error("수정실패", { id: loadingToast });
       })
       .finally(() => {
         setIsLoading(false);
       });
   };
-
-  useEffect(() => {
-    reset(current);
-  }, [current, reset]);
 
   if (!current) {
     return null;
@@ -75,27 +63,19 @@ const UpdateModal = () => {
   if (updateModal.step === "INFO") {
     bodyContent = (
       <div className="flex flex-col gap-4 py-2">
-        <Calendar
-          value={createdAt ? new Date(createdAt) : undefined}
-          onChange={(date) => setValue("createdAt", date)}
-          placeholder="문의시각"
-          disabled={isLoading}
-          showTime
-        />
         <div className="flex flex-col sm:flex-row gap-4">
+          <Calendar
+            control={control}
+            name="createdAt"
+            placeholder="문의시각"
+            disabled={isLoading}
+            showTime
+          />
           <Input
             control={control}
             errors={errors}
             name="clientCompany"
             label="고객명"
-          />
-          <Select
-            control={control}
-            errors={errors}
-            name="state"
-            options={selectOptions.stateOptions}
-            placeholder="상태"
-            label="상태"
             disabled={isLoading}
           />
         </div>
@@ -220,8 +200,8 @@ const UpdateModal = () => {
         </div>
         <div className="flex flex-col sm:flex-row gap-4">
           <Calendar
-            value={deadline ? new Date(deadline) : undefined}
-            onChange={(date) => setValue("deadline", date)}
+            control={control}
+            name="deadline"
             placeholder="납기일"
             showTime
             isClearable

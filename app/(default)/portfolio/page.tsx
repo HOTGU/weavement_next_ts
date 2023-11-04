@@ -17,7 +17,7 @@ const PortfolioPage = async ({ searchParams }: PortfolioParams) => {
   const { portfolios, allPage } = await getPortfolios(searchParams);
   return (
     <Container>
-      <div className="pt-10 ">
+      <div className="pt-14 ">
         <div className="py-6 min-h-[calc(100vh-100px)] flex flex-col">
           <div className="flex-1 grid gird-cols-1 md:grid-cols-2 gap-6">
             {portfolios.map((portfolio) => (

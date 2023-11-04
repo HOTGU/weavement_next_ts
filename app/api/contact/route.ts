@@ -6,7 +6,7 @@ export async function POST(request: Request) {
   try {
     const body = await request.json();
 
-    const { name, phone, email, position, ...contactBody } = body;
+    const { name, phone, email, position, files, ...contactBody } = body;
     const clientBody = { name, phone, email, position };
 
     const contact = await prisma.contact.create({

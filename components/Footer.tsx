@@ -2,6 +2,8 @@ import React from "react";
 import { CiMail, CiPhone } from "react-icons/ci";
 import Container from "./Container";
 import Image from "next/legacy/image";
+import { SiNaver, SiInstagram, SiYoutube } from "react-icons/si";
+import Link from "next/link";
 
 const Footer = () => {
   return (
@@ -35,8 +37,33 @@ const Footer = () => {
               </div>
             </div>
           </div>
-          <div className="text-center text-neutral-400 mt-4 sm:mt-6 md:mt-8 lg:mt-12 text-xs md:text-base">
-            © 2022 WEAVEMENT CO.LTD. ALL RIGHTS RESERVED.
+          <div className="text-center mt-4 sm:mt-6 text-xs md:text-base">
+            <div className="flex items-center justify-center gap-2 mb-2 md:mb-4">
+              <Link
+                href="https://blog.naver.com/weavement"
+                target="_blank"
+                className="w-9 h-9 md:w-12 md:h-12 flex rounded justify-center items-center border"
+              >
+                <SiNaver size={20} color="#02c75a" />
+              </Link>
+              <Link
+                href="https://www.instagram.com/weavement"
+                target="_blank"
+                className="w-9 h-9 md:w-12 md:h-12 flex rounded justify-center items-center border"
+              >
+                <SiInstagram size={25} color="#F56040" />
+              </Link>
+              <Link
+                href="https://www.youtube.com/@WEAVEMENT"
+                target="_blank"
+                className="w-9 h-9 md:w-12 md:h-12 flex rounded justify-center items-center border"
+              >
+                <SiYoutube size={26} color="rgb(255,0,0)" />
+              </Link>
+            </div>
+            <span className="text-neutral-400">
+              © 2022 WEAVEMENT CO.LTD. ALL RIGHTS RESERVED.
+            </span>
           </div>
         </div>
       </Container>
