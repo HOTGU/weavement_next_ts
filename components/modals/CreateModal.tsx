@@ -20,7 +20,6 @@ import FilesName from "../FilesName";
 enum STEPS {
   INFO = 0,
   DESC = 1,
-
   CLIENT = 2,
   PROJECT = 3,
   NOTE = 4,
@@ -67,8 +66,7 @@ const CreateModal = () => {
   } = useForm<FieldValues>({
     defaultValues,
   });
-  const createdAt = watch("createdAt");
-  const deadline = watch("deadline");
+
   const watchFiles = watch("files");
 
   const onNext = () => setStep(step + 1);
@@ -96,7 +94,6 @@ const CreateModal = () => {
         const res = await axios.post("/api/contact/file-upload", fd); // file만 업로드하는 api 호출
         if (res.status === 200) {
           data.images = res.data; // return 값은 image location array 형태
-          delete data.files; // 기존 file은 지우고 data를 보내야 error X
         }
       } catch (error) {
         toast.error("사진 올리는 도중 오류발생", { id: loadingToast });
@@ -104,6 +101,8 @@ const CreateModal = () => {
         return;
       }
     }
+
+    // delete data.files; // files를 지워야 prisma 에러 발생 안함
 
     axios
       .post("/api/contact", data)
