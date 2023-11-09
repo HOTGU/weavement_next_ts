@@ -21,10 +21,6 @@ const ContactStateChange = () => {
 
   if (!current) return null;
 
-  const stateChange: SubmitHandler<FieldValues> = (data) => {
-    console.log(data);
-  };
-
   const handeClick = (value: string) => (e: React.MouseEvent) => {
     if (value === current.state || loading) return;
     const loadingToast = toast.loading("상태 수정중..");

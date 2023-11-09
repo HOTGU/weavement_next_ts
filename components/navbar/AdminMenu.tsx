@@ -10,6 +10,13 @@ const AdminMenu = () => {
   return (
     <>
       <Link
+        className={`${pathname.includes("/admin/analysis") && "text-accent"} `}
+        href="/admin/analysis"
+        passHref
+      >
+        분석
+      </Link>
+      <Link
         className={`${pathname === "/admin/contact" && "text-accent"} `}
         href="/admin/contact"
         passHref
