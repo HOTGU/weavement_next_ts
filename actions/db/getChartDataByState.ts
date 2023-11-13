@@ -1,20 +1,8 @@
+import {
+  IAnalysisParams,
+  IChartDataTypes,
+} from "@/app/(admin)/admin/analysis/page";
 import prisma from "@/libs/prismadb";
-import { parseISO } from "date-fns";
-
-export interface IContactParams {}
-
-interface DataTypes {
-  categories: string[];
-  series: {
-    total: number[];
-    success: number[];
-  };
-}
-
-export interface IStateChartParams {
-  date: "month" | "year" | "quarter";
-  year: number;
-}
 
 interface AggreateContactType {
   _id: {
@@ -25,49 +13,48 @@ interface AggreateContactType {
 }
 
 const initTotalAndSuccess = ({
+  data,
   date,
-  total,
-  success,
 }: {
+  data: IChartDataTypes;
   date: "quarter" | "month" | "year";
-  total: number[];
-  success: number[];
 }) => {
-  if (date === "month") {
-    for (let i = 0; i < 12; i++) {
-      total.push(0);
-      success.push(0);
-    }
-  }
-  if (date === "quarter") {
-    for (let i = 0; i < 4; i++) {
-      total.push(0);
-      success.push(0);
-    }
+  let length = 0;
+  if (date === "month") length = 12;
+  if (date === "quarter") length = 4;
+
+  for (let i = 0; i < length; i++) {
+    data.series.map((item) => item.data.push(0));
+    data.categories.push(`${i + 1}`);
   }
 };
 
 const addDataTotalAndSuccess = ({
   contact,
   date,
-  total,
-  success,
+  data,
 }: {
   contact: AggreateContactType;
   date: "quarter" | "month" | "year";
-  total: number[];
-  success: number[];
+  data: IChartDataTypes;
 }) => {
   const month = contact._id.month;
   const state = contact._id.state;
   const count = contact.count;
 
   if (date === "month") {
-    total[month - 1] += count;
-    if (state === "계약" || state === "완료") {
-      success[month - 1] += count;
-    }
+    data.series.map((item) => {
+      if (item.name === "문의") {
+        item.data[month - 1] += count;
+      }
+      if (item.name === "계약") {
+        if (state === "계약" || state === "완료") {
+          item.data[month - 1] += count;
+        }
+      }
+    });
   }
+
   if (date === "quarter") {
     const quarterArr = [
       [1, 2, 3],
@@ -79,52 +66,22 @@ const addDataTotalAndSuccess = ({
     for (let i = 0; i < quarterArr.length; i++) {
       const checkQuarter = quarterArr[i].includes(month);
       if (checkQuarter) {
-        total[i] += count;
-        if (state === "계약" || state === "완료") {
-          success[i] += count;
-        }
+        data.series.map((item) => {
+          if (item.name === "문의") {
+            item.data[i] += count;
+          }
+          if (item.name === "계약") {
+            if (state === "계약" || state === "완료") {
+              item.data[i] += count;
+            }
+          }
+        });
       }
     }
   }
 };
 
-const setData = ({
-  data,
-  total,
-  date,
-  success,
-}: {
-  data: DataTypes;
-  date: "quarter" | "month" | "year";
-  total: number[];
-  success: number[];
-}) => {
-  data.series.total = total;
-  data.series.success = success;
-
-  if (date === "month") {
-    data.categories = [
-      "1월",
-      "2월",
-      "3월",
-      "4월",
-      "5월",
-      "6월",
-      "7월",
-      "8월",
-      "9월",
-      "10월",
-      "11월",
-      "12월",
-    ];
-  }
-
-  if (date === "quarter") {
-    data.categories = ["1분기", "2분기", "3분기", "4분기"];
-  }
-};
-
-export default async (params: IStateChartParams) => {
+export default async (params: IAnalysisParams) => {
   try {
     const { date, year } = params;
 
@@ -175,22 +132,18 @@ export default async (params: IStateChartParams) => {
 
     let data = {
       categories: [],
-      series: {
-        total: [],
-        success: [],
-      },
-    } as DataTypes;
-    let total = [] as number[];
-    let success = [] as number[];
+      series: [
+        { name: "문의", data: [] },
+        { name: "계약", data: [] },
+      ],
+    } as IChartDataTypes;
 
-    initTotalAndSuccess({ date, total, success });
+    initTotalAndSuccess({ data, date });
 
     // @ts-ignore
     contacts.map((contact) => {
-      addDataTotalAndSuccess({ date, contact, total, success });
+      addDataTotalAndSuccess({ date, contact, data });
     });
-
-    setData({ date, data, total, success });
 
     return data;
   } catch (error: any) {

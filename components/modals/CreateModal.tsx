@@ -34,7 +34,7 @@ const defaultValues = {
   cost: "",
   schedule: "",
   pm: "미정",
-  knowPlatform: "",
+  knowPlatform: "알수없음",
   description: "",
   files: [],
   clientCompany: "",
@@ -213,6 +213,7 @@ const CreateModal = () => {
           options={selectOptions.knowPlatformOptions}
           errors={errors}
           disabled={isLoading}
+          isClearable={false}
         />
       </div>
     </div>
