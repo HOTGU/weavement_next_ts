@@ -63,7 +63,7 @@ const DataList = ({ searchParams, data, isState }: IBarGraph) => {
         )}
       </div>
       {list.map((item, index) => (
-        <div className="flex text-left text-neutral-500">
+        <div key={index} className="flex text-left text-neutral-500">
           <div className="flex-1">{type.list[index]}</div>
           {item.map((count: number, index: number) => (
             <div className="w-24" key={index}>
