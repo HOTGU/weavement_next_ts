@@ -4,19 +4,15 @@ import React from "react";
 import dynamic from "next/dynamic";
 import { ApexOptions } from "apexcharts";
 const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
-import { IChartDataTypes } from "@/app/(admin)/admin/analysis/page";
-import { useSearchParams } from "next/navigation";
 
 interface IBarGraph {
-  data: IChartDataTypes;
+  categories?: string[];
+  series?: any[];
   stacked?: boolean;
+  date?: "month" | "quarter";
 }
 
-const BarGraph = ({ data, stacked = false }: IBarGraph) => {
-  const params = useSearchParams();
-
-  const date = params?.get("date");
-
+const BarGraph = ({ date, categories, series, stacked = false }: IBarGraph) => {
   const option: ApexOptions = {
     colors: [
       "#F97F51",
@@ -30,11 +26,14 @@ const BarGraph = ({ data, stacked = false }: IBarGraph) => {
       "#CAD3C8",
     ],
     xaxis: {
-      categories: data.categories,
+      categories,
       labels: {
         formatter(value) {
-          const string = date === "month" ? "월" : "분기";
-          return `${value}${string}`;
+          if (date) {
+            const string = date === "month" ? "월" : "분기";
+            return `${value}${string}`;
+          }
+          return `${value}`;
         },
       },
       crosshairs: {
@@ -69,9 +68,7 @@ const BarGraph = ({ data, stacked = false }: IBarGraph) => {
     },
   };
 
-  return (
-    <Chart type="bar" options={option} series={data.series} height={400} />
-  );
+  return <Chart type="bar" options={option} series={series} height={400} />;
 };
 
 export default BarGraph;

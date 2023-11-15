@@ -3,14 +3,14 @@ import React from "react";
 import { redirect } from "next/navigation";
 import qs from "query-string";
 
-import getChartDataByState from "@/actions/db/getChartDataByState";
+import { IAnalysisParams } from "../page";
 import DateSearch from "@/components/admin/analysis/DateSearch";
-// import PieGraph from "@/components/admin/analysis/state/PieGraph";
 import DataList from "@/components/admin/analysis/DataList";
 import YearSearch from "@/components/admin/analysis/YearSearch";
-import { IAnalysisParams } from "../page";
 import BarGraph from "@/components/admin/analysis/BarGraph";
 import PieGraph from "@/components/admin/analysis/PieGraph";
+import getPieDataByState from "@/actions/chart/getPieDataByState";
+import getBarDataByState from "@/actions/chart/getBarDataByState";
 
 interface AnalysisParams {
   searchParams: IAnalysisParams;
@@ -24,7 +24,8 @@ const AnalysisStatePage = async ({ searchParams }: AnalysisParams) => {
     });
     redirect(url);
   }
-  const data = await getChartDataByState(searchParams);
+  const barData = await getBarDataByState(searchParams);
+  const pieData = await getPieDataByState(searchParams);
 
   return (
     <div className="flex-1 bg-neutral-50 rounded-lg p-6">
@@ -34,14 +35,19 @@ const AnalysisStatePage = async ({ searchParams }: AnalysisParams) => {
       </div>
       <div className="flex items-center gap-4 mt-4">
         <div className="w-3/4">
-          <BarGraph data={data} />
+          <BarGraph categories={barData.categories} series={barData.series} />
         </div>
         <div className="w-1/4 h-full">
-          <PieGraph data={data} isState />
+          <PieGraph
+            labels={pieData.labels}
+            series={pieData.series}
+            total={pieData.total}
+            colors={pieData.colors}
+          />
         </div>
       </div>
       <div className="mt-4">
-        <DataList data={data} searchParams={searchParams} isState />
+        {/* <DataList data={data} searchParams={searchParams} isState /> */}
       </div>
     </div>
   );

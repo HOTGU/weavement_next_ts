@@ -1,8 +1,14 @@
-import {
-  IAnalysisParams,
-  IChartDataTypes,
-} from "@/app/(admin)/admin/analysis/page";
 import prisma from "@/libs/prismadb";
+
+interface IChartDataTypes {
+  categories: string[];
+  series: { name: StateKind; data: number[] }[];
+}
+
+interface IAnalysisParams {
+  date: "month" | "year" | "quarter";
+  year: number;
+}
 
 interface AggreateContactType {
   _id: {
@@ -11,6 +17,8 @@ interface AggreateContactType {
   };
   count: number;
 }
+
+type StateKind = "문의" | "계약";
 
 const initTotalAndSuccess = ({
   data,

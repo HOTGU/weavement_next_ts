@@ -1,8 +1,25 @@
-import {
-  IAnalysisParams,
-  IChartDataTypes,
-} from "@/app/(admin)/admin/analysis/page";
 import prisma from "@/libs/prismadb";
+
+interface IChartDataTypes {
+  categories: string[];
+  series: { name: PlatformKind; data: number[] }[];
+}
+
+type PlatformKind =
+  | "홈페이지"
+  | "블로그"
+  | "인스타그램"
+  | "페이스북"
+  | "유튜브"
+  | "기존고객"
+  | "소개"
+  | "기타"
+  | "알수없음";
+
+interface IAnalysisParams {
+  date: "month" | "year" | "quarter";
+  year: number;
+}
 
 const InitData = ({
   data,

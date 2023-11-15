@@ -18,13 +18,22 @@ const AdminAnalysisNav = () => {
           문의별
         </div>
       </Link>
+      <Link href="/admin/analysis/platform">
+        <div
+          className={`text-center py-5 hover:bg-neutral-200 transition ${
+            pathname === "/admin/analysis/platform" && "bg-neutral-200"
+          }`}
+        >
+          플랫폼별
+        </div>
+      </Link>
       <Link href="/admin/analysis/path">
         <div
           className={`text-center py-5 hover:bg-neutral-200 transition ${
             pathname === "/admin/analysis/path" && "bg-neutral-200"
           }`}
         >
-          유입경로별
+          문의경로별
         </div>
       </Link>
       <Link href="/admin/analysis/material">

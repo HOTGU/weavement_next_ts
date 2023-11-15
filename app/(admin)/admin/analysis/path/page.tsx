@@ -3,32 +3,15 @@ import React from "react";
 import { redirect } from "next/navigation";
 import qs from "query-string";
 
-import getChartDataByPath from "@/actions/db/getChartDataByPath";
-import DateSearch from "@/components/admin/analysis/DateSearch";
-import PieGraph from "@/components/admin/analysis/PieGraph";
-import YearSearch from "@/components/admin/analysis/YearSearch";
 import { IAnalysisParams } from "../page";
+import DateSearch from "@/components/admin/analysis/DateSearch";
+import YearSearch from "@/components/admin/analysis/YearSearch";
+import PieGraph from "@/components/admin/analysis/PieGraph";
 import BarGraph from "@/components/admin/analysis/BarGraph";
 import DataList from "@/components/admin/analysis/DataList";
 
 interface AnalysisParams {
   searchParams: IAnalysisParams;
-}
-
-type PlatformKind =
-  | "홈페이지"
-  | "블로그"
-  | "인스타그램"
-  | "페이스북"
-  | "유튜브"
-  | "기존고객"
-  | "소개"
-  | "기타"
-  | "알수없음";
-
-export interface PathChartType {
-  categories: string[];
-  series: { name: PlatformKind; data: number[] }[];
 }
 
 const AnalysisPathPage = async ({ searchParams }: AnalysisParams) => {
@@ -39,7 +22,6 @@ const AnalysisPathPage = async ({ searchParams }: AnalysisParams) => {
     });
     redirect(url);
   }
-  const data = await getChartDataByPath(searchParams);
 
   return (
     <div className="flex-1 bg-neutral-50 rounded-lg p-6">
@@ -48,15 +30,11 @@ const AnalysisPathPage = async ({ searchParams }: AnalysisParams) => {
         <YearSearch />
       </div>
       <div className="flex items-center gap-4 mt-4">
-        <div className="w-3/4">
-          <BarGraph data={data} stacked />
-        </div>
-        <div className="w-1/4 h-full">
-          <PieGraph data={data} />
-        </div>
+        <div className="w-3/4">{/* <BarGraph data={data} stacked /> */}</div>
+        <div className="w-1/4 h-full">{/* <PieGraph data={data} /> */}</div>
       </div>
       <div className="mt-4">
-        <DataList data={data} searchParams={searchParams} />
+        {/* <DataList data={data} searchParams={searchParams} /> */}
       </div>
     </div>
   );

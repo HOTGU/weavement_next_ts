@@ -5,23 +5,21 @@ export interface IAnalysisParams {
   year: number;
 }
 
-export interface IChartDataTypes {
-  categories: string[];
-  series: { name: PlatformKind | StateKind; data: number[] }[];
-}
-
-type PlatformKind =
+type PathKind =
   | "홈페이지"
-  | "블로그"
-  | "인스타그램"
-  | "페이스북"
-  | "유튜브"
-  | "기존고객"
-  | "소개"
-  | "기타"
-  | "알수없음";
-
-type StateKind = "문의" | "계약";
+  | "대표전화(HP)"
+  | "대표문자(HP)"
+  | "블로그(전화)"
+  | "블로그(문자)"
+  | "대표메일"
+  | "카카오톡"
+  | "카카오톡(채널)"
+  | "인스타(전화)"
+  | "인스타(문자)"
+  | "인스타(DM)"
+  | "유튜브(전화)"
+  | "유튜브(문자)"
+  | "기타";
 
 const AdminPage = async () => {
   redirect("/admin/analysis/state");

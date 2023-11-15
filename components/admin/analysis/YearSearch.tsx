@@ -10,7 +10,6 @@ const YearSearch = () => {
   const pathname = usePathname();
   const router = useRouter();
   const paramsYear = params.get("year");
-  console.log(pathname);
   const [open, setOpen] = useState(false);
   const [years, setYears] = useState<number[]>([]);
 
