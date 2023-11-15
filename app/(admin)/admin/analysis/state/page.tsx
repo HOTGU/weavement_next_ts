@@ -27,6 +27,10 @@ const AnalysisStatePage = async ({ searchParams }: AnalysisParams) => {
   const barData = await getBarDataByState(searchParams);
   const pieData = await getPieDataByState(searchParams);
 
+  if (!barData || !pieData) {
+    return <div>차트 데이터 가져오는 도중 오류발생</div>;
+  }
+
   return (
     <div className="flex-1 bg-neutral-50 rounded-lg p-6">
       <div className="flex justify-between">
@@ -43,6 +47,7 @@ const AnalysisStatePage = async ({ searchParams }: AnalysisParams) => {
             series={pieData.series}
             total={pieData.total}
             colors={pieData.colors}
+            showLegend
           />
         </div>
       </div>

@@ -10,9 +10,16 @@ interface IGraph {
   labels: string[];
   total: number;
   colors?: string[];
+  showLegend?: boolean;
 }
 
-const PieGraph = ({ series, labels, total, colors }: IGraph) => {
+const PieGraph = ({
+  series,
+  labels,
+  total,
+  colors,
+  showLegend = false,
+}: IGraph) => {
   const colorsArr = colors
     ? colors
     : [
@@ -32,12 +39,11 @@ const PieGraph = ({ series, labels, total, colors }: IGraph) => {
     labels,
     colors: colorsArr,
     legend: {
-      show: true,
+      show: showLegend,
       position: "top",
     },
     dataLabels: {
       formatter(val: number, opts) {
-        // const count = opts.w.globals.seriesTotals[opts.seriesIndex];
         return `${val.toFixed(1)}%`;
       },
     },
@@ -49,8 +55,10 @@ const PieGraph = ({ series, labels, total, colors }: IGraph) => {
             show: true,
             total: {
               show: true,
-              label: "총문의",
-              fontSize: "14",
+              label: "합계",
+              fontSize: "16",
+              color: "black",
+              fontWeight: "800",
               formatter: function (w) {
                 return `${total}`;
               },
@@ -67,7 +75,7 @@ const PieGraph = ({ series, labels, total, colors }: IGraph) => {
         type="donut"
         options={options}
         series={options.series}
-        height={400}
+        height={300}
       />
     </div>
   );
