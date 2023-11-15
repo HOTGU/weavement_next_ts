@@ -1,11 +1,10 @@
 "use client";
 
 import { IAnalysisParams } from "@/app/(admin)/admin/analysis/page";
-import { IChartDataTypes } from "@/app/(admin)/admin/analysis/page";
 import React, { useMemo } from "react";
 
 interface IBarGraph {
-  data: IChartDataTypes;
+  data: any;
   searchParams: IAnalysisParams;
   isState?: Boolean;
 }
@@ -13,42 +12,42 @@ interface IBarGraph {
 const DataList = ({ searchParams, data, isState }: IBarGraph) => {
   const date = searchParams?.date;
 
-  const type = useMemo(() => {
-    const list = [];
-    let name = "";
-    if (date === "month") {
-      name = "월별";
-      for (let i = 0; i < 12; i++) {
-        list.push(`${i + 1}월`);
-      }
-    }
-    if (date === "quarter") {
-      name = "분기별";
-      for (let i = 0; i < 4; i++) {
-        list.push(`${i + 1}분기`);
-      }
-    }
-    return { name, list };
-  }, [date]);
+  // const type = useMemo(() => {
+  // const list = [];
+  // let name = "";
+  //   if (date === "month") {
+  //     name = "월별";
+  //     for (let i = 0; i < 12; i++) {
+  //       list.push(`${i + 1}월`);
+  //     }
+  //   }
+  //   if (date === "quarter") {
+  //     name = "분기별";
+  //     for (let i = 0; i < 4; i++) {
+  //       list.push(`${i + 1}분기`);
+  //     }
+  //   }
+  //   return { name, list };
+  // }, [date]);
 
-  const list = useMemo(() => {
-    const arr = new Array();
+  // const list = useMemo(() => {
+  //   const arr = new Array();
 
-    for (let i = 0; i < type.list.length; i++) {
-      const dataOfDate = data.series.map((item) => item.data[i]);
-      arr.push(dataOfDate);
-    }
+  //   for (let i = 0; i < type.list.length; i++) {
+  //     const dataOfDate = data.series.map((item) => item.data[i]);
+  //     arr.push(dataOfDate);
+  //   }
 
-    return arr;
-  }, [date]);
+  //   return arr;
+  // }, [date]);
 
-  const labels = useMemo(() => {
-    return data.series.map((item) => item.name);
-  }, []);
+  // const labels = useMemo(() => {
+  //   return data.series.map((item) => item.name);
+  // }, []);
 
   return (
     <div className="space-y-4 mt-10">
-      <div className="flex text-neutral-500 border-b pb-4 text-left">
+      {/* <div className="flex text-neutral-500 border-b pb-4 text-left">
         <div className="flex-1">{type.name}</div>
         {labels.map((label) => (
           <div key={label} className="w-24">
@@ -81,7 +80,7 @@ const DataList = ({ searchParams, data, isState }: IBarGraph) => {
             </>
           )}
         </div>
-      ))}
+      ))} */}
     </div>
   );
 };
