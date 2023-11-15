@@ -86,7 +86,10 @@ const Navbar = ({ currentUser }: CurrentUserProps) => {
         </div>
         {currentUser && currentUser.isAdmin && (
           <Link
-            href="/admin"
+            href={{
+              pathname: "/admin/analysis/state",
+              query: { date: "month", year: new Date().getFullYear() },
+            }}
             className="fixed bottom-10 right-1/2 translate-x-1/2 flex gap-1 text-black items-center bg-white rounded-full px-4 py-1 shadow-lg cursor hover:scale-105 transition cursor-pointer"
           >
             Admin

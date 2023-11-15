@@ -25,7 +25,7 @@ model Contact {
   schedule      String?
   description   String?
   images        String[]
-  knowPlatform  String?
+  knowPlatform  String    @default("알수없음")
   contactPath   String    @default("홈페이지")
   clientCompany String?
   clientRequest String?

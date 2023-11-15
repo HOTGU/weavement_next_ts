@@ -12,7 +12,6 @@ interface PortfolioBlockProps {
 }
 
 const PortfolioBlock = ({ portfolio }: PortfolioBlockProps) => {
-  const router = useRouter();
   const updatePortfolio = useUpdatePortfolio();
   const deletePortfolioConfirm = useDeletePortfolioConfirm();
 

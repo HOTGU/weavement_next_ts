@@ -51,7 +51,9 @@ const ContactBlock = ({ contact }: ContactBlockProps) => {
         </div>
       </div>
       <div className="truncate">
-        {contact.clientCompany ? contact.clientCompany : contact.client[0].name}
+        {contact.clientCompany
+          ? contact.clientCompany
+          : contact.client[0]?.name}
       </div>
       {contact.client.length > 0 && contact.client[0] && (
         <div className="text-xs text-neutral-500">

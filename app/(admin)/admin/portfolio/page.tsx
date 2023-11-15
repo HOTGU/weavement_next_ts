@@ -10,7 +10,8 @@ interface PortfolioProps {
 }
 
 const PortfolioPage = async ({ searchParams }: PortfolioProps) => {
-  const { portfolios, allPage } = await getPortfolios(searchParams);
+  const params = { ...searchParams, take: 20 };
+  const { portfolios, allPage } = await getPortfolios(params);
 
   return (
     <Container>

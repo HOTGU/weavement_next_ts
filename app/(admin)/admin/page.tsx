@@ -1,9 +1,7 @@
-import React from "react";
-
-import Container from "@/components/Container";
+import { redirect } from "next/navigation";
 
 const AdminPage = async () => {
-  return <Container>Admin Home</Container>;
+  redirect("/admin/analysis");
 };
 
 export default AdminPage;

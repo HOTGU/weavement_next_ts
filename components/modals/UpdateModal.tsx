@@ -88,6 +88,7 @@ const UpdateModal = () => {
             disabled={isLoading}
             placeholder="알게된경로"
             label="알게된경로"
+            isClearable={false}
           />
           <Select
             options={selectOptions.contactPathOptions}
