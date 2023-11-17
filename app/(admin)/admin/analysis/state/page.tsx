@@ -20,7 +20,7 @@ const AnalysisStatePage = async ({ searchParams }: AnalysisParams) => {
   if (!searchParams.date) {
     const url = qs.stringifyUrl({
       url: "/admin/analysis/state",
-      query: { date: "month", year: 2023 },
+      query: { date: "month", year: new Date().getFullYear() },
     });
     redirect(url);
   }

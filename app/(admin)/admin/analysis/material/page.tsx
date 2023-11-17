@@ -18,7 +18,7 @@ const AnalysisMaterialPage = async ({ searchParams }: AnalysisParams) => {
   if (!searchParams.year) {
     const url = qs.stringifyUrl({
       url: "/admin/analysis/material",
-      query: { year: 2023 },
+      query: { year: new Date().getFullYear() },
     });
     redirect(url);
   }

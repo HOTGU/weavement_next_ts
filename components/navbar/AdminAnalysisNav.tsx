@@ -36,7 +36,7 @@ const AdminAnalysisNav = () => {
           소재별
         </div>
       </Link>
-      {/* <Link href="/admin/analysis/path">
+      <Link href="/admin/analysis/path">
         <div
           className={`text-center py-5 hover:bg-neutral-200 transition ${
             pathname === "/admin/analysis/path" && "bg-neutral-200"
@@ -44,7 +44,7 @@ const AdminAnalysisNav = () => {
         >
           문의경로별
         </div>
-      </Link> */}
+      </Link>
     </div>
   );
 };
