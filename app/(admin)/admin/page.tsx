@@ -1,9 +1,17 @@
 import getUsers from "@/actions/db/getUsers";
+import getCurrentUser from "@/actions/getCurrentUser";
 import Container from "@/components/Container";
 import UserBlock from "@/components/admin/user/UserBlock";
 import UserCreateButton from "@/components/admin/user/UserCreateButton";
+import { redirect } from "next/navigation";
 
 const AdminPage = async () => {
+  const currentUser = await getCurrentUser();
+
+  if (currentUser?.admin_id !== process.env.MASTER_ID) {
+    return redirect("/admin/analysis/state");
+  }
+
   const users = await getUsers();
 
   if (!users) return <div>유저 정보 가져오는 도중 에러발생</div>;
