@@ -3,6 +3,9 @@ import getCurrentUser from "@/actions/getCurrentUser";
 import Container from "@/components/Container";
 import UserBlock from "@/components/admin/user/UserBlock";
 import UserCreateButton from "@/components/admin/user/UserCreateButton";
+import DeleteUserConfirm from "@/components/confirms/DeleteUserConfirm";
+import CreateUserModal from "@/components/modals/CreateUserModal";
+import UpdateUserModal from "@/components/modals/UpdateUserModal";
 import { redirect } from "next/navigation";
 
 const AdminPage = async () => {
@@ -18,6 +21,9 @@ const AdminPage = async () => {
 
   return (
     <Container>
+      <CreateUserModal />
+      <UpdateUserModal />
+      <DeleteUserConfirm />
       <div className="flex flex-col mx-auto gap-6 w-[500px] mt-4 p-4 border rounded">
         <div className=" self-center font-bold text-2xl">위브먼트 직원일동</div>
         <div className="py-4 flex flex-col gap-4">
