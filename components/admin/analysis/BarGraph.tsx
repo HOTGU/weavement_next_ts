@@ -9,11 +9,17 @@ interface IBarGraph {
   categories?: string[];
   series?: any[];
   stacked?: boolean;
-  date?: "month" | "quarter";
+  setColorByCategory?: boolean;
 }
 
-const BarGraph = ({ date, categories, series, stacked = false }: IBarGraph) => {
+const BarGraph = ({
+  categories,
+  series,
+  stacked = false,
+  setColorByCategory = false,
+}: IBarGraph) => {
   const option: ApexOptions = {
+    series,
     colors: [
       "#F97F51",
       "#1B9CFC",
@@ -27,19 +33,8 @@ const BarGraph = ({ date, categories, series, stacked = false }: IBarGraph) => {
     ],
     xaxis: {
       categories,
-      labels: {
-        formatter(value) {
-          if (date) {
-            const string = date === "month" ? "월" : "분기";
-            return `${value}${string}`;
-          }
-          return `${value}`;
-        },
-      },
-      crosshairs: {
-        show: true,
-      },
     },
+
     chart: {
       stacked,
     },
@@ -52,23 +47,38 @@ const BarGraph = ({ date, categories, series, stacked = false }: IBarGraph) => {
       shared: true,
       intersect: false,
       theme: "dark",
+      marker: {
+        show: setColorByCategory ? false : true,
+      },
+      y: {
+        title: {
+          formatter: function (name) {
+            if (setColorByCategory) return "";
+            return `${name}`;
+          },
+        },
+      },
       fixed: {
         enabled: true,
-        position: "topRight",
+        position: "topLeft",
       },
     },
     plotOptions: {
       bar: {
-        borderRadius: 4,
+        borderRadius: 2,
+        distributed: setColorByCategory,
+        barHeight: "100%",
       },
     },
     legend: {
       show: true,
-      position: "top",
+      position: "right",
     },
   };
 
-  return <Chart type="bar" options={option} series={series} height={400} />;
+  return (
+    <Chart type="bar" options={option} series={option.series} height={400} />
+  );
 };
 
 export default BarGraph;

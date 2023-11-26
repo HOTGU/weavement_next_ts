@@ -20,12 +20,16 @@ const AnalysisStatePage = async ({ searchParams }: AnalysisParams) => {
   if (!searchParams.date) {
     const url = qs.stringifyUrl({
       url: "/admin/analysis/state",
-      query: { date: "month", year: 2023 },
+      query: { date: "month", year: new Date().getFullYear() },
     });
     redirect(url);
   }
   const barData = await getBarDataByState(searchParams);
   const pieData = await getPieDataByState(searchParams);
+
+  if (!barData || !pieData) {
+    return <div>차트 데이터 가져오는 도중 오류발생</div>;
+  }
 
   return (
     <div className="flex-1 bg-neutral-50 rounded-lg p-6">
@@ -43,6 +47,7 @@ const AnalysisStatePage = async ({ searchParams }: AnalysisParams) => {
             series={pieData.series}
             total={pieData.total}
             colors={pieData.colors}
+            showLegend
           />
         </div>
       </div>

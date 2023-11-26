@@ -27,15 +27,6 @@ const AdminAnalysisNav = () => {
           플랫폼별
         </div>
       </Link>
-      <Link href="/admin/analysis/path">
-        <div
-          className={`text-center py-5 hover:bg-neutral-200 transition ${
-            pathname === "/admin/analysis/path" && "bg-neutral-200"
-          }`}
-        >
-          문의경로별
-        </div>
-      </Link>
       <Link href="/admin/analysis/material">
         <div
           className={`text-center py-5 hover:bg-neutral-200 transition ${
@@ -43,6 +34,15 @@ const AdminAnalysisNav = () => {
           }`}
         >
           소재별
+        </div>
+      </Link>
+      <Link href="/admin/analysis/path">
+        <div
+          className={`text-center py-5 hover:bg-neutral-200 transition ${
+            pathname === "/admin/analysis/path" && "bg-neutral-200"
+          }`}
+        >
+          문의경로별
         </div>
       </Link>
     </div>

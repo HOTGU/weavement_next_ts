@@ -1,13 +1,18 @@
 import prisma from "@/libs/prismadb";
 
+interface IChartDataTypes {
+  categories: string[];
+  series: { data: number[] }[];
+}
+
 interface IAnalysisParams {
   year: number;
 }
 
 export default async (params: IAnalysisParams) => {
-  const { year } = params;
-
   try {
+    const { year } = params;
+
     const contacts = await prisma.contact.aggregateRaw({
       pipeline: [
         {
@@ -44,7 +49,7 @@ export default async (params: IAnalysisParams) => {
         },
         {
           $group: {
-            _id: { platform: "$knowPlatform" },
+            _id: { material: "$meterial" },
             count: {
               $sum: 1,
             },
@@ -53,32 +58,37 @@ export default async (params: IAnalysisParams) => {
       ],
     });
 
-    let data = {
-      total: 0,
-      labels: [
-        "블로그",
-        "홈페이지",
-        "인스타그램",
-        "페이스북",
-        "유튜브",
-        "기존고객",
-        "소개",
+    const data = {
+      categories: [
+        "EPS",
+        "목재",
+        "FRP",
+        "금속",
+        "3D프린팅",
+        "패브릭",
+        "에어",
+        "ALC",
+        "폼보드",
+        "포맥스",
+        "종이",
+        "레진",
+        "디자인",
         "기타",
-        "알수없음",
       ],
-      series: new Array(9).fill(0),
-    };
+      series: [{ data: new Array(14).fill(0) }],
+    } as IChartDataTypes;
 
     // @ts-ignore
     contacts.map((contact) => {
-      const platform = contact._id.platform;
+      const materials = contact._id.material;
       const count = contact.count;
 
-      const dataIndex = data.labels.findIndex(
-        (dataPlatform) => dataPlatform === platform
-      );
-      data.total += count;
-      data.series[dataIndex] = count;
+      materials.map((material: string) => {
+        const dataIndex = data.categories.findIndex(
+          (dataMaterial) => dataMaterial === material
+        );
+        data.series[0].data[dataIndex] += count;
+      });
     });
 
     return data;

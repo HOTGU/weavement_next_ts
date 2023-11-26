@@ -1,5 +1,3 @@
-import Container from "@/components/Container";
-import ContactNav from "@/components/admin/contact/ContactNav";
 import DeleteClientConfirm from "@/components/confirms/DeleteClientConfirm";
 import DeleteContactConfirm from "@/components/confirms/DeleteContactConfirm";
 import AddClientModal from "@/components/modals/AddClientModal";
@@ -24,9 +22,7 @@ export default async function RootLayout({
       <DeleteClientConfirm />
       <DeleteContactConfirm />
       <FileModal />
-      <Container>
-        <ContactNav />
-      </Container>
+
       <div>{children}</div>
     </div>
   );

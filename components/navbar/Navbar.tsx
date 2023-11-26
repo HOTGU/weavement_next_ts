@@ -87,8 +87,14 @@ const Navbar = ({ currentUser }: CurrentUserProps) => {
         {currentUser && currentUser.isAdmin && (
           <Link
             href={{
-              pathname: "/admin/analysis/state",
-              query: { date: "month", year: new Date().getFullYear() },
+              pathname:
+                currentUser.admin_id === process.env.NEXT_PUBLIC_MASTER_ID
+                  ? "/admin"
+                  : "/admin/analysis/state",
+              query:
+                currentUser.admin_id === process.env.NEXT_PUBLIC_MASTER_ID
+                  ? {}
+                  : { date: "month", year: new Date().getFullYear() },
             }}
             className="fixed bottom-10 right-1/2 translate-x-1/2 flex gap-1 text-black items-center bg-white rounded-full px-4 py-1 shadow-lg cursor hover:scale-105 transition cursor-pointer"
           >

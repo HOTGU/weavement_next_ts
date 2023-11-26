@@ -1,5 +1,10 @@
 import prisma from "@/libs/prismadb";
 
+interface IChartDataTypes {
+  categories: string[];
+  series: { data: number[] }[];
+}
+
 interface IAnalysisParams {
   year: number;
 }
@@ -44,7 +49,7 @@ export default async (params: IAnalysisParams) => {
         },
         {
           $group: {
-            _id: { platform: "$knowPlatform" },
+            _id: { path: "$contactPath" },
             count: {
               $sum: 1,
             },
@@ -53,32 +58,35 @@ export default async (params: IAnalysisParams) => {
       ],
     });
 
-    let data = {
-      total: 0,
-      labels: [
-        "블로그",
+    const data = {
+      categories: [
         "홈페이지",
-        "인스타그램",
-        "페이스북",
-        "유튜브",
-        "기존고객",
-        "소개",
+        "대표전화(HP)",
+        "대표문자(HP)",
+        "블로그(전화)",
+        "블로그(문자)",
+        "대표메일",
+        "카카오톡",
+        "카카오톡(채널)",
+        "인스타(전화)",
+        "인스타(문자)",
+        "인스타(DM)",
+        "유튜브(전화)",
+        "유튜브(문자)",
         "기타",
-        "알수없음",
       ],
-      series: new Array(9).fill(0),
-    };
+      series: [{ data: new Array(14).fill(0) }],
+    } as IChartDataTypes;
 
-    // @ts-ignore
+    //@ts-ignore
     contacts.map((contact) => {
-      const platform = contact._id.platform;
+      const path = contact._id.path;
       const count = contact.count;
 
-      const dataIndex = data.labels.findIndex(
-        (dataPlatform) => dataPlatform === platform
-      );
-      data.total += count;
-      data.series[dataIndex] = count;
+      const index = data.categories.findIndex((value) => value === path);
+      if (index > -1) {
+        data.series[0].data[index] += count;
+      }
     });
 
     return data;

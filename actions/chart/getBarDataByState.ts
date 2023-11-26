@@ -28,12 +28,19 @@ const initTotalAndSuccess = ({
   date: "quarter" | "month" | "year";
 }) => {
   let length = 0;
-  if (date === "month") length = 12;
-  if (date === "quarter") length = 4;
+  let dateString = "";
+  if (date === "month") {
+    length = 12;
+    dateString = "월";
+  }
+  if (date === "quarter") {
+    length = 4;
+    dateString = "분기";
+  }
 
   for (let i = 0; i < length; i++) {
     data.series.map((item) => item.data.push(0));
-    data.categories.push(`${i + 1}`);
+    data.categories.push(`${i + 1}${dateString}`);
   }
 };
 
@@ -159,6 +166,6 @@ export default async (params: IAnalysisParams) => {
       console.log(error);
     }
 
-    throw new Error(error);
+    return null;
   }
 };

@@ -20,12 +20,16 @@ const AnalysisPathPage = async ({ searchParams }: AnalysisParams) => {
   if (!searchParams.date) {
     const url = qs.stringifyUrl({
       url: "/admin/analysis/platform",
-      query: { date: "month", year: 2023 },
+      query: { date: "month", year: new Date().getFullYear() },
     });
     redirect(url);
   }
   const barData = await getBarDataByPlatform(searchParams);
-  // const pieData = await getPieDataByPlatform(searchParams);
+  const pieData = await getPieDataByPlatform(searchParams);
+
+  if (!barData || !pieData) {
+    return <div>차트 데이터 가져오는 도중 오류발생</div>;
+  }
 
   return (
     <div className="flex-1 bg-neutral-50 rounded-lg p-6">
@@ -41,7 +45,13 @@ const AnalysisPathPage = async ({ searchParams }: AnalysisParams) => {
             stacked
           />
         </div>
-        <div className="w-1/4 h-full">{/* <PieGraph data={data} /> */}</div>
+        <div className="w-1/4 h-full">
+          <PieGraph
+            labels={pieData.labels}
+            series={pieData.series}
+            total={pieData.total}
+          />
+        </div>
       </div>
       <div className="mt-4">
         {/* <DataList data={data} searchParams={searchParams} /> */}
