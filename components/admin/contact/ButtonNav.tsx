@@ -1,15 +1,17 @@
 "use client";
 
-import useCreateModal from "@/hooks/useCreateModal";
-import useSearchModal from "@/hooks/useSearchModal";
-import { useRouter } from "next/navigation";
 import React from "react";
 import { AiOutlineHome, AiOutlinePlus, AiOutlineSearch } from "react-icons/ai";
+import { useRouter } from "next/navigation";
+
+import useCreateModal from "@/hooks/useCreateModal";
+import useSearchModal from "@/hooks/useSearchModal";
 
 const ButtonNav = () => {
   const createModal = useCreateModal();
   const searchModal = useSearchModal();
   const router = useRouter();
+
   return (
     <div className="flex gap-2 items-center justify-center">
       <div
