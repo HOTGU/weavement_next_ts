@@ -3,7 +3,6 @@ import React from "react";
 import StateSearch from "./StateSearch";
 import ButtonNav from "./ButtonNav";
 import SearchResult from "./SearchResult";
-import { ContactWithClients } from "@/types";
 
 const ContactNav = () => {
   return (
