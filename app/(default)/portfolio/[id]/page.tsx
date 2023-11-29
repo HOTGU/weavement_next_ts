@@ -1,5 +1,5 @@
 import React from "react";
-import { Metadata } from "next";
+import { Metadata, MetadataRoute } from "next";
 import Image from "next/legacy/image";
 
 import getPortfolio, { IParams } from "@/actions/db/getPortfolio";
@@ -27,7 +27,7 @@ export const generateMetadata = async ({
     },
     keywords: portfolio.metaKeywords,
     alternates: {
-      canonical: "https://weavement.co.kr/portfolio",
+      canonical: `https://weavement.co.kr/portfolio/${portfolio.id}`,
     },
     openGraph: {
       title: `위브먼트 | ${portfolio.metaTitle}`,
@@ -37,7 +37,7 @@ export const generateMetadata = async ({
       // @ts-ignore
       type: "website",
       siteName: "위브먼트",
-      url: "https://weavement.co.kr/portfolio",
+      url: `https://weavement.co.kr/portfolio/${portfolio.id}`,
       images: [
         {
           url: "/meta_img.png",
