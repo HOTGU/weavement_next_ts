@@ -1,5 +1,6 @@
 import prisma from "@/libs/prismadb";
 import addDays from "date-fns/addDays";
+import { cache } from "react";
 
 export interface IContactParams {
   pm?: string;
@@ -9,7 +10,9 @@ export interface IContactParams {
   endDate?: string;
 }
 
-export default async (params: IContactParams) => {
+export const revalidate = 3600;
+
+export default cache(async (params: IContactParams) => {
   try {
     const { pm, state, term, startDate, endDate } = params;
 
@@ -67,4 +70,4 @@ export default async (params: IContactParams) => {
 
     throw new Error(error);
   }
-};
+});

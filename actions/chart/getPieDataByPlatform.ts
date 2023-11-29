@@ -56,8 +56,8 @@ export default async (params: IAnalysisParams) => {
     let data = {
       total: 0,
       labels: [
-        "블로그",
         "홈페이지",
+        "블로그",
         "인스타그램",
         "페이스북",
         "유튜브",

@@ -1,3 +1,4 @@
+import ContactDownloadConfirm from "@/components/confirms/ContactDownloadConfirm";
 import DeleteClientConfirm from "@/components/confirms/DeleteClientConfirm";
 import DeleteContactConfirm from "@/components/confirms/DeleteContactConfirm";
 import AddClientModal from "@/components/modals/AddClientModal";
@@ -21,6 +22,7 @@ export default async function RootLayout({
       <UpdateClientModal />
       <DeleteClientConfirm />
       <DeleteContactConfirm />
+      <ContactDownloadConfirm />
       <FileModal />
 
       <div>{children}</div>

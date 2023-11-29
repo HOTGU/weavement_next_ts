@@ -18,7 +18,7 @@ const ContactPage = async ({ searchParams }: AdminProps) => {
     <Container>
       <div className="flex items-center justify-between">
         <ContactNav />
-        <ExcelDownload contacts={contacts} />
+        <ExcelDownload />
       </div>
       <div className="flex gap-4 sm:gap-8 flex-col sm:flex-row">
         <div className="w-full sm:w-fit flex flex-row sm:flex-col gap-2 h-auto sm:h-[calc(100vh-126px)] overflow-x-auto sm:overflow-y-auto pr-4 py-2">
