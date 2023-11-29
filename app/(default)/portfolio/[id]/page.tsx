@@ -6,6 +6,7 @@ import getPortfolio, { IParams } from "@/actions/db/getPortfolio";
 import getPortfolios from "@/actions/db/getPortfolios";
 import Container from "@/components/Container";
 import metadataConfig from "@/constants/metadataConfig";
+import prisma from "@/libs/prismadb";
 
 export const generateMetadata = async ({
   params,
@@ -48,7 +49,9 @@ export const generateMetadata = async ({
 };
 
 export const generateStaticParams = async () => {
-  const { portfolios } = await getPortfolios({});
+  // const { portfolios } = await getPortfolios({});
+
+  const portfolios = await prisma.portfolio.findMany({});
 
   return portfolios.map((portfolio) => ({
     id: String(portfolio.id),
