@@ -20,7 +20,7 @@ const Footer = () => {
           </div>
           <div className="flex flex-col-reverse md:flex-row justify-between items-center mt-0 md:mt-6 ">
             <div className="text-neutral-500 text-center md:text-start text-xs md:text-base">
-              <div>영업시간 09:00 ~ 18:00 | 토,일 휴무</div>
+              <div>영업시간 10:00 ~ 19:00 | 토,일 휴무</div>
               <div>서울시 강서구 양천로 738 한강G트리타워, 711호</div>
               <div>사업자등록번호 313-47-00901</div>
             </div>
