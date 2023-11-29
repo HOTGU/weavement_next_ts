@@ -25,13 +25,18 @@ const PieGraph = ({
     : [
         "#F97F51",
         "#1B9CFC",
-        "#3B3B98",
-        "#8e44ad",
-        "#2c3e50",
+        "#F8EFBA",
         "#58B19F",
-        "#FC427B",
+        "#2C3A47",
         "#6D214F",
+        "#182C61",
+        "#FC427B",
+        "#BDC581",
+        "#82589F",
+        "#25CCF7",
+        "#EAB543",
         "#CAD3C8",
+        "#9AECDB",
       ];
 
   const options: ApexOptions = {
