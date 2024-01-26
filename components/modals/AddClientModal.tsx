@@ -100,6 +100,7 @@ const AddClientModal = () => {
       actionLabel="생성"
       onSubmit={handleSubmit(onSubmit)}
       disabled={isLoading}
+      enableEnterKey
     />
   );
 };

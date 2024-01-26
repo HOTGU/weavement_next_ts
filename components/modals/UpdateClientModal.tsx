@@ -90,12 +90,14 @@ const UpdateClientModal = () => {
 
   return (
     <Modal
-      isOpen={updateClientModal.isOpen}
       title="클라이언트 수정"
+      isOpen={updateClientModal.isOpen}
+      disabled={isLoading}
       onClose={updateClientModal.onClose}
       actionLabel="수정"
       body={body}
       onSubmit={handleSubmit(onSubmit)}
+      enableEnterKey
     />
   );
 };
