@@ -60,7 +60,9 @@ const ContactBlock = ({ contact }: ContactBlockProps) => {
           {contact.client[0].phone}
         </div>
       )}
-      {(contact.pm === "미정" || contact.pm === "") && (
+      {(contact.pm === "미정" ||
+        contact.pm === "" ||
+        contact.state === "문의") && (
         <span className="absolute flex h-3 w-3 -top-1 -right-1 z-20">
           <span className="absolute animate-ping inline-flex bg-accent w-3 h-3 top-0 right-0 rounded-full"></span>
           <span className=" bg-accent inline-flex w-3 h-3 rounded-full"></span>

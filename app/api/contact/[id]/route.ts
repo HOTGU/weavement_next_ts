@@ -35,6 +35,10 @@ export async function PUT(
 
     const body = await request.json();
 
+    if (body.state === "문의" && body.pm && body.pm !== "미정") {
+      body.state = "상담";
+    }
+
     const updatedContact = await prisma.contact.update({
       where: {
         id,
