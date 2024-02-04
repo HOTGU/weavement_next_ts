@@ -5,8 +5,7 @@ import { IoMdClose } from "react-icons/io";
 
 import Slider from "@/components/Slider";
 import useFileModal from "@/hooks/useFileModal";
-import axios from "axios";
-import { toast } from "react-hot-toast";
+import useDownloadFilesConfirm from "@/hooks/useDownloadFilesConfirm";
 
 interface ContactImagsProps {
   images: string[];
@@ -16,46 +15,14 @@ interface ContactImagsProps {
 
 const ContactImages = ({ images, show, setShow }: ContactImagsProps) => {
   const fileModal = useFileModal();
-  const [loading, setLoading] = useState(false);
+  const downloadImagesConfirm = useDownloadFilesConfirm();
 
-  const handleImagesDownload = async () => {
-    if (loading) {
-      return;
-    }
-    const loadingToast = toast.loading("다운로드중..");
-    setLoading(true);
-    try {
-      images.map(async (image: string) => {
-        const key = image.split("com/")[1]; // ex)CONTACT/production/올리/2023년10월3일6시59분__DSC_1255.JPG
-        const keyArrayOfSlash = key.split("/"); // ex) ["CONTACT", "production", "올리", "2023년10월3일6시59분__DSC_1255.JPG"]
-        const fileNameArray = keyArrayOfSlash.filter((item, index) => {
-          if (index === 0 || index === 1) {
-            return false;
-          }
-
-          return true;
-        }); // ex) ["올리", "2023년10월3일6시59분__DSC_1255.JPG"]
-        const fileNameStr = fileNameArray.join("-");
-
-        const { data } = await axios.post("/api/contact/file-download", {
-          key,
-        });
-        const a = window.document.createElement("a");
-        a.href = `data:${data.contentType};base64,${data.base64Data}`;
-        a.download = `${fileNameStr}`;
-        a.click();
-        toast.success("파일 다운로드 성공", {
-          id: loadingToast,
-        });
-      });
-    } catch (error) {
-      toast.error("파일 다운로드 실패", { id: loadingToast });
-    } finally {
-      setLoading(false);
-    }
+  const handleFilesDownload = () => {
+    setShow(false);
+    downloadImagesConfirm.onOpen(images);
   };
 
-  const handleImagesUpdate = () => {
+  const handleFilesUpdate = () => {
     setShow(false);
     fileModal.onOpen();
   };
@@ -76,18 +43,14 @@ const ContactImages = ({ images, show, setShow }: ContactImagsProps) => {
           </div>
           <div className="absolute right-10 top-10 flex gap-2">
             <div
-              className={`hover:opacity-70 transition p-2 rounded ${
-                loading
-                  ? "cursor-not-allowed bg-neutral-300"
-                  : "cursor-pointer bg-neutral-100"
-              }`}
-              onClick={handleImagesDownload}
+              className="hover:opacity-70 transition p-2 rounded cursor-pointer bg-neutral-100"
+              onClick={handleFilesDownload}
             >
               🗂️ 파일저장
             </div>
             <div
               className="cursor-pointer hover:opacity-70 transition bg-sky-100 p-2 rounded"
-              onClick={handleImagesUpdate}
+              onClick={handleFilesUpdate}
             >
               📁 파일수정
             </div>
