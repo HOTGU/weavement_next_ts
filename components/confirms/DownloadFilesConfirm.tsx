@@ -37,12 +37,12 @@ const DownloadFilesConfirm = () => {
         a.href = `data:${data.contentType};base64,${data.base64Data}`;
         a.download = `${fileNameStr}`;
         a.click();
-        toast.success("파일 다운로드 성공", {
-          id: loadingToast,
-        });
-        confirm.onClose();
-        fileModal.onClose();
       });
+      toast.success("파일 다운로드 성공", {
+        id: loadingToast,
+      });
+      confirm.onClose();
+      fileModal.onClose();
     } catch (error) {
       toast.error("파일 다운로드 실패", { id: loadingToast });
     } finally {
