@@ -63,6 +63,7 @@ const BarGraph = ({
           },
         },
       },
+
       fixed: {
         enabled: true,
         position: "topLeft",

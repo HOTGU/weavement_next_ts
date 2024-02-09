@@ -24,6 +24,7 @@ const AnalysisPathPage = async ({ searchParams }: AnalysisParams) => {
     });
     redirect(url);
   }
+
   const barData = await getBarDataByPlatform(searchParams);
   const pieData = await getPieDataByPlatform(searchParams);
 
