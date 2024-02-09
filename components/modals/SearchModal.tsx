@@ -137,6 +137,7 @@ const SearchModal = () => {
       actionLabel="검색"
       secondaryActionLabel="초기화"
       secondaryAction={initFilter}
+      enableEnterKey
     />
   );
 };

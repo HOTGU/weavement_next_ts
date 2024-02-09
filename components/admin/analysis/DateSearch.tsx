@@ -14,7 +14,7 @@ const DateSearch = () => {
   const navigateDateByQuery = ({
     date,
   }: {
-    date: "quarter" | "month" | "year";
+    date: "quarter" | "month" | "day";
   }) => {
     {
       let query = {};
@@ -41,6 +41,14 @@ const DateSearch = () => {
         onClick={() => navigateDateByQuery({ date: "quarter" })}
       >
         분기별
+      </div>
+      <div
+        className={`px-4 py-1 rounded border cursor-pointer hover:opacity-70 transition ${
+          date === "day" && "bg-neutral-200"
+        }`}
+        onClick={() => navigateDateByQuery({ date: "day" })}
+      >
+        요일별
       </div>
     </div>
   );

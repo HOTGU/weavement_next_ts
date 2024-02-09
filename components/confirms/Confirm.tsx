@@ -48,7 +48,7 @@ const Confirm = ({
   }
 
   return (
-    <div className="flex items-center justify-center fixed overflow-x-hidden overflow-y-auto inset-0 z-50 ouline-none bg-neutral-800/70">
+    <div className="flex items-center justify-center fixed overflow-x-hidden overflow-y-auto inset-0 z-[60] ouline-none bg-neutral-800/70">
       <div className="relative w-96 my-6 mx-auto h-auto">
         <div
           className={` translate duration-300 h-full ${

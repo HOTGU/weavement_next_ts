@@ -17,38 +17,151 @@ type PlatformKind =
   | "알수없음";
 
 interface IAnalysisParams {
-  date: "month" | "year" | "quarter";
+  date: "month" | "day" | "quarter";
   year: number;
 }
 
-const InitData = ({
-  data,
-  date,
-}: {
-  data: IChartDataTypes;
-  date: "quarter" | "month" | "year";
-}) => {
-  let length = 0;
-  let dateString = "";
-  if (date === "month") {
-    length = 12;
-    dateString = "월";
-  }
-  if (date === "quarter") {
-    length = 4;
-    dateString = "분기";
-  }
-
-  for (let i = 0; i < length; i++) {
-    data.series.map((item) => item.data.push(0));
-    data.categories.push(`${i + 1}${dateString}`);
-  }
-};
-
 export default async (params: IAnalysisParams) => {
-  try {
-    const { date, year } = params;
+  const { date, year } = params;
 
+  let data = {
+    categories: [],
+    series: [
+      { name: "홈페이지", data: [] },
+      { name: "블로그", data: [] },
+      { name: "인스타그램", data: [] },
+      { name: "페이스북", data: [] },
+      { name: "유튜브", data: [] },
+      { name: "기존고객", data: [] },
+      { name: "소개", data: [] },
+      { name: "기타", data: [] },
+      { name: "알수없음", data: [] },
+    ],
+  } as IChartDataTypes;
+
+  const orderByDay = async () => {
+    try {
+      const contacts = await prisma.contact.findMany({
+        where: {
+          createdAt: {
+            gte: new Date(`${year}-01-01T00:59:00.000Z`).toISOString(),
+            lte: new Date(`${year}-12-31T00:59:00.000Z`).toISOString(),
+          },
+        },
+        select: { createdAt: true, knowPlatform: true },
+      });
+
+      const daysArr = [
+        "월요일",
+        "화요일",
+        "수요일",
+        "목요일",
+        "금요일",
+        "토요일",
+        "일요일",
+      ];
+
+      for (let i = 0; i < 7; i++) {
+        data.series.map((item) => item.data.push(0));
+        data.categories.push(daysArr[i]);
+      }
+
+      contacts.map((contact) => {
+        const day = new Date(contact.createdAt).getDay();
+        const dayIndex = day === 0 ? 6 : day - 1;
+
+        data.series.map((item) => {
+          if (item.name === contact.knowPlatform) {
+            item.data[dayIndex] += 1;
+          }
+        });
+      });
+    } catch (error) {
+      if (process.env.NODE_ENV === "development") {
+        console.log(error);
+      }
+
+      return null;
+    }
+  };
+
+  const orderByMonth = async () => {
+    try {
+      const contacts = await prisma.contact.aggregateRaw({
+        pipeline: [
+          {
+            $match: {
+              $expr: {
+                $and: [
+                  {
+                    $gte: [
+                      "$createdAt",
+                      {
+                        $dateFromString: {
+                          dateString: new Date(
+                            `${year}-01-01T00:59:00.000Z`
+                          ).toISOString(),
+                        },
+                      },
+                    ],
+                  },
+                  {
+                    $lte: [
+                      "$createdAt",
+                      {
+                        $dateFromString: {
+                          dateString: new Date(
+                            `${year}-12-31T00:59:00.000Z`
+                          ).toISOString(),
+                        },
+                      },
+                    ],
+                  },
+                ],
+              },
+            },
+          },
+          {
+            $group: {
+              _id: {
+                month: { $month: "$createdAt" },
+                platform: "$knowPlatform",
+              },
+              count: {
+                $sum: 1,
+              },
+            },
+          },
+        ],
+      });
+
+      for (let i = 0; i < 12; i++) {
+        data.series.map((item) => item.data.push(0));
+        data.categories.push(`${i + 1}월`);
+      }
+
+      // @ts-ignore
+      contacts.map((contact) => {
+        const month = contact._id.month;
+        let platform = contact._id.platform;
+        const count = contact.count;
+
+        data.series.map((item) => {
+          if (platform === item.name) {
+            item.data[month - 1] += count;
+          }
+        });
+      });
+    } catch (error) {
+      if (process.env.NODE_ENV === "development") {
+        console.log(error);
+      }
+
+      return null;
+    }
+  };
+
+  const orderByQuarter = async () => {
     const contacts = await prisma.contact.aggregateRaw({
       pipeline: [
         {
@@ -85,7 +198,10 @@ export default async (params: IAnalysisParams) => {
         },
         {
           $group: {
-            _id: { month: { $month: "$createdAt" }, platform: "$knowPlatform" },
+            _id: {
+              month: { $month: "$createdAt" },
+              platform: "$knowPlatform",
+            },
             count: {
               $sum: 1,
             },
@@ -94,22 +210,10 @@ export default async (params: IAnalysisParams) => {
       ],
     });
 
-    let data = {
-      categories: [],
-      series: [
-        { name: "홈페이지", data: [] },
-        { name: "블로그", data: [] },
-        { name: "인스타그램", data: [] },
-        { name: "페이스북", data: [] },
-        { name: "유튜브", data: [] },
-        { name: "기존고객", data: [] },
-        { name: "소개", data: [] },
-        { name: "기타", data: [] },
-        { name: "알수없음", data: [] },
-      ],
-    } as IChartDataTypes;
-
-    InitData({ data, date });
+    for (let i = 0; i < 4; i++) {
+      data.series.map((item) => item.data.push(0));
+      data.categories.push(`${i + 1}분기`);
+    }
 
     // @ts-ignore
     contacts.map((contact) => {
@@ -117,41 +221,35 @@ export default async (params: IAnalysisParams) => {
       let platform = contact._id.platform;
       const count = contact.count;
 
-      if (date === "month") {
-        data.series.map((item) => {
-          if (platform === item.name) {
-            item.data[month - 1] += count;
-          }
-        });
-      }
+      const quarterArr = [
+        [1, 2, 3],
+        [4, 5, 6],
+        [7, 8, 9],
+        [10, 11, 12],
+      ];
 
-      if (date === "quarter") {
-        const quarterArr = [
-          [1, 2, 3],
-          [4, 5, 6],
-          [7, 8, 9],
-          [10, 11, 12],
-        ];
-
-        for (let i = 0; i < quarterArr.length; i++) {
-          const checkQuarter = quarterArr[i].includes(month);
-          if (checkQuarter) {
-            data.series.map((item) => {
-              if (platform === item.name) {
-                item.data[i] += count;
-              }
-            });
-          }
+      for (let i = 0; i < quarterArr.length; i++) {
+        const checkQuarter = quarterArr[i].includes(month);
+        if (checkQuarter) {
+          data.series.map((item) => {
+            if (platform === item.name) {
+              item.data[i] += count;
+            }
+          });
         }
       }
     });
+  };
 
-    return data;
-  } catch (error: any) {
-    if (process.env.NODE_ENV === "development") {
-      console.log(error);
-    }
-
-    return null;
+  if (date === "day") {
+    await orderByDay();
   }
+  if (date === "month") {
+    await orderByMonth();
+  }
+  if (date === "quarter") {
+    await orderByQuarter();
+  }
+
+  return data;
 };

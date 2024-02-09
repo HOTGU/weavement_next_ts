@@ -15,6 +15,7 @@ interface ModalProps {
   disabled?: boolean;
   secondaryAction?: () => void;
   secondaryActionLabel?: string;
+  enableEnterKey?: boolean;
 }
 
 const Modal: React.FC<ModalProps> = ({
@@ -28,12 +29,30 @@ const Modal: React.FC<ModalProps> = ({
   disabled,
   secondaryAction,
   secondaryActionLabel,
+  enableEnterKey = false,
 }) => {
   const [showModal, setShowModal] = useState(isOpen);
 
   useEffect(() => {
     setShowModal(isOpen);
   }, [isOpen]);
+
+  useEffect(() => {
+    const listener = (event: KeyboardEvent) => {
+      if (event.code === "Enter" || event.code === "NumpadEnter") {
+        if (disabled) {
+          return;
+        }
+        handleSubmit();
+      }
+    };
+    if (isOpen && enableEnterKey) {
+      document.addEventListener("keydown", listener);
+      return () => {
+        document.removeEventListener("keydown", listener);
+      };
+    }
+  }, [isOpen, disabled]);
 
   const handleClose = useCallback(() => {
     if (disabled) {
@@ -48,6 +67,7 @@ const Modal: React.FC<ModalProps> = ({
 
   const handleSubmit = useCallback(() => {
     if (disabled) {
+      console.log("disabled");
       return;
     }
 

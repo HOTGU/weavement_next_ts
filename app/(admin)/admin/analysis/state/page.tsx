@@ -5,7 +5,6 @@ import qs from "query-string";
 
 import { IAnalysisParams } from "../page";
 import DateSearch from "@/components/admin/analysis/DateSearch";
-import DataList from "@/components/admin/analysis/DataList";
 import YearSearch from "@/components/admin/analysis/YearSearch";
 import BarGraph from "@/components/admin/analysis/BarGraph";
 import PieGraph from "@/components/admin/analysis/PieGraph";
@@ -24,6 +23,7 @@ const AnalysisStatePage = async ({ searchParams }: AnalysisParams) => {
     });
     redirect(url);
   }
+
   const barData = await getBarDataByState(searchParams);
   const pieData = await getPieDataByState(searchParams);
 

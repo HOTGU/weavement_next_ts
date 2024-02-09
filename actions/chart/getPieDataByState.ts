@@ -9,17 +9,21 @@ export default async (params: IAnalysisParams) => {
   try {
     const total = await prisma.contact.count({
       where: {
-        AND: [
-          { createdAt: { gte: new Date(Date.UTC(year, 1, 1)) } },
-          { createdAt: { lte: new Date(year, 12, 31) } },
-        ],
+        createdAt: {
+          gte: new Date(`${year}-01-01T00:59:00.000Z`).toISOString(),
+          lte: new Date(`${year}-12-31T00:59:00.000Z`).toISOString(),
+        },
       },
     });
     const success = await prisma.contact.count({
       where: {
         AND: [
-          { createdAt: { gte: new Date(Date.UTC(year, 1, 1)) } },
-          { createdAt: { lte: new Date(year, 12, 31) } },
+          {
+            createdAt: {
+              gte: new Date(`${year}-01-01T00:59:00.000Z`).toISOString(),
+              lte: new Date(`${year}-12-31T00:59:00.000Z`).toISOString(),
+            },
+          },
           { OR: [{ state: "계약" }, { state: "완료" }] },
         ],
       },
