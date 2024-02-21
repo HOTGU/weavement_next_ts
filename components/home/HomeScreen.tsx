@@ -25,8 +25,6 @@ const HomeScreen = ({ portfolios }: HomeScreenProps) => {
     return () => clearInterval(interval);
   }, [index, portfolios.length]);
 
-  const text = ["감각적인 제조, 위브먼트", "두번째 위브먼트"];
-
   return (
     <div className="w-full h-full relative overflow-hidden">
       <div className="absolute top-0 left-0 w-screen aspect-video max-h-[100vh] z-10 flex justify-end items-end">
@@ -46,7 +44,6 @@ const HomeScreen = ({ portfolios }: HomeScreenProps) => {
       >
         {thumbs.map((thumb, i) => (
           <motion.div
-            animate={{ opacity: i === index ? 1 : 1 }}
             className="w-screen aspect-video max-h-[100vh] relative"
             key={i}
           >
@@ -55,6 +52,7 @@ const HomeScreen = ({ portfolios }: HomeScreenProps) => {
               src={thumb}
               layout="fill"
               objectFit="cover"
+              priority
             />
           </motion.div>
         ))}
