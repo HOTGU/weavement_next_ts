@@ -1,10 +1,10 @@
 import React from "react";
 import { CiMail, CiPhone } from "react-icons/ci";
+import { FaN } from "react-icons/fa6";
 import NaverImg from "../public/imgs/naver.svg";
 
 import Container from "./Container";
 import Image from "next/legacy/image";
-import { SiNaver, SiInstagram, SiYoutube } from "react-icons/si";
 import Link from "next/link";
 import { FaInstagram, FaYoutube } from "react-icons/fa";
 
@@ -48,11 +48,7 @@ const Footer = () => {
                 className="w-9 h-9 md:w-12 md:h-12 flex rounded justify-center items-center border"
                 aria-label="위브먼트의 네이버 블로그"
               >
-                <img
-                  alt="네이버 로고"
-                  src="imgs/naver.svg"
-                  style={{ width: "25px" }}
-                />
+                <FaN size={20} color="#02C75A" />
               </Link>
               <Link
                 href="https://www.instagram.com/weavement"
