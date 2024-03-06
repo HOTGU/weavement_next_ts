@@ -46,12 +46,18 @@ const Footer = () => {
                 href="https://blog.naver.com/weavement"
                 target="_blank"
                 className="w-9 h-9 md:w-12 md:h-12 flex rounded justify-center items-center border"
+                aria-label="위브먼트의 네이버 블로그"
               >
-                <img src="imgs/naver.svg" style={{ width: "25px" }} />
+                <img
+                  alt="네이버 로고"
+                  src="imgs/naver.svg"
+                  style={{ width: "25px" }}
+                />
               </Link>
               <Link
                 href="https://www.instagram.com/weavement"
                 target="_blank"
+                aria-label="위브먼트의 인스타그램"
                 className="w-9 h-9 md:w-12 md:h-12 flex rounded justify-center items-center border"
               >
                 <FaInstagram size={25} color="#F56040" />
@@ -59,14 +65,13 @@ const Footer = () => {
               <Link
                 href="https://www.youtube.com/@WEAVEMENT"
                 target="_blank"
+                aria-label="위브먼트의 유튜브"
                 className="w-9 h-9 md:w-12 md:h-12 flex rounded justify-center items-center border"
               >
                 <FaYoutube size={26} color="rgb(255,0,0)" />
               </Link>
             </div>
-            <span className="text-neutral-400">
-              © 2022 WEAVEMENT CO.LTD. ALL RIGHTS RESERVED.
-            </span>
+            <span>© 2022 WEAVEMENT CO.LTD. ALL RIGHTS RESERVED.</span>
           </div>
         </div>
       </Container>

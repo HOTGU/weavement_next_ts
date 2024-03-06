@@ -24,7 +24,7 @@ export default async function RootLayout({
           content="e0cdc465ab3662b580c637f908b0f730cd900dba"
         />
       </head>
-      <body className={`${pretendard.className} bgColor`}>
+      <body className={`${pretendard.className}`}>
         <Toaster />
         {children}
       </body>

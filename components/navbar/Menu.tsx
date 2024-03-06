@@ -11,7 +11,7 @@ const Menu = () => {
   return (
     <>
       <div className="block sm:hidden"></div>
-      <ul className="hidden sm:flex gap-6 font-bold h-full">
+      <div className="hidden sm:flex gap-6 font-bold h-full">
         <Link
           href="/contact"
           className={`h-full flex items-center ${
@@ -38,7 +38,7 @@ const Menu = () => {
         >
           전문가 칼럼
         </Link>
-      </ul>
+      </div>
     </>
   );
 };
