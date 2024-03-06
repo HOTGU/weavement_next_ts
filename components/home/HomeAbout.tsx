@@ -3,7 +3,6 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { slidingText } from "@/libs/framer";
-import AnimateText from "../framer/AnimateText";
 import Container from "../Container";
 
 const HomeAbout = () => {
@@ -23,10 +22,6 @@ const HomeAbout = () => {
           <div>
             감각적인 제조,{" "}
             <span className="text-accent font-bold">위브먼트</span>입니다
-            {/* <span className=" text-accent whitespace-pre-line break-words">
-              <AnimateText text="WEAVEMENT" delay={0.3} />{" "}
-            </span>
-            입니다. */}
           </div>
         </motion.div>
       </span>

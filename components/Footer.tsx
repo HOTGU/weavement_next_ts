@@ -1,9 +1,12 @@
 import React from "react";
 import { CiMail, CiPhone } from "react-icons/ci";
+import NaverImg from "../public/imgs/naver.svg";
+
 import Container from "./Container";
 import Image from "next/legacy/image";
 import { SiNaver, SiInstagram, SiYoutube } from "react-icons/si";
 import Link from "next/link";
+import { FaInstagram, FaYoutube } from "react-icons/fa";
 
 const Footer = () => {
   return (
@@ -44,21 +47,21 @@ const Footer = () => {
                 target="_blank"
                 className="w-9 h-9 md:w-12 md:h-12 flex rounded justify-center items-center border"
               >
-                <SiNaver size={20} color="#02c75a" />
+                <img src="imgs/naver.svg" style={{ width: "25px" }} />
               </Link>
               <Link
                 href="https://www.instagram.com/weavement"
                 target="_blank"
                 className="w-9 h-9 md:w-12 md:h-12 flex rounded justify-center items-center border"
               >
-                <SiInstagram size={25} color="#F56040" />
+                <FaInstagram size={25} color="#F56040" />
               </Link>
               <Link
                 href="https://www.youtube.com/@WEAVEMENT"
                 target="_blank"
                 className="w-9 h-9 md:w-12 md:h-12 flex rounded justify-center items-center border"
               >
-                <SiYoutube size={26} color="rgb(255,0,0)" />
+                <FaYoutube size={26} color="rgb(255,0,0)" />
               </Link>
             </div>
             <span className="text-neutral-400">
