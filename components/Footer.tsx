@@ -1,9 +1,10 @@
 import React from "react";
 import { CiMail, CiPhone } from "react-icons/ci";
-import Container from "./Container";
 import Image from "next/legacy/image";
-import { SiNaver, SiInstagram, SiYoutube } from "react-icons/si";
 import Link from "next/link";
+import { SiNaver, SiInstagram, SiYoutube } from "react-icons/si";
+
+import Container from "./Container";
 
 const Footer = () => {
   return (
@@ -62,7 +63,7 @@ const Footer = () => {
               </Link>
             </div>
             <span className="text-neutral-400">
-              © 2022 WEAVEMENT CO.LTD. ALL RIGHTS RESERVED.
+              © 2024 WEAVEMENT CO.LTD. ALL RIGHTS RESERVED.
             </span>
           </div>
         </div>
