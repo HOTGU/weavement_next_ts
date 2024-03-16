@@ -1,20 +1,11 @@
 import React from "react";
-import { CiMail, CiPhone } from "react-icons/ci";
-<<<<<<< HEAD
+import Image from "next/legacy/image";
+import Link from "next/link";
 import { FaN } from "react-icons/fa6";
-import NaverImg from "../public/imgs/naver.svg";
-
-import Container from "./Container";
-import Image from "next/legacy/image";
-import Link from "next/link";
+import { CiMail, CiPhone } from "react-icons/ci";
 import { FaInstagram, FaYoutube } from "react-icons/fa";
-=======
-import Image from "next/legacy/image";
-import Link from "next/link";
-import { SiNaver, SiInstagram, SiYoutube } from "react-icons/si";
 
 import Container from "./Container";
->>>>>>> dev
 
 const Footer = () => {
   return (
@@ -75,13 +66,10 @@ const Footer = () => {
                 <FaYoutube size={26} color="rgb(255,0,0)" />
               </Link>
             </div>
-<<<<<<< HEAD
-            <span>© 2022 WEAVEMENT CO.LTD. ALL RIGHTS RESERVED.</span>
-=======
+
             <span className="text-neutral-400">
               © 2024 WEAVEMENT CO.LTD. ALL RIGHTS RESERVED.
             </span>
->>>>>>> dev
           </div>
         </div>
       </Container>
