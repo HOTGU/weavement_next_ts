@@ -12,6 +12,8 @@ export interface IContactParams {
 
 export const revalidate = 3600;
 
+const TAKE = 10;
+
 export default cache(async (params: IContactParams) => {
   try {
     const { pm, state, term, startDate, endDate } = params;
@@ -54,6 +56,7 @@ export default cache(async (params: IContactParams) => {
 
     const contacts = await prisma.contact.findMany({
       where: query,
+      take: TAKE,
       orderBy: {
         createdAt: "desc",
       },
