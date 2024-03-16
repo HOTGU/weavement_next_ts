@@ -3,9 +3,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import qs from "query-string";
-import { useInView } from "react-intersection-observer";
 import { toast } from "react-hot-toast";
 import { useSearchParams } from "next/navigation";
+import { MdKeyboardDoubleArrowDown } from "react-icons/md";
 
 import ContactBlock from "./ContactBlock";
 import { ContactWithClients } from "@/types";
@@ -24,9 +24,12 @@ const ContactList = ({ initialConctacts }: ContactListProps) => {
   >([]);
   const [skip, setSkip] = useState(SKIP_CONTACTS);
   const [isLast, setIsLast] = useState(false);
-  const [ref, inView] = useInView();
 
   const params = useSearchParams();
+
+  useEffect(() => {
+    reset();
+  }, [initialConctacts]);
 
   useEffect(() => {
     const prefetch = async () => {
@@ -60,10 +63,15 @@ const ContactList = ({ initialConctacts }: ContactListProps) => {
     prefetch();
   }, [skip]);
 
-  useEffect(() => {
-    setContacts([...contacts, ...prefetchContacts]);
-    setSkip(skip + SKIP_CONTACTS);
-  }, [inView]);
+  const reset = () => {
+    setContacts(initialConctacts);
+    setSkip(SKIP_CONTACTS);
+    setPrefetchContacts([]);
+    setIsLast(false);
+    if (initialConctacts.length < SKIP_CONTACTS) {
+      setIsLast(true);
+    }
+  };
 
   return (
     <div className="w-full sm:w-fit flex flex-row sm:flex-col gap-2 h-auto sm:h-[calc(100vh-126px)] overflow-x-auto sm:overflow-y-auto pr-4 py-2">
@@ -71,7 +79,17 @@ const ContactList = ({ initialConctacts }: ContactListProps) => {
         <ContactBlock contact={contact} key={contact.id} />
       ))}
 
-      {!isLast && <div ref={ref} className="h-[100px] bg-red-500" />}
+      {!isLast && (
+        <div
+          className=" pt-4 pb-2 flex items-center justify-center group hover:cursor-pointer hover:bg-slate-100"
+          onClick={() => {
+            setContacts([...contacts, ...prefetchContacts]);
+            setSkip(skip + SKIP_CONTACTS);
+          }}
+        >
+          <MdKeyboardDoubleArrowDown className=" animate-bounce w-10 h-10 p-2  border border-slate-300 text-slate-500 rounded-full group-hover:bg-accent group-hover:text-white transition" />
+        </div>
+      )}
     </div>
   );
 };
