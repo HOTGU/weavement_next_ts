@@ -6,9 +6,9 @@ const nextConfig = {
       "weavement-test.s3.ap-northeast-2.amazonaws.com",
     ],
     minimumCacheTTL: 31536000,
-    swcMinify: true,
   },
   output: "standalone",
+  swcMinify: true,
 };
 
 module.exports = nextConfig;
