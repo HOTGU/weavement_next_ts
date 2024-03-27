@@ -1,7 +1,7 @@
-import { Portfolio } from "@prisma/client";
-import Image from "next/legacy/image";
 import Link from "next/link";
 import React from "react";
+import Image from "next/legacy/image";
+import { Portfolio } from "@prisma/client";
 
 interface PortfolioBlockProps {
   portfolio: Portfolio;

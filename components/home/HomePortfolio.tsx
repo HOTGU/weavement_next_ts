@@ -1,14 +1,14 @@
 "use client";
 
 import React from "react";
-import Image from "next/legacy/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
 import { Portfolio } from "@prisma/client";
+import { motion } from "framer-motion";
 
 import Container from "../Container";
 import SlidingText from "../framer/SlidingText";
 import ScaleBtn from "../framer/ScaleBtn";
+import Image from "next/legacy/image";
 
 interface HomePortfolioProps {
   portfolios: Portfolio[];

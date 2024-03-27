@@ -1,4 +1,4 @@
-import { Prisma } from "@prisma/client";
+import { Portfolio, Prisma } from "@prisma/client";
 
 interface User {
   id: string;

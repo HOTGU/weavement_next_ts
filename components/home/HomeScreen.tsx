@@ -1,10 +1,11 @@
 "use client";
 
-import { Portfolio } from "@prisma/client";
-import { motion } from "framer-motion";
 import Image from "next/legacy/image";
 import React, { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+
 import RacingFont from "../RacingFont";
+import { Portfolio } from "@prisma/client";
 
 interface HomeScreenProps {
   portfolios: Portfolio[];
@@ -15,14 +16,17 @@ const HomeScreen = ({ portfolios }: HomeScreenProps) => {
   const thumbs = portfolios.map((portfolio) => portfolio.thumb);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      if (index === portfolios.length - 1) {
-        setIndex(0);
-        return;
-      }
-      setIndex((prev) => prev + 1);
+    setTimeout(() => {
+      const interval = setInterval(() => {
+        if (index === portfolios.length - 1) {
+          setIndex(0);
+          return;
+        }
+        setIndex((prev) => prev + 1);
+      }, 3000);
+
+      return () => clearInterval(interval);
     }, 3000);
-    return () => clearInterval(interval);
   }, [index, portfolios.length]);
 
   return (
