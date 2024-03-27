@@ -1,5 +1,7 @@
 import Link from "next/link";
 import React from "react";
+import Image from "next/legacy/image";
+import { Portfolio } from "@prisma/client";
 
 import ImageWithPlaceholder from "../ImageWithPlaceholder";
 import { PortfolioWithBlurData } from "@/types";

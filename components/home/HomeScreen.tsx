@@ -5,15 +5,15 @@ import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
 import RacingFont from "../RacingFont";
-import { PortfolioWithBlurData } from "@/types";
-import ImageWithPlaceholder from "../ImageWithPlaceholder";
+import { Portfolio } from "@prisma/client";
 
 interface HomeScreenProps {
-  portfolios: PortfolioWithBlurData[];
+  portfolios: Portfolio[];
 }
 
 const HomeScreen = ({ portfolios }: HomeScreenProps) => {
   const [index, setIndex] = useState(0);
+  const thumbs = portfolios.map((portfolio) => portfolio.thumb);
 
   useEffect(() => {
     setTimeout(() => {
@@ -46,14 +46,17 @@ const HomeScreen = ({ portfolios }: HomeScreenProps) => {
         transition={{ ease: "easeIn", duration: 0.5 }}
         className="flex w-fit relative"
       >
-        {portfolios.map((portfolio, i) => (
+        {thumbs.map((thumb, i) => (
           <motion.div
             className="w-screen aspect-video max-h-[100vh] relative"
             key={i}
           >
-            <ImageWithPlaceholder
-              blurData={portfolio.blurData}
-              image={portfolio.thumb}
+            <Image
+              alt="포트폴리오 썸네일"
+              src={thumb}
+              layout="fill"
+              objectFit="cover"
+              priority
             />
           </motion.div>
         ))}
