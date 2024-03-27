@@ -1,10 +1,11 @@
-import { Portfolio } from "@prisma/client";
-import Image from "next/legacy/image";
 import Link from "next/link";
 import React from "react";
 
+import ImageWithPlaceholder from "../ImageWithPlaceholder";
+import { PortfolioWithBlurData } from "@/types";
+
 interface PortfolioBlockProps {
-  portfolio: Portfolio;
+  portfolio: PortfolioWithBlurData;
 }
 
 const PortfolioBlock = ({ portfolio }: PortfolioBlockProps) => {
@@ -15,14 +16,11 @@ const PortfolioBlock = ({ portfolio }: PortfolioBlockProps) => {
     >
       <div
         key={portfolio.id}
-        className="relative w-full h-full hover:scale-110 transition cursor-pointer"
+        className="relative w-full h-full hover:scale-110 transition "
       >
-        <Image
-          src={portfolio.thumb}
-          objectFit="cover"
-          alt="포트폴리오 썸네일"
-          layout="fill"
-          className="rounded"
+        <ImageWithPlaceholder
+          image={portfolio.thumb}
+          blurData={portfolio.blurData}
         />
 
         <div className="opacity-0 flex hover:opacity-100 transition text-white w-full h-full absolute top-0 right-0 bg-black/50 items-center justify-center text-xl">

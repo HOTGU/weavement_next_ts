@@ -1,17 +1,17 @@
 "use client";
 
 import React from "react";
-import Image from "next/legacy/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Portfolio } from "@prisma/client";
 
 import Container from "../Container";
 import SlidingText from "../framer/SlidingText";
 import ScaleBtn from "../framer/ScaleBtn";
+import ImageWithPlaceholder from "../ImageWithPlaceholder";
+import { PortfolioWithBlurData } from "@/types";
 
 interface HomePortfolioProps {
-  portfolios: Portfolio[];
+  portfolios: PortfolioWithBlurData[];
 }
 
 const HomePortfolio = ({ portfolios }: HomePortfolioProps) => {
@@ -40,12 +40,9 @@ const HomePortfolio = ({ portfolios }: HomePortfolioProps) => {
                 viewport={{ once: true }}
                 className="w-full aspect-video relative mb-4"
               >
-                <Image
-                  src={portfolio.thumb}
-                  alt="포트폴리오 썸네일"
-                  layout="fill"
-                  objectFit="cover"
-                  className="rounded cursor-pointer hover:opacity-70 transition"
+                <ImageWithPlaceholder
+                  blurData={portfolio.blurData}
+                  image={portfolio.thumb}
                 />
               </motion.div>
             </Link>

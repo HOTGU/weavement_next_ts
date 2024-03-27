@@ -1,4 +1,4 @@
-import { Prisma } from "@prisma/client";
+import { Portfolio, Prisma } from "@prisma/client";
 
 interface User {
   id: string;
@@ -13,3 +13,5 @@ export interface CurrentUserProps {
 export type ContactWithClients = Prisma.ContactGetPayload<{
   include: { client: true };
 }>;
+
+export type PortfolioWithBlurData = Portfolio & { blurData: string };
