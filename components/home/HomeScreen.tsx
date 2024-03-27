@@ -16,17 +16,14 @@ const HomeScreen = ({ portfolios }: HomeScreenProps) => {
   const thumbs = portfolios.map((portfolio) => portfolio.thumb);
 
   useEffect(() => {
-    setTimeout(() => {
-      const interval = setInterval(() => {
-        if (index === portfolios.length - 1) {
-          setIndex(0);
-          return;
-        }
-        setIndex((prev) => prev + 1);
-      }, 3000);
-
-      return () => clearInterval(interval);
-    }, 3000);
+    const interval = setInterval(() => {
+      if (index === portfolios.length - 1) {
+        setIndex(0);
+        return;
+      }
+      setIndex((prev) => prev + 1);
+    }, 5000);
+    return () => clearInterval(interval);
   }, [index, portfolios.length]);
 
   return (
