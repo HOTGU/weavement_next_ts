@@ -23,6 +23,12 @@ const PortfolioBlock = ({ portfolio }: PortfolioBlockProps) => {
           alt="포트폴리오 썸네일"
           layout="fill"
           className="rounded"
+          blurDataURL={
+            portfolio.blurThumb
+              ? portfolio.blurThumb
+              : "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+P+/HgAFhAJ/wlseKgAAAABJRU5ErkJggg=="
+          }
+          placeholder="blur"
         />
 
         <div className="opacity-0 flex hover:opacity-100 transition text-white w-full h-full absolute top-0 right-0 bg-black/50 items-center justify-center text-xl">

@@ -46,6 +46,12 @@ const HomePortfolio = ({ portfolios }: HomePortfolioProps) => {
                   layout="fill"
                   objectFit="cover"
                   className="rounded cursor-pointer hover:opacity-70 transition"
+                  blurDataURL={
+                    portfolio.blurThumb
+                      ? portfolio.blurThumb
+                      : "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+P+/HgAFhAJ/wlseKgAAAABJRU5ErkJggg=="
+                  }
+                  placeholder="blur"
                 />
               </motion.div>
             </Link>

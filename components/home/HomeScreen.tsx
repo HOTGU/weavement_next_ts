@@ -43,16 +43,22 @@ const HomeScreen = ({ portfolios }: HomeScreenProps) => {
         transition={{ ease: "easeIn", duration: 0.5 }}
         className="flex w-fit relative"
       >
-        {thumbs.map((thumb, i) => (
+        {portfolios.map((portfolio, i) => (
           <motion.div
             className="w-screen aspect-video max-h-[100vh] relative"
             key={i}
           >
             <Image
               alt="포트폴리오 썸네일"
-              src={thumb}
+              src={portfolio.thumb}
               layout="fill"
               objectFit="cover"
+              blurDataURL={
+                portfolio.blurThumb
+                  ? portfolio.blurThumb
+                  : "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+P+/HgAFhAJ/wlseKgAAAABJRU5ErkJggg=="
+              }
+              placeholder="blur"
               priority
             />
           </motion.div>

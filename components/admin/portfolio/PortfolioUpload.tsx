@@ -136,6 +136,21 @@ const PortfolioUpload = () => {
     setValue("filesPreview", deleteFilesPreview);
   };
 
+  const createBlur = async () => {
+    const loadingToast = toast.loading("포트폴리오 썸네일 블러 생성중..");
+    axios
+      .post("/api/portfolio/create-blur")
+      .then((res) => {
+        if (res.status === 200) {
+          toast.success("성공", { id: loadingToast });
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error("실패", { id: loadingToast });
+      });
+  };
+
   return (
     <div className="flex gap-6 h-[calc(100vh-50px)] p-6 overflow-y-auto relative">
       <div className="w-2/3 h-fit flex flex-col gap-4 items-center">
@@ -202,6 +217,7 @@ const PortfolioUpload = () => {
             ))}
         </div>
       </div>
+      <div onClick={createBlur}>블러썸네일 생성</div>
       <div className="w-1/3 h-fit sticky top-0 flex flex-col gap-4 p-4 shadow-xl border rounded">
         <div className="flex gap-4">
           <File
