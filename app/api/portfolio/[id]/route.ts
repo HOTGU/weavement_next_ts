@@ -1,4 +1,5 @@
 import getCurrentUser from "@/actions/getCurrentUser";
+import createBlurImage from "@/libs/createBlurImage";
 import prisma from "@/libs/prismadb";
 import s3PutImage from "@/libs/s3PutImage";
 import { NextResponse } from "next/server";
@@ -63,6 +64,7 @@ export async function PUT(request: Request, { params }: { params: IParams }) {
     let thumbLocation = body.oldThumb;
 
     if (body.thumb) {
+      body.blurThumb = await createBlurImage(body.thumb);
       thumbLocation = await s3PutImage({
         folderName: body.title,
         file: body.thumb,

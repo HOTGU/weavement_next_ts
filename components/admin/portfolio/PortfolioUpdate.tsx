@@ -37,6 +37,7 @@ const PortfolioUpdate = () => {
         metaDescription: updatePortfolio.target?.metaDescription,
         metaKeywords: updatePortfolio.target?.metaKeywords,
         isRep: updatePortfolio.target?.isRep ? "on" : "",
+        blurThumb: updatePortfolio.target?.blurThumb,
         oldFiles: updatePortfolio.target?.images,
         oldThumb: updatePortfolio.target?.thumb,
         files: [],
@@ -101,6 +102,7 @@ const PortfolioUpdate = () => {
       fd.append("title", data.title);
       fd.append("description", data.description);
       fd.append("isRep", data.isRep);
+      fd.append("blurThumb", data.blurThumb);
       fd.append("metaTitle", data.metaTitle);
       fd.append("metaDescription", data.metaDescription);
       fd.append("metaKeywords", data.metaKeywords);

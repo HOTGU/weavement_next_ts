@@ -1,4 +1,5 @@
 import getCurrentUser from "@/actions/getCurrentUser";
+import createBlurImage from "@/libs/createBlurImage";
 import prisma from "@/libs/prismadb";
 import s3PutImage from "@/libs/s3PutImage";
 import { NextResponse } from "next/server";
@@ -29,6 +30,9 @@ export async function POST(request: Request) {
 
     const metaKeywords = dataMetaKeywords ? dataMetaKeywords.split(",") : [];
 
+    //create blur image
+    const blurThumb = await createBlurImage(thumb);
+
     const thumbLocation = await s3PutImage({
       folderName: title,
       file: thumb,
@@ -36,10 +40,6 @@ export async function POST(request: Request) {
       resizeWidth: 2560,
       isRep: true,
     });
-
-    //create blur image
-    const buffer = (await thumb.arrayBuffer()) as Buffer;
-    const { base64: blurThumb } = await getPlaiceholder(buffer, { size: 6 }); // 약 150 ~ 200 byte
 
     for (let i = 0; i < images.length; i++) {
       const imageLocation = await s3PutImage({
