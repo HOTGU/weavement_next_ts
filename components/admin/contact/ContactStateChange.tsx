@@ -2,22 +2,16 @@
 
 import useCurrentContact from "@/hooks/useCurrentContact";
 import axios from "axios";
-import { useRouter } from "next/navigation";
-import React, { useMemo, useState } from "react";
-import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
+import React, { useState } from "react";
 import { toast } from "react-hot-toast";
+import { useContacts } from "./ContactMainScreen";
 
 const stateArr = ["문의", "상담", "계약", "미수신", "불발", "완료"];
 
 const ContactStateChange = () => {
   const { current, setCurrent } = useCurrentContact();
-  const router = useRouter();
+  const { updateContact } = useContacts();
   const [loading, setLoading] = useState(false);
-  const { setValue, handleSubmit } = useForm<FieldValues>({
-    values: useMemo(() => {
-      return { state: current?.state };
-    }, [current]),
-  });
 
   if (!current) return null;
 
@@ -29,8 +23,8 @@ const ContactStateChange = () => {
       .put(`/api/contact/${current?.id}`, { state: value })
       .then((result) => {
         toast.success("수정성공", { id: loadingToast });
-        router.refresh();
         setCurrent(result.data);
+        updateContact(result.data);
       })
       .catch((error) => {
         toast.error("수정실패", { id: loadingToast });
