@@ -2,15 +2,16 @@
 
 import React, { useState } from "react";
 import Confirm from "./Confirm";
-import useDeleteContactConfirm from "@/hooks/useDeleteContactConfirm";
-import { toast } from "react-hot-toast";
 import axios from "axios";
-import { useRouter } from "next/navigation";
+import { toast } from "react-hot-toast";
+
+import useDeleteContactConfirm from "@/hooks/useDeleteContactConfirm";
 import useCurrentContact from "@/hooks/useCurrentContact";
+import { useRouter } from "next/navigation";
 
 const DeleteContactConfirm = () => {
-  const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
   const deleteConfirm = useDeleteContactConfirm();
   const currentContact = useCurrentContact();
 
@@ -21,8 +22,8 @@ const DeleteContactConfirm = () => {
       .delete(`/api/contact/${deleteConfirm.target}`)
       .then(() => {
         toast.success("문의삭제 성공", { id: toastLoading });
-        deleteConfirm.onClose();
         router.refresh();
+        deleteConfirm.onClose();
         currentContact.reset();
       })
       .catch(() => {

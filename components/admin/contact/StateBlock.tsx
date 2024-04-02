@@ -25,6 +25,7 @@ const StateBlock = ({ icon: Icon, label, selected }: StateBlockProps) => {
     const updatedQuery: any = {
       ...currentQuery,
       state: label,
+      take: null, // 더보기 리셋
     };
 
     if (params?.get("state") === label) {

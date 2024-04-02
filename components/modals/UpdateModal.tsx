@@ -4,7 +4,6 @@ import React, { useMemo, useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import axios from "axios";
 import { toast } from "react-hot-toast";
-import { useRouter } from "next/navigation";
 
 import Modal from "./Modal";
 import useUpdateModal from "@/hooks/useUpdateModal";
@@ -14,10 +13,11 @@ import getSelectOptions from "@/actions/getSelectOptions";
 import Input from "../inputs/Input";
 import Calendar from "../inputs/Calendar";
 import Tiptap from "../inputs/Tiptap";
+import { useRouter } from "next/navigation";
 
 const UpdateModal = () => {
-  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
   const selectOptions = getSelectOptions();
   const updateModal = useUpdateModal();
   const { current, setCurrent } = useCurrentContact();
@@ -43,8 +43,8 @@ const UpdateModal = () => {
       .then((result) => {
         toast.success("수정성공", { id: loadingToast });
         updateModal.onClose();
-        router.refresh();
         setCurrent(result.data);
+        router.refresh();
       })
       .catch((error) => {
         if (process.env.NODE_ENV === "development") {

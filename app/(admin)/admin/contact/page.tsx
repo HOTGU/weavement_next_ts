@@ -4,7 +4,8 @@ import getContacts, { IContactParams } from "@/actions/db/getContacts";
 import Container from "@/components/Container";
 import ContactNav from "@/components/admin/contact/ContactNav";
 import ExcelDownload from "@/components/admin/contact/ExcelDownload";
-import ContactMainScreen from "@/components/admin/contact/ContactMainScreen";
+import ContactList from "@/components/admin/contact/ContactList";
+import ContactDetail from "@/components/admin/contact/ContactDetail";
 
 interface AdminProps {
   searchParams: IContactParams;
@@ -20,7 +21,12 @@ const ContactPage = async ({ searchParams }: AdminProps) => {
         <ExcelDownload />
       </div>
 
-      <ContactMainScreen initialContacts={contacts} />
+      <div className="flex gap-4 sm:gap-8 flex-col sm:flex-row">
+        <ContactList contacts={contacts} />
+        <div className="flex-1 py-2 h-[calc(100vh-126px)] overflow-y-auto">
+          <ContactDetail />
+        </div>
+      </div>
     </Container>
   );
 };

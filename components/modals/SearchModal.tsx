@@ -80,6 +80,7 @@ const SearchModal = () => {
       term: data.term,
       startDate: null,
       endDate: null,
+      take: null, // 더보기 리셋
     };
 
     if (data.startDate && data.endDate) {

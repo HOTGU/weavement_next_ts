@@ -4,13 +4,13 @@ import useCurrentContact from "@/hooks/useCurrentContact";
 import axios from "axios";
 import React, { useState } from "react";
 import { toast } from "react-hot-toast";
-import { useContacts } from "./ContactMainScreen";
+import { useRouter } from "next/navigation";
 
 const stateArr = ["문의", "상담", "계약", "미수신", "불발", "완료"];
 
 const ContactStateChange = () => {
   const { current, setCurrent } = useCurrentContact();
-  const { updateContact } = useContacts();
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
 
   if (!current) return null;
@@ -24,7 +24,7 @@ const ContactStateChange = () => {
       .then((result) => {
         toast.success("수정성공", { id: loadingToast });
         setCurrent(result.data);
-        updateContact(result.data);
+        router.refresh();
       })
       .catch((error) => {
         toast.error("수정실패", { id: loadingToast });
