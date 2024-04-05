@@ -23,11 +23,14 @@ const ContactList = ({ contacts }: { contacts: ContactWithClients[] }) => {
 
   const moreBtnClick = () => {
     const currentQuery = qs.parse(params.toString());
+
     const take = currentQuery.take ? +currentQuery.take + 10 : 20;
+
     const updatedQuery = {
       ...currentQuery,
       take,
     };
+
     const url = qs.stringifyUrl(
       { url: "/admin/contact", query: updatedQuery },
       { skipNull: true }
