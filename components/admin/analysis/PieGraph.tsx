@@ -75,12 +75,12 @@ const PieGraph = ({
   };
 
   return (
-    <div>
+    <div className="lg:w-[200px]  xl:w-[300px]">
       <Chart
         type="donut"
         options={options}
         series={options.series}
-        height={300}
+        // height={300}
       />
     </div>
   );

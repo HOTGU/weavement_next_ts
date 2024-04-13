@@ -24,16 +24,20 @@ const AdminPage = async () => {
       <CreateUserModal />
       <UpdateUserModal />
       <DeleteUserConfirm />
-      <div className="flex flex-col mx-auto gap-6 w-[500px] mt-4 p-4 border rounded">
-        <div className=" self-center font-bold text-2xl">위브먼트 직원일동</div>
-        <div className="py-4 flex flex-col gap-4">
-          {users.map((user) => (
-            <div key={user.id}>
-              <UserBlock user={user} />
-            </div>
-          ))}
+      <div className="flex items-center justify-center w-full max-w-[500px] mt-10 mx-auto ">
+        <div className="w-full flex flex-col gap-6 p-4 border rounded">
+          <div className="text-center font-bold text-2xl">
+            위브먼트 직원일동
+          </div>
+          <div className="py-4 flex flex-col gap-4">
+            {users.map((user) => (
+              <div key={user.id}>
+                <UserBlock user={user} />
+              </div>
+            ))}
+          </div>
+          <UserCreateButton />
         </div>
-        <UserCreateButton />
       </div>
     </Container>
   );

@@ -78,12 +78,14 @@ const BarGraph = ({
     },
     legend: {
       show: true,
-      position: "right",
+      position: "top",
     },
   };
 
   return (
-    <Chart type="bar" options={option} series={option.series} height={400} />
+    <div className="flex-1 w-full">
+      <Chart type="bar" options={option} series={option.series} height={350} />
+    </div>
   );
 };
 

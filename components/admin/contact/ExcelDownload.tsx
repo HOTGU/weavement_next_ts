@@ -10,7 +10,7 @@ const ExcelDownload = () => {
     <>
       <div
         onClick={contactDownloadConfirm.onOpen}
-        className="border cursor-pointer transition hover:bg-accent hover:text-white w-fit px-2 h-9 rounded flex items-center justify-center gap-2"
+        className="border cursor-pointer transition hover:bg-accent hover:text-white w-fit px-2 h-9 rounded items-center justify-center gap-2 hidden md:flex"
       >
         <span>엑셀 다운로드</span>
         <AiOutlineFileExcel size={18} />

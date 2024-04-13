@@ -5,7 +5,7 @@ import React from "react";
 const layout = ({ children }: { children: React.ReactNode }) => {
   return (
     <Container>
-      <div className="flex mt-4 gap-4">
+      <div className="flex flex-col sm:flex-row mt-4 gap-4">
         <AdminAnalysisNav />
         {children}
       </div>
