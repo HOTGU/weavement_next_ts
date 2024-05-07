@@ -39,6 +39,7 @@ const AnalysisMaterialPage = async ({ searchParams }: AnalysisParams) => {
   return (
     <div className="flex-1 bg-neutral-50 rounded-lg p-2 lg:p-6">
       <div className="flex justify-between">
+        <div />
         <YearSearch />
       </div>
       <div className="flex flex-col lg:flex-row items-center gap-4 mt-4">

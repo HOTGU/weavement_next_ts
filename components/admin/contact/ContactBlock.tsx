@@ -3,7 +3,7 @@
 import useCurrentContact from "@/hooks/useCurrentContact";
 import { ContactWithClients } from "@/types";
 import { format } from "date-fns";
-import React from "react";
+import React, { useMemo } from "react";
 
 interface ContactBlockProps {
   contact: ContactWithClients;
@@ -12,15 +12,27 @@ interface ContactBlockProps {
 const ContactBlock = ({ contact }: ContactBlockProps) => {
   const useContact = useCurrentContact();
 
+  const pmColor = useMemo(() => {
+    if (contact.pm === "SH") return { bg: "bg-pink-50", text: "text-pink-600" };
+    if (contact.pm === "DW") return { bg: "bg-teal-50", text: "text-teal-600" };
+    if (contact.pm === "JH") return { bg: "bg-blue-50", text: "text-blue-600" };
+    return { bg: "bg-white", text: "text-neutral-500" };
+  }, [contact.pm]);
+
+  const stateColor = useMemo(() => {
+    if (contact.state === "계약") return "bg-sky-400 text-white";
+    if (contact.state === "불발") return "bg-red-700 text-white";
+    if (contact.state === "완료") return "bg-blue-700 text-white";
+    return "text-neutral-500";
+  }, [contact.state]);
+
   return (
     <div
       className={`w-[200px] relative whitespace-nowrap p-2 rounded shadow-sm border flex flex-col transition cursor-pointer ${
         useContact.current?.id === contact.id
           ? "border-black border"
           : "border-neutral-300"
-      }  ${contact.pm === "SH" && "bg-pink-50"} ${
-        contact.pm === "DW" && "bg-teal-50"
-      }`}
+      }  ${pmColor.bg}`}
       onClick={() => useContact.setCurrent(contact)}
     >
       <div className="w-full flex items-center justify-between gap-2 text-sm">
@@ -28,24 +40,8 @@ const ContactBlock = ({ contact }: ContactBlockProps) => {
           {format(new Date(contact.createdAt), "MM/dd hh:mm aaa")}
         </div>
         <div className="flex gap-1 text-xs">
-          <div
-            className={`font-extrabold ${
-              contact.pm === "SH" && "text-pink-600"
-            } ${contact.pm === "DW" && "text-teal-600"}`}
-          >
-            {contact.pm}
-          </div>
-          <div
-            className={`px-1 rounded font-bold ${
-              contact.state === "계약"
-                ? "bg-sky-400 text-white"
-                : contact.state === "불발"
-                ? "bg-red-700 text-white"
-                : contact.state === "완료"
-                ? "bg-blue-700 text-white"
-                : "text-black" // 완료
-            }`}
-          >
+          <div className={`font-extrabold ${pmColor.text} `}>{contact.pm}</div>
+          <div className={`px-1 rounded font-bold ${stateColor}`}>
             {contact.state}
           </div>
         </div>

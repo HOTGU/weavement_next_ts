@@ -35,6 +35,10 @@ const BarGraph = ({
       "#EAB543",
       "#CAD3C8",
       "#9AECDB",
+      "#b7ab3b",
+      "#be0719",
+      "#051a00",
+      "#03f2c2",
     ],
     xaxis: {
       categories,

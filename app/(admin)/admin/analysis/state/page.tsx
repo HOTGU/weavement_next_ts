@@ -47,9 +47,6 @@ const AnalysisStatePage = async ({ searchParams }: AnalysisParams) => {
           showLegend
         />
       </div>
-      <div className="mt-4">
-        {/* <DataList data={data} searchParams={searchParams} isState /> */}
-      </div>
     </div>
   );
 };

@@ -1,4 +1,5 @@
 import prisma from "@/libs/prismadb";
+import getSelectOptions from "../getSelectOptions";
 
 interface IChartDataTypes {
   categories: string[];
@@ -59,23 +60,14 @@ export default async (params: IAnalysisParams) => {
     });
 
     const data = {
-      categories: [
-        "홈페이지",
-        "대표전화(HP)",
-        "대표문자(HP)",
-        "블로그(전화)",
-        "블로그(문자)",
-        "대표메일",
-        "카카오톡",
-        "카카오톡(채널)",
-        "인스타(전화)",
-        "인스타(문자)",
-        "인스타(DM)",
-        "유튜브(전화)",
-        "유튜브(문자)",
-        "기타",
+      categories: getSelectOptions().contactPathOptions.map(
+        (item) => item.value
+      ),
+      series: [
+        {
+          data: new Array(getSelectOptions().contactPathOptions.length).fill(0),
+        },
       ],
-      series: [{ data: new Array(14).fill(0) }],
     } as IChartDataTypes;
 
     //@ts-ignore

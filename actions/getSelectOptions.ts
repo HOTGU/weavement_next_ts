@@ -61,6 +61,7 @@ export default () => {
     { value: "미정", label: "미정" },
     { value: "SH", label: "SH" },
     { value: "DW", label: "DW" },
+    { value: "JH", label: "JH" },
   ];
 
   const contactPathOptions: OptionType[] = [
@@ -69,6 +70,10 @@ export default () => {
     { value: "대표문자(HP)", label: "대표문자(HP)" },
     { value: "블로그(전화)", label: "블로그(전화)" },
     { value: "블로그(문자)", label: "블로그(문자)" },
+    { value: "블로그2(전화)", label: "블로그2(전화)" },
+    { value: "블로그2(문자)", label: "블로그2(문자)" },
+    { value: "블로그3(전화)", label: "블로그3(전화)" },
+    { value: "블로그3(문자)", label: "블로그3(문자)" },
     { value: "대표메일", label: "대표메일" },
     { value: "카카오톡", label: "카카오톡" },
     { value: "카카오톡(채널)", label: "카카오톡(채널)" },

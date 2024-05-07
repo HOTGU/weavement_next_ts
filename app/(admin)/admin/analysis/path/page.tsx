@@ -4,11 +4,9 @@ import { redirect } from "next/navigation";
 import qs from "query-string";
 
 import { IAnalysisParams } from "../page";
-import DateSearch from "@/components/admin/analysis/DateSearch";
 import YearSearch from "@/components/admin/analysis/YearSearch";
 import PieGraph from "@/components/admin/analysis/PieGraph";
 import BarGraph from "@/components/admin/analysis/BarGraph";
-import DataList from "@/components/admin/analysis/DataList";
 import getBarDataByPath from "@/actions/chart/getBarDataByPath";
 
 interface AnalysisParams {
@@ -27,6 +25,7 @@ const AnalysisPathPage = async ({ searchParams }: AnalysisParams) => {
   const barData = await getBarDataByPath(searchParams);
 
   if (!barData) return <div>데이터 가져오는 도중 에러발생</div>;
+
   const seriesDataArr = barData.series[0].data;
   const pieData = {
     labels: barData.categories,
