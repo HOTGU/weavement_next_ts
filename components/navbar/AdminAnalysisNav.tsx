@@ -31,7 +31,7 @@ const AdminAnalysisNav = () => {
   return (
     <div className="w-full max-w-md cursor-pointer bg-neutral-50 rounded-lg flex ">
       {linkArr.map((item) => (
-        <LinkBtn label={item.label} target={item.target} />
+        <LinkBtn label={item.label} target={item.target} key={item.label} />
       ))}
     </div>
   );
