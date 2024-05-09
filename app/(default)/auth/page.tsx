@@ -14,9 +14,7 @@ const authPage = async () => {
   return (
     <div className="pt-16 min-h-screen">
       <Container>
-        <Code>
-          <LoginForm />
-        </Code>
+        <LoginForm />
       </Container>
     </div>
   );
