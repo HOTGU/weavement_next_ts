@@ -23,7 +23,7 @@ const LinkBtn = ({ label, target }: { label: string; target: string }) => {
 const AdminAnalysisNav = () => {
   const linkArr = [
     { target: "/admin/analysis/state", label: "문의별" },
-    { target: "/admin/analysis/platform", label: "플랫폼별" },
+    { target: "/admin/analysis/platform", label: "알게된경로별" },
     { target: "/admin/analysis/material", label: "소재별" },
     { target: "/admin/analysis/path", label: "문의경로별" },
   ];

@@ -2,7 +2,6 @@ import React from "react";
 import { redirect } from "next/navigation";
 
 import getCurrentUser from "@/actions/getCurrentUser";
-import Code from "@/components/Code";
 import Container from "@/components/Container";
 import LoginForm from "@/components/forms/LoginForm";
 

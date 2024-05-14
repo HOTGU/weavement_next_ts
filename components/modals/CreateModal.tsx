@@ -207,7 +207,7 @@ const CreateModal = () => {
         />
         <Select
           placeholder="플랫폼"
-          label="유입플랫폼"
+          label="알게된경로"
           control={control}
           name="knowPlatform"
           options={selectOptions.knowPlatformOptions}
