@@ -22,7 +22,7 @@ interface FileProps {
 const File = ({
   multiple,
   label = "사진선택",
-  compressWidth,
+  compressWidth = 760,
   onlyOne = false,
   disabled,
   control,

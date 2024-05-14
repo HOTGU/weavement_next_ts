@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
@@ -78,19 +78,17 @@ const FileModal = () => {
   }
 
   const bodyContent = (
-    <>
-      <div className=" flex flex-col gap-2">
-        <File control={control} name="files" />
-        <div className="flex gap-2 flex-wrap">
-          {watchImages && (
-            <FilesName type="images" files={watchImages} setValue={setValue} />
-          )}
-          {watchFiles && (
-            <FilesName type="files" files={watchFiles} setValue={setValue} />
-          )}
-        </div>
+    <div className=" flex flex-col gap-2">
+      <File control={control} name="files" multiple compressWidth={760} />
+      <div className="flex gap-2 flex-wrap">
+        {watchImages && (
+          <FilesName type="images" files={watchImages} setValue={setValue} />
+        )}
+        {watchFiles && (
+          <FilesName type="files" files={watchFiles} setValue={setValue} />
+        )}
       </div>
-    </>
+    </div>
   );
 
   return (
