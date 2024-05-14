@@ -79,7 +79,7 @@ const FileModal = () => {
 
   const bodyContent = (
     <div className=" flex flex-col gap-2">
-      <File control={control} name="files" multiple compressWidth={760} />
+      <File control={control} name="files" multiple compressWidth={1280} />
       <div className="flex gap-2 flex-wrap">
         {watchImages && (
           <FilesName type="images" files={watchImages} setValue={setValue} />
