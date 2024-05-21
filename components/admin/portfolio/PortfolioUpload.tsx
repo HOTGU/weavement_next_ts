@@ -37,6 +37,7 @@ const PortfolioUpload = () => {
       metaKeywords: "",
       files: [],
       thumb: [],
+      isRep: "",
     },
   });
 

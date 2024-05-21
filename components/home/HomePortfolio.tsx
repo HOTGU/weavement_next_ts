@@ -45,6 +45,7 @@ const HomePortfolio = ({ portfolios }: HomePortfolioProps) => {
                   alt="포트폴리오 썸네일"
                   layout="fill"
                   objectFit="cover"
+                  sizes="50w"
                   className="rounded cursor-pointer hover:opacity-70 transition"
                   blurDataURL={
                     portfolio.blurThumb

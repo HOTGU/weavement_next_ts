@@ -18,6 +18,7 @@ interface PutImageParams {
   type: "CONTACT" | "PORTFOLIO";
   resizeWidth?: number;
   isRep?: boolean;
+  setWatermark?: boolean;
 }
 
 export default async ({
@@ -26,11 +27,12 @@ export default async ({
   type,
   resizeWidth,
   isRep = false,
+  setWatermark,
 }: PutImageParams) => {
   let bufferData = (await file.arrayBuffer()) as Buffer;
 
   if (resizeWidth) {
-    bufferData = await sharpResize(bufferData, resizeWidth);
+    bufferData = await sharpResize(bufferData, resizeWidth, setWatermark);
   }
 
   try {

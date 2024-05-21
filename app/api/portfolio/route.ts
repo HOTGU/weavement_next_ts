@@ -38,7 +38,7 @@ export async function POST(request: Request) {
       file: thumb,
       type: "PORTFOLIO",
       resizeWidth: 2560,
-      isRep: true,
+      isRep,
     });
 
     for (let i = 0; i < images.length; i++) {
@@ -48,6 +48,7 @@ export async function POST(request: Request) {
         resizeWidth: 768,
         type: "PORTFOLIO",
         isRep: false,
+        setWatermark: true,
       });
       imagesLocation.push(imageLocation);
     }
