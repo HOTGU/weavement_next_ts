@@ -1,6 +1,7 @@
 import getUsers from "@/actions/db/getUsers";
 import getCurrentUser from "@/actions/getCurrentUser";
 import Container from "@/components/Container";
+import AdminDbChangeForm from "@/components/admin/AdminDbChangeForm";
 import UserBlock from "@/components/admin/user/UserBlock";
 import UserCreateButton from "@/components/admin/user/UserCreateButton";
 import DeleteUserConfirm from "@/components/confirms/DeleteUserConfirm";
@@ -24,8 +25,8 @@ const AdminPage = async () => {
       <CreateUserModal />
       <UpdateUserModal />
       <DeleteUserConfirm />
-      <div className="flex items-center justify-center w-full max-w-[500px] mt-10 mx-auto ">
-        <div className="w-full flex flex-col gap-6 p-4 border rounded">
+      <div className="flex justify-center w-full max-w-[1000px] gap-10 mt-10 mx-auto  ">
+        <div className="w-1/2 flex flex-col gap-6 p-4 border rounded">
           <div className="text-center font-bold text-2xl">
             위브먼트 직원일동
           </div>
@@ -37,6 +38,9 @@ const AdminPage = async () => {
             ))}
           </div>
           <UserCreateButton />
+        </div>
+        <div className="w-1/2">
+          <AdminDbChangeForm />
         </div>
       </div>
     </Container>
