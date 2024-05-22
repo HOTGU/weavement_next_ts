@@ -92,6 +92,7 @@ export default () => {
     { value: "금속", label: "금속" },
     { value: "3D프린팅", label: "3D프린팅" },
     { value: "패브릭", label: "패브릭" },
+    { value: "인형탈", label: "인형탈" },
     { value: "에어", label: "에어" },
     { value: "ALC", label: "ALC" },
     { value: "폼보드", label: "폼보드" },

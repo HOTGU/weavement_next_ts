@@ -20,16 +20,14 @@ import FilesName from "../FilesName";
 enum STEPS {
   INFO = 0,
   DESC = 1,
-  CLIENT = 2,
-  PROJECT = 3,
-  NOTE = 4,
+  PROJECT = 2,
+  NOTE = 3,
 }
 
 const defaultValues = {
   state: "상담",
   createdAt: undefined,
   contactPath: "",
-  step: "",
   hasDesign: "",
   cost: "",
   schedule: "",
@@ -44,8 +42,6 @@ const defaultValues = {
   email: "",
   meterial: [],
   content: "",
-  size: "",
-  deadline: undefined,
   orderCompany: "",
   note: "",
 };
@@ -145,23 +141,21 @@ const CreateModal = () => {
           isClearable
           disabled={isLoading}
         />
+        <Input
+          control={control}
+          errors={errors}
+          name="clientCompany"
+          label="기업명"
+          disabled={isLoading}
+        />
+      </div>
+      <div className="flex gap-4">
         <Select
           placeholder="문의경로"
           label="문의경로"
           control={control}
           name="contactPath"
           options={selectOptions.contactPathOptions}
-          errors={errors}
-          disabled={isLoading}
-        />
-      </div>
-      <div className="flex gap-4">
-        <Select
-          placeholder="단계"
-          label="단계"
-          control={control}
-          name="step"
-          options={selectOptions.stepOptions}
           errors={errors}
           disabled={isLoading}
         />
@@ -235,47 +229,6 @@ const CreateModal = () => {
     );
   }
 
-  if (step === STEPS.CLIENT) {
-    bodyContent = (
-      <div className="flex flex-col gap-4">
-        <Input
-          control={control}
-          errors={errors}
-          name="clientCompany"
-          label="기업명"
-          disabled={isLoading}
-        />
-        <div className="flex gap-4">
-          <Input control={control} errors={errors} name="name" label="고객명" />
-          <Input
-            control={control}
-            errors={errors}
-            name="phone"
-            label="연락처"
-            disabled={isLoading}
-            formatterPhone
-          />
-        </div>
-        <div className="flex gap-4">
-          <Input
-            control={control}
-            errors={errors}
-            disabled={isLoading}
-            name="position"
-            label="직급"
-          />
-          <Input
-            control={control}
-            disabled={isLoading}
-            errors={errors}
-            name="email"
-            label="이메일"
-          />
-        </div>
-      </div>
-    );
-  }
-
   if (step === STEPS.PROJECT) {
     bodyContent = (
       <div className="flex flex-col gap-4">
@@ -289,6 +242,7 @@ const CreateModal = () => {
           disabled={isLoading}
           isMulti
         />
+
         <div className="flex gap-4">
           <Input
             control={control}
@@ -297,9 +251,6 @@ const CreateModal = () => {
             disabled={isLoading}
             label="콘텐츠"
           />
-          <Input name="size" control={control} errors={errors} label="크기" />
-        </div>
-        <div className="flex flex-col sm:flex-row gap-4">
           <Input
             name="orderCompany"
             control={control}
@@ -307,15 +258,36 @@ const CreateModal = () => {
             errors={errors}
             label="협력사"
           />
-          <Calendar
+        </div>
+
+        <div className="flex gap-4">
+          <Input control={control} errors={errors} name="name" label="고객명" />
+          <Input
             control={control}
-            name="deadline"
-            showTime
-            placeholder="납기일"
+            errors={errors}
             disabled={isLoading}
-            isClearable
+            name="position"
+            label="직급"
           />
         </div>
+        <div className="flex gap-4">
+          <Input
+            control={control}
+            errors={errors}
+            name="phone"
+            label="연락처"
+            disabled={isLoading}
+            formatterPhone
+          />
+          <Input
+            control={control}
+            disabled={isLoading}
+            errors={errors}
+            name="email"
+            label="이메일"
+          />
+        </div>
+        {/* <div className="flex flex-col sm:flex-row gap-4"></div> */}
       </div>
     );
   }

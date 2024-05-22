@@ -28,7 +28,7 @@ const defaultValues = {
   createdAt: undefined,
   contactPath: "홈페이지",
   state: "문의",
-  step: "",
+  // step: "",
   hasDesign: "",
   cost: "",
   schedule: "",
@@ -49,7 +49,6 @@ const ContactClient = () => {
   const router = useRouter();
 
   const {
-    stepOptions,
     hasDesignOptions,
     costOptions,
     scheduleOptions,
@@ -153,7 +152,7 @@ const ContactClient = () => {
 
   let content = (
     <div className="flex flex-col gap-5">
-      <Select
+      {/* <Select
         placeholder="어떤 단계인가요? *"
         label="단계"
         options={stepOptions}
@@ -161,7 +160,7 @@ const ContactClient = () => {
         control={control}
         errors={errors}
         required
-      />
+      /> */}
       <Select
         placeholder="예산을 선택해주세요? *"
         label="예산"

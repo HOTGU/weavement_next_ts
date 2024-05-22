@@ -122,6 +122,7 @@ const ContactInfo = ({ current }: { current: ContactWithClients }) => {
         >
           문의내용
         </span>
+
         {current.images.length > 0 ? (
           <div
             className="text-xs cursor-pointer hover:opacity-70 transition bg-neutral-200 px-2 py-1 rounded"
@@ -139,10 +140,8 @@ const ContactInfo = ({ current }: { current: ContactWithClients }) => {
         )}
       </div>
       <div className="flex flex-wrap gap-2">
-        <Item label="단계" item={current.step} />
         <Item label="디자인" item={current.hasDesign} />
         <Item label="예산" item={current.cost} />
-        <Item label="일정" item={current.schedule} />
         <Item label="문의경로" item={current.contactPath} />
         <Item label="알게된경로" item={current.knowPlatform} />
         <div
@@ -180,8 +179,7 @@ const ContactCounsel = ({ current }: { current: ContactWithClients }) => {
             item={current.meterial.map((meterial) => ` ${meterial}`).toString()}
           />
           <Item label="콘텐츠" item={current.content} />
-          <Item label="크기" item={current.size} />
-          <Item label="납기일" item={current?.deadline} isDate />
+          <Item label="일정" item={current.schedule} />
           <Item label="협력사" item={current.orderCompany} />
           <Item label="담당자" item={current.pm} />
           <div

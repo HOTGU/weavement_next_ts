@@ -65,7 +65,7 @@ const Input: React.FC<InputProps> = ({
         }
         placeholder=" "
         type={type}
-        className={`peer w-full p-4 z-10 bg-white font-light border focus:border-2 rounded-md outline-none transition disabled:opacity-70 disabled:cursor-not-allowed pl-4 ${
+        className={`peer w-full p-4 z-10 bg-white font-light border focus:border-2 rounded-md outline-none transition disabled:bg-neutral-50 disabled:cursor-not-allowed pl-4 ${
           errors[name]
             ? "border-rose-300 focus:border-rose-500"
             : " border-neutral-300 focus:border-black"
@@ -75,7 +75,7 @@ const Input: React.FC<InputProps> = ({
       <label
         htmlFor={name}
         onClick={() => inputRef.current?.focus()}
-        className={`absolute text-md duration-150 px-1 transform top-0 -translate-y-1/2 scale-75 z-[0] bg-white origin-[0] left-5 hover:cursor-text peer-placeholder-shown:scale-100 peer-placeholder-shown:top-4 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:top-0 peer-focus:-translate-y-1/2 peer-focus:bg-white ${
+        className={`absolute text-md duration-150 px-1 transform top-0 -translate-y-1/2 scale-75 z-[0] bg-white origin-[0] left-5 hover:cursor-text peer-placeholder-shown:scale-100 peer-placeholder-shown:top-4 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:top-0 peer-focus:-translate-y-1/2 peer-focus:bg-white  ${
           errors[name] ? "text-rose-500" : "text-zinc-400 peer-focus:text-black"
         }`}
       >

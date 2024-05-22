@@ -106,15 +106,6 @@ const UpdateModal = () => {
 
         <div className="flex flex-col sm:flex-row gap-4">
           <Select
-            options={selectOptions.stepOptions}
-            control={control}
-            name="step"
-            errors={errors}
-            placeholder="단계"
-            label="단계"
-            disabled={isLoading}
-          />
-          <Select
             options={selectOptions.hasDesignOptions}
             control={control}
             name="hasDesign"
@@ -123,8 +114,6 @@ const UpdateModal = () => {
             label="디자인여부"
             disabled={isLoading}
           />
-        </div>
-        <div className="flex flex-col sm:flex-row gap-4">
           <Select
             options={selectOptions.costOptions}
             control={control}
@@ -132,15 +121,6 @@ const UpdateModal = () => {
             name="cost"
             placeholder="예산"
             label="예산"
-            disabled={isLoading}
-          />
-          <Select
-            options={selectOptions.scheduleOptions}
-            control={control}
-            errors={errors}
-            name="schedule"
-            placeholder="일정"
-            label="일정"
             disabled={isLoading}
           />
         </div>
@@ -162,30 +142,15 @@ const UpdateModal = () => {
   if (updateModal.step === "PROJECT") {
     bodyContent = (
       <div className="flex flex-col gap-4">
-        <div className="flex flex-col sm:flex-row gap-4">
-          <div className="w-full sm:w-3/4">
-            <Select
-              control={control}
-              errors={errors}
-              name="meterial"
-              options={selectOptions.meterialOptions}
-              label="소재"
-              placeholder="소재"
-              isMulti
-            />
-          </div>
-          <div className="w-full sm:w-1/4">
-            <Select
-              control={control}
-              errors={errors}
-              name="pm"
-              options={selectOptions.pmOptions}
-              label="담당자"
-              placeholder="PM"
-              isClearable={false}
-            />
-          </div>
-        </div>
+        <Select
+          control={control}
+          errors={errors}
+          name="meterial"
+          options={selectOptions.meterialOptions}
+          label="소재"
+          placeholder="소재"
+          isMulti
+        />
         <div className="flex gap-4">
           <Input
             control={control}
@@ -196,27 +161,30 @@ const UpdateModal = () => {
           />
           <Input
             control={control}
-            name="size"
-            errors={errors}
-            label="크기"
-            disabled={isLoading}
-          />
-        </div>
-        <div className="flex flex-col sm:flex-row gap-4">
-          <Calendar
-            control={control}
-            name="deadline"
-            placeholder="납기일"
-            showTime
-            isClearable
-            disabled={isLoading}
-          />
-          <Input
-            control={control}
             name="orderCompany"
             errors={errors}
             label="협력사"
             disabled={isLoading}
+          />
+        </div>
+        <div className="flex flex-col sm:flex-row gap-4">
+          <Select
+            options={selectOptions.scheduleOptions}
+            control={control}
+            errors={errors}
+            name="schedule"
+            placeholder="일정"
+            label="일정"
+            disabled={isLoading}
+          />
+          <Select
+            control={control}
+            errors={errors}
+            name="pm"
+            options={selectOptions.pmOptions}
+            label="담당자"
+            placeholder="PM"
+            isClearable={false}
           />
         </div>
       </div>

@@ -89,7 +89,7 @@ const Select = ({
         isDisabled={disabled}
       />
       <label
-        className={`absolute origin-[0] top-0 transition peer-focus:text-red-500 text-md  -translate-y-1/2 bg-white scale-75 left-4 px-1 ${
+        className={`absolute origin-[0] top-0 transition peer-focus:text-red-500 text-md -translate-y-1/2 bg-white scale-75 left-4 px-1 ${
           isFocus
             ? "text-black"
             : errors[name]
