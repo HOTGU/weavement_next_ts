@@ -28,7 +28,6 @@ const DownloadContactConfirm = () => {
     { label: "날짜", key: "createdAt" },
     { label: "회사", key: "clientCompany" },
     { label: "고객", key: "client" },
-    { label: "단계", key: "step" },
     { label: "예산", key: "cost" },
     { label: "디자인여부", key: "hasDesign" },
     { label: "일정", key: "schedule" },
@@ -37,10 +36,8 @@ const DownloadContactConfirm = () => {
     { label: "문의내용", key: "description" },
     { label: "PM", key: "pm" },
     { label: "소재", key: "meterial" },
-    { label: "크기", key: "size" },
     { label: "콘텐츠", key: "content" },
     { label: "협력사", key: "orderCompany" },
-    { label: "납기일", key: "deadline" },
     { label: "상담내용", key: "note" },
   ];
 
@@ -59,7 +56,6 @@ const DownloadContactConfirm = () => {
             createdAt,
             clientCompany,
             client,
-            step,
             cost,
             hasDesign,
             schedule,
@@ -68,10 +64,8 @@ const DownloadContactConfirm = () => {
             description,
             pm,
             meterial,
-            size,
             content,
             orderCompany,
-            deadline,
             note,
           } = contact;
 
@@ -89,7 +83,6 @@ const DownloadContactConfirm = () => {
               client.map((c) => {
                 return `${c.name}${c.position} ${c.phone} ${c.email}\n`;
               }),
-            step,
             cost,
             hasDesign,
             schedule,
@@ -103,12 +96,8 @@ const DownloadContactConfirm = () => {
               : "",
             pm,
             meterial,
-            size,
             content,
             orderCompany,
-            deadline: deadline
-              ? format(new Date(deadline), "yy년MM월dd일 hh:mmaaaaa'm'")
-              : "",
             note: note
               ? note
                   .replace(/(<\/p>)/gi, "\n")
