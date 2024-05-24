@@ -1,12 +1,6 @@
 import s3PutImage from "@/libs/s3PutImage";
 import { NextResponse } from "next/server";
 
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
-
 export async function POST(request: Request) {
   try {
     const fd = await request.formData();
