@@ -20,6 +20,7 @@ export async function POST(request: Request) {
         file: files[index] as File,
         type: "CONTACT",
         resizeWidth: 600,
+        setWatermark: false,
       });
       imageLocations.push(location);
     }
