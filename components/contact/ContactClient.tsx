@@ -28,7 +28,6 @@ const defaultValues = {
   createdAt: undefined,
   contactPath: "홈페이지",
   state: "문의",
-  // step: "",
   hasDesign: "",
   cost: "",
   schedule: "",
