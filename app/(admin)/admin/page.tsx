@@ -39,9 +39,7 @@ const AdminPage = async () => {
           </div>
           <UserCreateButton />
         </div>
-        <div className="w-1/2">
-          <AdminDbChangeForm />
-        </div>
+        <div className="w-1/2">{/* <AdminDbChangeForm /> */}</div>
       </div>
     </Container>
   );

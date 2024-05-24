@@ -59,13 +59,15 @@ export default async (params: IAnalysisParams) => {
       ],
     });
 
+    const categories = getSelectOptions().contactPathOptions.map(
+      (item) => item.value
+    );
+
     const data = {
-      categories: getSelectOptions().contactPathOptions.map(
-        (item) => item.value
-      ),
+      categories,
       series: [
         {
-          data: new Array(getSelectOptions().contactPathOptions.length).fill(0),
+          data: new Array(categories.length).fill(0),
         },
       ],
     } as IChartDataTypes;
