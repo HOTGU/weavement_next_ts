@@ -152,15 +152,6 @@ const ContactClient = () => {
 
   let content = (
     <div className="flex flex-col gap-5">
-      {/* <Select
-        placeholder="어떤 단계인가요? *"
-        label="단계"
-        options={stepOptions}
-        name="step"
-        control={control}
-        errors={errors}
-        required
-      /> */}
       <Select
         placeholder="예산을 선택해주세요? *"
         label="예산"
@@ -210,7 +201,7 @@ const ContactClient = () => {
             label="사진(선택)"
             control={control}
             name="files"
-            compressWidth={1480}
+            compressWidth={1280}
             max={5}
           />
           <span className="text-xs text-neutral-500">
