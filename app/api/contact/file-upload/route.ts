@@ -30,7 +30,6 @@ export async function POST(request: Request) {
     if (process.env.NODE_ENV === "development") {
       console.log(error);
     }
-    console.log(error);
     return new NextResponse("서버 오류발생", { status: 500 });
   }
 }

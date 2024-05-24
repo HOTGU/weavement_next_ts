@@ -28,7 +28,6 @@ const defaultValues = {
   createdAt: undefined,
   contactPath: "홈페이지",
   state: "문의",
-  // step: "",
   hasDesign: "",
   cost: "",
   schedule: "",
@@ -100,7 +99,6 @@ const ContactClient = () => {
           delete data.files;
         }
       } catch (error) {
-        console.log(error);
         toast.error("사진 올리는 도중 오류발생", { id: loadingToast });
         setIsLoading(false);
         return;
