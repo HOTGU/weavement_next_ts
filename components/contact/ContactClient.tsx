@@ -100,6 +100,7 @@ const ContactClient = () => {
           delete data.files;
         }
       } catch (error) {
+        console.log(error);
         toast.error("사진 올리는 도중 오류발생", { id: loadingToast });
         setIsLoading(false);
         return;
