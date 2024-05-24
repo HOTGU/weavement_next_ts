@@ -24,9 +24,9 @@ const AnalysisMaterialPage = async ({ searchParams }: AnalysisParams) => {
   }
 
   const barData = await getBarDataByMaterial(searchParams);
-  // console.log(data);
 
   if (!barData) return <div>차트 데이터 가져오는 도중 오류발생</div>;
+
   const seriesDataArr = barData.series[0].data;
   const pieData = {
     labels: barData.categories,

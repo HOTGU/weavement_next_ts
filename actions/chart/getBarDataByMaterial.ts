@@ -1,4 +1,5 @@
 import prisma from "@/libs/prismadb";
+import getSelectOptions from "../getSelectOptions";
 
 interface IChartDataTypes {
   categories: string[];
@@ -58,24 +59,13 @@ export default async (params: IAnalysisParams) => {
       ],
     });
 
+    const categories = getSelectOptions().meterialOptions.map(
+      (item) => item.value
+    );
+
     const data = {
-      categories: [
-        "EPS",
-        "목재",
-        "FRP",
-        "금속",
-        "3D프린팅",
-        "패브릭",
-        "에어",
-        "ALC",
-        "폼보드",
-        "포맥스",
-        "종이",
-        "레진",
-        "디자인",
-        "기타",
-      ],
-      series: [{ data: new Array(14).fill(0) }],
+      categories,
+      series: [{ data: new Array(categories.length).fill(0) }],
     } as IChartDataTypes;
 
     // @ts-ignore
@@ -83,12 +73,14 @@ export default async (params: IAnalysisParams) => {
       const materials = contact._id.material;
       const count = contact.count;
 
-      materials.map((material: string) => {
-        const dataIndex = data.categories.findIndex(
-          (dataMaterial) => dataMaterial === material
-        );
-        data.series[0].data[dataIndex] += count;
-      });
+      if (materials) {
+        materials.map((material: string) => {
+          const dataIndex = data.categories.findIndex(
+            (dataMaterial) => dataMaterial === material
+          );
+          data.series[0].data[dataIndex] += count;
+        });
+      }
     });
 
     return data;
