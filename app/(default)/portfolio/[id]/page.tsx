@@ -1,5 +1,5 @@
 import React from "react";
-import { Metadata, MetadataRoute } from "next";
+import { Metadata } from "next";
 import Image from "next/legacy/image";
 
 import getPortfolio, { IParams } from "@/actions/db/getPortfolio";
