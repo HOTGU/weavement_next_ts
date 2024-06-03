@@ -96,9 +96,9 @@ const SearchModal = () => {
       { skipNull: true }
     );
 
-    searchModal.onClose();
     currentContact.reset();
     router.push(url);
+    searchModal.onClose();
   };
 
   let bodyContent = (

@@ -199,8 +199,7 @@ const ContactCounsel = ({ current }: { current: ContactWithClients }) => {
 const ContactDetail = () => {
   const { current } = useCurrentContact();
 
-  if (!current)
-    return <span className=" text-xl font-semibold">위브먼트 화이팅🫡</span>;
+  if (!current) return null;
 
   return (
     <>
