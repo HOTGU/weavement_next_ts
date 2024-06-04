@@ -9,7 +9,9 @@ interface AdminProps {
 }
 
 const AdminContactPage = async ({ searchParams }: AdminProps) => {
-  const searchString = queryString.stringify(searchParams);
+  const copySearchParams = { ...searchParams };
+  delete copySearchParams.take;
+  const searchString = queryString.stringify(copySearchParams);
 
   return (
     <Suspense fallback={<AdminContactSkeleton />} key={searchString}>
