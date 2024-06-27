@@ -8,7 +8,7 @@ import Container from "../Container";
 const HomeAbout = () => {
   return (
     <Container>
-      <span className="inline-block overflow-hidden leading-relaxed ">
+      <h2 className="inline-block overflow-hidden leading-relaxed ">
         <motion.div
           viewport={{ once: true }}
           variants={slidingText}
@@ -24,7 +24,7 @@ const HomeAbout = () => {
             <span className="text-accent font-bold">위브먼트</span>입니다
           </div>
         </motion.div>
-      </span>
+      </h2>
     </Container>
   );
 };

@@ -49,8 +49,6 @@ export const generateMetadata = async ({
 };
 
 export const generateStaticParams = async () => {
-  // const { portfolios } = await getPortfolios({});
-
   const portfolios = await prisma.portfolio.findMany({});
 
   return portfolios.map((portfolio) => ({
@@ -75,21 +73,21 @@ const page = async ({ params }: { params: IParams }) => {
               objectFit="cover"
               className="rounded-md"
               sizes="100vw"
-              alt="포트폴리오 썸네일"
+              alt="포트폴리오 대표사진"
             />
           </div>
           <div className="flex flex-col gap-2 md:gap-4 xl:gap-6 items-center justify-center">
-            <div className="text-md sm:text-lg md:text-xl lg:text-2xl font-semibold">
+            <h2 className="text-md sm:text-lg md:text-xl lg:text-2xl font-semibold">
               {portfolio.title}
-            </div>
-            <div className="text-sm md:text-md lg:text-lg whitespace-pre-wrap text-center">
+            </h2>
+            <p className="text-sm md:text-md lg:text-lg whitespace-pre-wrap text-center">
               {portfolio.description}
-            </div>
+            </p>
           </div>
           <div className="columns-2 lg:columns-3">
             {portfolio.images.map((image, index) => (
               <img
-                alt="포트폴리오 사진"
+                alt={`포트폴리오 사진 ${index}`}
                 src={image}
                 key={index}
                 className="mb-6 rounded"
