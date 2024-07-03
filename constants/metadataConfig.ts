@@ -1,5 +1,5 @@
 const homeMetadata = {
-  title: "조형물 제조 - 위브먼트",
+  title: "조형물 제작 - 위브먼트",
   description:
     "감각적인 제조, 위브먼트. FRP, 스티로폼, 패브릭, 금속, 목재, 3D프린팅, ALC 등 맞춤형 조형물 제작 서비스",
   icons: {

@@ -14,6 +14,17 @@ const Menu = () => {
       <div className="hidden sm:flex gap-6 font-bold h-full">
         <li className="list-none">
           <Link
+            href="/aboutus"
+            className={`h-full flex items-center ${
+              pathname === "/aboutus" && "text-accent "
+            }`}
+            passHref
+          >
+            위브먼트소개
+          </Link>
+        </li>
+        <li className="list-none">
+          <Link
             href="/contact"
             className={`h-full flex items-center ${
               pathname === "/contact" && "text-accent "
@@ -36,9 +47,10 @@ const Menu = () => {
         </li>
         <li className="list-none">
           <Link
-            href="https://blog.naver.com/PostList.naver?blogId=weavement&from=postList&categoryNo=6"
+            href="/column"
+            // href="https://blog.naver.com/PostList.naver?blogId=weavement&from=postList&categoryNo=6"
             className="h-full flex items-center"
-            target="_blank"
+            // target="_blank"
             passHref
           >
             전문가 칼럼

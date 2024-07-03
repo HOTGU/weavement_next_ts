@@ -37,6 +37,8 @@ const Navbar = ({ currentUser }: CurrentUserProps) => {
     setIsSlider(false);
   }, [pathname]);
 
+  const sliderClose = () => setIsSlider(false);
+
   const isHome = Boolean(pathname === "/");
 
   return (
@@ -76,7 +78,9 @@ const Navbar = ({ currentUser }: CurrentUserProps) => {
                   animate={sliderNav.visible}
                   exit={sliderNav.exit}
                 >
-                  <SliderMenu />
+                  {/* <div className="absolute top-0 left-0 w-screen h-screen bg-red-500"> */}
+                  <SliderMenu close={sliderClose} />
+                  {/* </div> */}
                 </motion.div>
               ) : null}
             </AnimatePresence>

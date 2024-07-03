@@ -30,6 +30,7 @@ export default async ({
   setWatermark,
 }: PutImageParams) => {
   let bufferData = (await file.arrayBuffer()) as Buffer;
+
   if (resizeWidth) {
     bufferData = await sharpResize(
       bufferData,

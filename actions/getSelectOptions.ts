@@ -61,7 +61,7 @@ export default () => {
     { value: "미정", label: "미정" },
     { value: "SH", label: "SH" },
     { value: "DW", label: "DW" },
-    { value: "JH", label: "JH" },
+    { value: "YJ", label: "YJ" },
   ];
 
   const contactPathOptions: OptionType[] = [

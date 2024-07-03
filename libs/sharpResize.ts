@@ -15,6 +15,7 @@ export default async (
       .resize({ width })
       .toFormat("webp", {
         quality: 100,
+        force: true,
       })
       .toBuffer();
     return sharpImage;
@@ -23,6 +24,7 @@ export default async (
       .resize({ width })
       .toFormat("webp", {
         quality: 100,
+        force: true,
       })
       .toBuffer();
     return sharpImage;

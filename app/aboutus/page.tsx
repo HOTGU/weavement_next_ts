@@ -9,7 +9,7 @@ const page = () => {
   return (
     <div className="min-h-screen">
       <AboutUsClient />
-      <AboutUsClient />
+      {/* <AboutUsClient /> */}
     </div>
   );
 };
