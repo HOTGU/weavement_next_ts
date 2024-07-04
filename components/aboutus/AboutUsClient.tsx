@@ -88,7 +88,7 @@ const MainImg = () => {
   );
 };
 
-const Column1 = () => {
+const Column = () => {
   const targetRef = useRef<HTMLDivElement | null>(null);
   const { scrollYProgress } = useScroll({
     target: targetRef,
@@ -106,7 +106,7 @@ const Column1 = () => {
     showTextTwo: 0.65,
     fadeOutTextTwoEnd: 0.75,
     centerMoveImageEnd: 0.8,
-    fadeOutImageEnd: 0.95,
+    fadeOutImageEnd: 1,
   };
 
   const scale = useTransform(
@@ -117,7 +117,7 @@ const Column1 = () => {
       animationOffset.centerMoveImageEnd,
       animationOffset.fadeOutImageEnd,
     ],
-    [2.5, 1, 1, 0.2]
+    [2.5, 1, 1, 0.5]
   );
   const x = useTransform(
     scrollYProgress,
@@ -235,13 +235,135 @@ const Column1 = () => {
   );
 };
 
+const Frame = () => {
+  const targetRef = useRef<HTMLDivElement | null>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: targetRef,
+    offset: ["start end", "end end"],
+  });
+
+  const animationOffset = {
+    init: 0,
+    fadeInBoxEnd: 0.14,
+    showText: 0.5,
+    fadeOutBoxEnd: 0.6,
+    fadeInTextEnd: 0.75,
+    showLastText: 0.85,
+    fadeOutTextEnd: 1,
+  };
+
+  const opacity = useTransform(
+    scrollYProgress,
+    [
+      animationOffset.init,
+      animationOffset.fadeInBoxEnd,
+      animationOffset.showText,
+      animationOffset.fadeOutBoxEnd,
+    ],
+    [0, 1, 1, 0]
+  );
+  const scale = useTransform(
+    scrollYProgress,
+    [
+      animationOffset.init,
+      animationOffset.fadeInBoxEnd,
+      animationOffset.fadeOutBoxEnd,
+    ],
+    [4, 1.2, 0.8]
+  );
+  const y = useTransform(
+    scrollYProgress,
+    [animationOffset.init, animationOffset.fadeInBoxEnd],
+    ["-100vh", "-50%"]
+  );
+  const x = useTransform(
+    scrollYProgress,
+    [animationOffset.init, animationOffset.fadeInBoxEnd],
+    ["-50%", "-50%"]
+  );
+
+  const textX = useTransform(
+    scrollYProgress,
+    [
+      animationOffset.init,
+      animationOffset.fadeInBoxEnd,
+      animationOffset.showText,
+    ],
+    ["100vw", "100vw", "-100vw"]
+  );
+
+  const textY = useTransform(scrollYProgress, [0, 1], ["-50%", "-50%"]);
+
+  const textOpacity = useTransform(
+    scrollYProgress,
+    [
+      animationOffset.init,
+      animationOffset.fadeOutBoxEnd,
+      animationOffset.fadeInTextEnd,
+      animationOffset.showLastText,
+      animationOffset.fadeOutTextEnd,
+    ],
+    [0, 0, 1, 1, 0]
+  );
+  const textScale = useTransform(
+    scrollYProgress,
+    [
+      animationOffset.init,
+      animationOffset.showLastText,
+      animationOffset.fadeOutTextEnd,
+    ],
+    [1, 1, 0.8]
+  );
+  const lastTextX = useTransform(scrollYProgress, [0, 1], ["-50%", "-50%"]);
+  const lastTextY = useTransform(
+    scrollYProgress,
+    [
+      animationOffset.init,
+      animationOffset.fadeOutBoxEnd,
+      animationOffset.fadeInTextEnd,
+    ],
+    ["0%", "0%", "-50%"]
+  );
+
+  return (
+    <section ref={targetRef} className="relative z-10 h-[400vh]">
+      <div className="sticky top-1/2">
+        <motion.div
+          style={{ opacity, x, y, scale }}
+          className="absolute z-10 left-1/2 -translate-x-1/2 p-[10vw] border-[20px] border-accent w-[200px]"
+        ></motion.div>
+        <motion.p
+          style={{ y: textY, x: textX }}
+          className="absolute right-0 text-8xl font-bold [-webkit-text-stroke:1px_var(--color-heading)]"
+        >
+          조형물 제작 위브먼트 감각적인 제조
+        </motion.p>
+        <motion.p
+          style={{
+            opacity: textOpacity,
+            x: lastTextX,
+            y: lastTextY,
+            scale: textScale,
+          }}
+          className="absolute left-1/2 top-1/2 text-7xl"
+        >
+          <p>조형물 제작 위브먼트</p>
+          <p>감각적인 제조</p>
+        </motion.p>
+      </div>
+    </section>
+  );
+};
+
 const AboutUsClient = () => {
   return (
     <main>
       <Header />
       <div className="relative z-10 w-full overflow-x-clip">
         <MainImg />
-        <Column1 />
+        <Column />
+        <Frame />
       </div>
     </main>
   );
