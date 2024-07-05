@@ -2,6 +2,9 @@
 
 import React, { useEffect, useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
+import { TiMessages } from "react-icons/ti";
+import { MdFactory } from "react-icons/md";
+import { FaHeadset, FaTruck, FaPencilRuler, FaInfo } from "react-icons/fa";
 
 const Header = () => {
   const targetRef = useRef<HTMLDivElement | null>(null);
@@ -88,7 +91,7 @@ const MainImg = () => {
   );
 };
 
-const Column = () => {
+const SlidingImage = () => {
   const targetRef = useRef<HTMLDivElement | null>(null);
   const { scrollYProgress } = useScroll({
     target: targetRef,
@@ -122,8 +125,6 @@ const Column = () => {
   const x = useTransform(
     scrollYProgress,
     [
-      animationOffset.init,
-      animationOffset.fadeInImageEnd,
       animationOffset.showTextOne,
       animationOffset.fadeOutTextOneEnd,
       animationOffset.moveImageEnd,
@@ -131,7 +132,7 @@ const Column = () => {
       animationOffset.fadeOutTextTwoEnd,
       animationOffset.centerMoveImageEnd,
     ],
-    ["0", "0", "0", "5vw", "-50vw", "-50vw", "-55vw", "-25vw"]
+    ["0", "5vw", "-50vw", "-50vw", "-55vw", "-25vw"]
   );
   const y = useTransform(
     scrollYProgress,
@@ -152,51 +153,43 @@ const Column = () => {
   const textOpacity = useTransform(
     scrollYProgress,
     [
-      animationOffset.init,
       animationOffset.fadeInImageEnd,
       animationOffset.fadeInTextOneEnd,
       animationOffset.showTextOne,
       animationOffset.fadeOutTextOneEnd,
-      1,
     ],
-    [0, 0, 1, 1, 0, 0]
+    [0, 1, 1, 0]
   );
   const textY = useTransform(
     scrollYProgress,
     [
-      animationOffset.init,
       animationOffset.fadeInImageEnd,
       animationOffset.fadeInTextOneEnd,
       animationOffset.showTextOne,
       animationOffset.fadeOutTextOneEnd,
-      1,
     ],
-    ["0", "0", "-50%", "-50%", "-100%", "-100%"]
+    ["0", "-50%", "-50%", "-100%"]
   );
 
   const textTwoOpacity = useTransform(
     scrollYProgress,
     [
-      animationOffset.init,
       animationOffset.moveImageEnd,
       animationOffset.fadeInTextTwoEnd,
       animationOffset.showTextTwo,
       animationOffset.fadeOutTextTwoEnd,
-      1,
     ],
-    [0, 0, 1, 1, 0, 0]
+    [0, 1, 1, 0]
   );
   const textTwoY = useTransform(
     scrollYProgress,
     [
-      animationOffset.init,
       animationOffset.moveImageEnd,
       animationOffset.fadeInTextTwoEnd,
       animationOffset.showTextTwo,
       animationOffset.fadeOutTextTwoEnd,
-      1,
     ],
-    ["0", "0", "-50%", "-50%", "-100%", "-100%"]
+    ["0", "-50%", "-50%", "-100%"]
   );
 
   return (
@@ -235,7 +228,7 @@ const Column = () => {
   );
 };
 
-const Frame = () => {
+const BoxAndSlogan = () => {
   const targetRef = useRef<HTMLDivElement | null>(null);
 
   const { scrollYProgress } = useScroll({
@@ -285,12 +278,8 @@ const Frame = () => {
 
   const textX = useTransform(
     scrollYProgress,
-    [
-      animationOffset.init,
-      animationOffset.fadeInBoxEnd,
-      animationOffset.showText,
-    ],
-    ["100vw", "100vw", "-100vw"]
+    [animationOffset.fadeInBoxEnd, animationOffset.showText],
+    ["100vw", "-100vw"]
   );
 
   const textY = useTransform(scrollYProgress, [0, 1], ["-50%", "-50%"]);
@@ -298,40 +287,31 @@ const Frame = () => {
   const textOpacity = useTransform(
     scrollYProgress,
     [
-      animationOffset.init,
       animationOffset.fadeOutBoxEnd,
       animationOffset.fadeInTextEnd,
       animationOffset.showLastText,
       animationOffset.fadeOutTextEnd,
     ],
-    [0, 0, 1, 1, 0]
+    [0, 1, 1, 0]
   );
   const textScale = useTransform(
     scrollYProgress,
-    [
-      animationOffset.init,
-      animationOffset.showLastText,
-      animationOffset.fadeOutTextEnd,
-    ],
-    [1, 1, 0.8]
+    [animationOffset.showLastText, animationOffset.fadeOutTextEnd],
+    [1, 0.8]
   );
   const lastTextX = useTransform(scrollYProgress, [0, 1], ["-50%", "-50%"]);
   const lastTextY = useTransform(
     scrollYProgress,
-    [
-      animationOffset.init,
-      animationOffset.fadeOutBoxEnd,
-      animationOffset.fadeInTextEnd,
-    ],
-    ["0%", "0%", "-50%"]
+    [animationOffset.fadeOutBoxEnd, animationOffset.fadeInTextEnd],
+    ["0%", "-50%"]
   );
 
   return (
-    <section ref={targetRef} className="relative z-10 h-[400vh]">
+    <section ref={targetRef} className="relative z-10 h-[400vh] -mt-[60vh]">
       <div className="sticky top-1/2">
         <motion.div
           style={{ opacity, x, y, scale }}
-          className="absolute z-10 left-1/2 -translate-x-1/2 p-[10vw] border-[20px] border-accent w-[200px]"
+          className="absolute z-10 left-1/2 p-[10vw] border-[20px] border-accent w-[200px]"
         ></motion.div>
         <motion.p
           style={{ y: textY, x: textX }}
@@ -348,10 +328,155 @@ const Frame = () => {
           }}
           className="absolute left-1/2 top-1/2 text-7xl"
         >
-          <p>조형물 제작 위브먼트</p>
-          <p>감각적인 제조</p>
+          <span>조형물 제작 위브먼트</span>
+          <br />
+          <span>감각적인 제조</span>
         </motion.p>
       </div>
+    </section>
+  );
+};
+
+const Features = () => {
+  const targetRef = useRef<HTMLDivElement | null>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: targetRef,
+    offset: ["start end", "end end"],
+  });
+
+  const scale = useTransform(scrollYProgress, [0, 0.9, 1], [0.8, 0.8, 1]);
+  const x = useTransform(scrollYProgress, [0.3, 1], ["50%", "0%"]);
+  const opacity = useTransform(
+    scrollYProgress,
+    [0, 0.5, 0.6, 0.85, 0.9],
+    [1, 1, 0.4, 0.4, 1]
+  );
+
+  const text1Opacity = useTransform(
+    scrollYProgress,
+    [0.3, 0.4, 0.5],
+    [0, 1, 0]
+  );
+  const text1Y = useTransform(
+    scrollYProgress,
+    [0.3, 0.4, 0.5],
+    ["-40%", "-50%", "-60%"]
+  );
+
+  const text2Opacity = useTransform(
+    scrollYProgress,
+    [0.5, 0.6, 0.7],
+    [0, 1, 0]
+  );
+  const text2Y = useTransform(
+    scrollYProgress,
+    [0.5, 0.6, 0.7],
+    ["-40%", "-50%", "-60%"]
+  );
+
+  const text3Opacity = useTransform(
+    scrollYProgress,
+    [0.7, 0.8, 0.9],
+    [0, 1, 0]
+  );
+  const text3Y = useTransform(
+    scrollYProgress,
+    [0.7, 0.8, 0.9],
+    ["-40%", "-50%", "-60%"]
+  );
+
+  return (
+    <section className="flex flex-col items-center h-[600vh]" ref={targetRef}>
+      <div className="sticky top-[16.7vh] h-[66.8vh] px-16 text-4xl">
+        <motion.div style={{ x, scale }} className="relative h-full">
+          <motion.figure style={{ opacity }} className="h-full">
+            <img src="/meta_img.png" className="h-full w-auto" />
+          </motion.figure>
+        </motion.div>
+        <motion.p
+          style={{ opacity: text1Opacity, y: text1Y }}
+          className="w-[30vw] absolute top-1/2 left-0 whitespace-break-spaces"
+        >
+          <span className="text-accent">1.위브먼트의 장점</span>
+          <br />
+          <span className=" ">
+            모든 서비스를 원스톱으로 누려보세요 디자인부터 제작 설치까지 모두
+            가능합니다 프로젝트 진행은 1명의 프로젝트 매니저가 전담합니다
+          </span>
+        </motion.p>
+        <motion.p
+          style={{ opacity: text2Opacity, y: text2Y }}
+          className="w-[30vw] absolute top-1/2 left-0 whitespace-break-spaces"
+        >
+          <span className="text-accent">2.위브먼트의 장점</span>
+          <br />
+          <span className=" ">
+            패브릭 FRP 인형탈까지 소재와 목적에 제한없이 모두 제작 가능합니다
+            편하게 연락주세요
+          </span>
+        </motion.p>
+        <motion.p
+          style={{ opacity: text3Opacity, y: text3Y }}
+          className="w-[30vw] absolute top-1/2 left-0 whitespace-break-spaces"
+        >
+          <span className="text-accent">3.위브먼트 장점</span>
+          <br />
+          <span className=" ">
+            조형물 스타트업으로 타 업체와 다른 신재생 에너지 또한 제작이
+            가능합니다 지구와 환경을 지켜주세요
+          </span>
+        </motion.p>
+      </div>
+    </section>
+  );
+};
+
+const MoreFeatures = () => {
+  const content = [
+    {
+      icon: FaHeadset,
+      title: "상담",
+      text: "문의내용을 검토하여 디렉터와 무료상담이 진행됩니다. 많은 프로젝트를 진행한 전문적인 프로젝트매니저가 직접 상담합니다.",
+    },
+    {
+      icon: FaPencilRuler,
+      title: "디자인",
+      text: "제작을 위한 사전 단계로 디자인이 필요하시면 2D디자인, 3D디자인 혹은 기술 설계 과정이 포함됩니다. ",
+    },
+    {
+      icon: MdFactory,
+      title: "제작",
+      text: "기획, 디자인, 설계 내용을 토대로 최적의 소재와 방식을 이용해 전문가들이 컨텐츠를 제작합니다. ",
+    },
+    {
+      icon: TiMessages,
+      title: "소통",
+      text: "기획단계나 제작과정 중 궁금한 것이 있으시면 편하게 연락주시면 친절하게 소통합니다",
+    },
+    {
+      icon: FaTruck,
+      title: "설치",
+      text: "제작된 컨텐츠의 특징, 현장 상황에 알맞게 안전한 운반과 설치가 진행됩니다.",
+    },
+    {
+      icon: FaInfo,
+      title: "강점",
+      text: "수 차례 공공기관과 기업들과 협엽한 경험을 바탕으로 원활한 진행을 경험하실 수 있습니다.",
+    },
+  ];
+
+  return (
+    <section className="mx-auto grid w-full max-w-[120rem] grid-cols-3 gap-32 p-40">
+      {content.map(({ icon: Icon, title, text }) => (
+        <div key={title}>
+          <span className="mb-4 flex h-24 w-24 items-center justify-center rounded-lg bg-gray-50">
+            <Icon className="w-8 h-8" />
+          </span>
+          <h3 className="mb-2 text-xl">{title}</h3>
+          <p className="text-md">{text}</p>
+        </div>
+      ))}
     </section>
   );
 };
@@ -362,8 +487,10 @@ const AboutUsClient = () => {
       <Header />
       <div className="relative z-10 w-full overflow-x-clip">
         <MainImg />
-        <Column />
-        <Frame />
+        <SlidingImage />
+        <BoxAndSlogan />
+        <Features />
+        <MoreFeatures />
       </div>
     </main>
   );
