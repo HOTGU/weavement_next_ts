@@ -1,10 +1,11 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import React, { useEffect, useRef, useState } from "react";
+import { motion, useScroll, useTransform, MotionConfig } from "framer-motion";
 import { TiMessages } from "react-icons/ti";
 import { MdFactory } from "react-icons/md";
 import { FaHeadset, FaTruck, FaPencilRuler, FaInfo } from "react-icons/fa";
+import Link from "next/link";
 
 const Header = () => {
   const targetRef = useRef<HTMLDivElement | null>(null);
@@ -470,8 +471,8 @@ const MoreFeatures = () => {
     <section className="mx-auto grid w-full max-w-[120rem] grid-cols-3 gap-32 p-40">
       {content.map(({ icon: Icon, title, text }) => (
         <div key={title}>
-          <span className="mb-4 flex h-24 w-24 items-center justify-center rounded-lg bg-gray-50">
-            <Icon className="w-8 h-8" />
+          <span className="mb-4 flex h-24 w-24 items-center justify-center rounded-lg bg-neutral-100">
+            <Icon className="w-8 h-8" color="black" />
           </span>
           <h3 className="mb-2 text-xl">{title}</h3>
           <p className="text-md">{text}</p>
@@ -481,11 +482,152 @@ const MoreFeatures = () => {
   );
 };
 
+const Nav = () => {
+  const [active, setActive] = useState(false);
+  return (
+    <MotionConfig
+      transition={{
+        duration: 0.5,
+        ease: "easeInOut",
+      }}
+    >
+      <motion.div
+        animate={active ? "open" : "close"}
+        className="z-20 relative text-white"
+      >
+        <motion.div
+          initial={false}
+          className="fixed"
+          animate={active ? "open" : "close"}
+          variants={{
+            open: {
+              width: "100%",
+              height: "100%",
+              top: 0,
+              right: 0,
+              backgroundColor: "black",
+              borderRadius: 0,
+            },
+            close: {
+              width: "80px",
+              height: "80px",
+              top: "20px",
+              right: "20px",
+              backgroundColor: "rgba(0, 0, 0, 0.7)",
+              borderRadius: "16px",
+            },
+          }}
+          transition={{
+            delay: active ? 0.1 : 0.5,
+          }}
+        >
+          <motion.button
+            initial={false}
+            onClick={() => {
+              console.log(2);
+              setActive(!active);
+            }}
+            className="fixed top-[20px] right-[20px] w-[80px] h-[80px] z-20 rounded-2xl"
+          >
+            <motion.span
+              style={{ left: "50%", top: "35%", x: "-50%", y: "-50%" }}
+              className="absolute h-1 w-10 bg-white"
+              variants={{
+                open: {
+                  rotate: ["0deg", "0deg", "45deg"],
+                  top: ["35%", "50%", "50%"],
+                },
+                close: {
+                  rotate: ["45deg", "0deg", "0deg"],
+                  top: ["50%", "50%", "35%"],
+                },
+              }}
+            />
+            <motion.span
+              style={{
+                left: "50%",
+                top: "50%",
+                x: "-50%",
+                y: "-50%",
+              }}
+              className="absolute h-1 w-10 bg-white"
+              variants={{
+                open: {
+                  rotate: ["0deg", "0deg", "-45deg"],
+                },
+                close: {
+                  rotate: ["-45deg", "0deg", "0deg"],
+                },
+              }}
+            />
+            <motion.span
+              style={{
+                left: "calc(50% + 10px)",
+                top: "65%",
+                x: "-50%",
+                y: "-50%",
+              }}
+              className="absolute h-1 w-5 bg-white"
+              variants={{
+                open: {
+                  rotate: ["0deg", "0deg", "45deg"],
+                  left: "50%",
+                  top: ["65%", "50%", "50%"],
+                },
+                close: {
+                  rotate: ["45deg", "0deg", "0deg"],
+                  left: "calc(50% + 10px)",
+                  top: ["50%", "50%", "65%"],
+                },
+              }}
+            />
+          </motion.button>
+          <motion.nav className="h-full flex items-start justify-center flex-col">
+            <motion.ul
+              className="text-7xl list-none w-full"
+              variants={{
+                open: {
+                  opacity: 1,
+                  y: "-20px",
+                },
+                close: {
+                  opacity: 0,
+                  y: "0px",
+                },
+              }}
+              transition={{
+                delay: active ? 0.5 : 0,
+              }}
+            >
+              <Link href="/">
+                <motion.li className="py-10 px-24 hover:text-accent hover:cursor-pointer">
+                  홈으로 가기.
+                </motion.li>
+              </Link>
+              <Link href="/contact">
+                <motion.li className="py-10 px-24 hover:text-accent hover:cursor-pointer">
+                  문의하기.
+                </motion.li>
+              </Link>
+              <Link href="/portfolio">
+                <motion.li className="py-10 px-24 hover:text-accent hover:cursor-pointer">
+                  포트폴리오 보기.
+                </motion.li>
+              </Link>
+            </motion.ul>
+          </motion.nav>
+        </motion.div>
+      </motion.div>
+    </MotionConfig>
+  );
+};
+
 const AboutUsClient = () => {
   return (
     <main>
+      <Nav />
       <Header />
-      <div className="relative z-10 w-full overflow-x-clip">
+      <div className="relative z-10 w-full overflow-x-clip ">
         <MainImg />
         <SlidingImage />
         <BoxAndSlogan />
