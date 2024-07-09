@@ -71,6 +71,7 @@ export async function PUT(request: Request, { params }: { params: IParams }) {
         file: body.thumb,
         type: "PORTFOLIO",
         resizeWidth: 2560,
+        isRep: body.isRep,
       });
     }
 

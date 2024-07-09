@@ -3,7 +3,6 @@ import createBlurImage from "@/libs/createBlurImage";
 import prisma from "@/libs/prismadb";
 import s3PutImage from "@/libs/s3PutImage";
 import { NextResponse } from "next/server";
-import { getPlaiceholder } from "plaiceholder";
 
 export async function POST(request: Request) {
   try {
