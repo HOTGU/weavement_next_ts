@@ -12,7 +12,7 @@ const Menu = () => {
     <ul>
       <div className="block sm:hidden"></div>
       <div className="hidden sm:flex gap-6 font-bold h-full">
-        <li className="list-none">
+        {/* <li className="list-none">
           <Link
             href="/aboutus"
             className={`h-full flex items-center ${
@@ -22,7 +22,7 @@ const Menu = () => {
           >
             위브먼트소개
           </Link>
-        </li>
+        </li> */}
         <li className="list-none">
           <Link
             href="/contact"
