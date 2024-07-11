@@ -246,11 +246,11 @@ const BoxAndSlogan = () => {
 
   const animationOffset = {
     init: 0,
-    fadeInBoxEnd: 0.14,
-    showText: 0.5,
-    fadeOutBoxEnd: 0.7,
-    fadeInTextEnd: 0.71,
-    showLastText: 0.8,
+    fadeInBoxEnd: 0.15,
+    showText: 0.7,
+    fadeOutBoxEnd: 0.8,
+    fadeInTextEnd: 0.81,
+    showLastText: 0.9,
     fadeOutTextEnd: 1,
   };
 
@@ -311,7 +311,7 @@ const BoxAndSlogan = () => {
   const lastTextY = useTransform(scrollYProgress, [0, 1], ["-50%", "-50%"]);
 
   return (
-    <section ref={targetRef} className="relative z-10 h-[500vh] -mt-[0vh]">
+    <section ref={targetRef} className="relative z-10 h-[400vh] -mt-[0vh]">
       <div className="sticky top-1/2">
         <motion.div
           style={{ opacity, x, y, scale }}
