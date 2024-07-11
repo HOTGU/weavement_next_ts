@@ -81,7 +81,7 @@ const MainImg = () => {
   const opacity = useTransform(scrollYProgress, [0.9, 1], [1, 0]);
 
   return (
-    <section ref={targetRef} className="relative z-10 mt-[-50vh] h-[300vh]">
+    <section ref={targetRef} className="relative z-10 mt-[-50vh] h-[200vh]">
       <div className="sticky top-0">
         <div className="flex justify-center">
           <motion.div style={{ scale }} className="origin-top">
@@ -199,7 +199,7 @@ const SlidingImage = () => {
   );
 
   return (
-    <section ref={targetRef} className="relative z-10 h-[600vh]">
+    <section ref={targetRef} className="relative z-10 h-[400vh]">
       <div className="sticky top-1/2 -translate-y-1/2 w-full">
         <motion.div
           style={{ scale, y, x }}
@@ -246,7 +246,7 @@ const BoxAndSlogan = () => {
 
   const animationOffset = {
     init: 0,
-    fadeInBoxEnd: 0.15,
+    fadeInBoxEnd: 0.3,
     showText: 0.7,
     fadeOutBoxEnd: 0.8,
     fadeInTextEnd: 0.81,
@@ -311,7 +311,7 @@ const BoxAndSlogan = () => {
   const lastTextY = useTransform(scrollYProgress, [0, 1], ["-50%", "-50%"]);
 
   return (
-    <section ref={targetRef} className="relative z-10 h-[400vh] -mt-[0vh]">
+    <section ref={targetRef} className="relative z-10 h-[200vh] -mt-[0vh]">
       <div className="sticky top-1/2">
         <motion.div
           style={{ opacity, x, y, scale }}
@@ -393,7 +393,7 @@ const Features = () => {
   );
 
   return (
-    <section className="flex flex-col items-center h-[600vh]" ref={targetRef}>
+    <section className="flex flex-col items-center h-[300vh]" ref={targetRef}>
       <div className="sticky top-[16.7vh] h-[66.8vh] px-16 text-4xl">
         <motion.div style={{ x, scale }} className="relative h-full">
           <motion.figure style={{ opacity }} className="h-full">
@@ -482,7 +482,7 @@ const MoreFeatures = () => {
     <section className="mx-auto grid w-full max-w-[120rem] grid-cols-3 gap-4 md:gap-16 lg:gap-32 p-4 md:p-20 lg:p-40 ">
       {content.map(({ icon: Icon, title, text }) => (
         <div key={title} className="text-pretty">
-          <span className="mb-4 flex h-12 md:h-24 w-12 md:w-24 items-center justify-center rounded-lg bg-neutral-100">
+          <span className="mb-4 flex h-12 md:h-24 w-12 md:w-24 items-center justify-center rounded-lg bg-neutral-200">
             <Icon className="w-6 h-6 md:w-8 md:h-8" color="black" />
           </span>
           <h3 className="mb-2 text-base md:text-xl">{title}</h3>
@@ -512,7 +512,7 @@ const Nav = () => {
           animate={active ? "open" : "close"}
           variants={{
             open: {
-              width: "100%",
+              width: "2%",
               height: "100%",
               top: 0,
               right: 0,
@@ -682,6 +682,32 @@ const AboutUsClient = () => {
               예산과 일정, 목적에 알맞은 예술적인 결과를 만들어갑니다
             </p>
           </div>
+        </section>
+        <section className="p-4 md:p-20 lg:p-40 bg-neutral-200 space-y-4">
+          <p className="w-full bg-white p-2 rounded ">
+            <span className="text-accent">Onestop Service</span>
+            <br />
+            조형물 디자인, 제작, 설치까지
+            <br />
+            원스톱 서비스를 제공합니다
+          </p>
+          <p className="w-full bg-white p-2 rounded ">
+            <span className="text-accent pb-4">Specialized Directing</span>
+            <br />
+            전문적인 지식과 섬세한 감각을 갖춘
+            <br />
+            프로젝트 디렉팅을 제공합니다.
+          </p>
+          <p className="w-full bg-white p-2 rounded ">
+            <span className="text-accent">
+              Art Service <br />
+              (Various Contents)
+            </span>
+            <br />
+            조형물, 인형탈, 신소재 활용까지
+            <br />
+            폭넓은 아트 콘텐츠를 제작합니다.
+          </p>
         </section>
         <MoreFeatures />
       </div>
