@@ -16,7 +16,15 @@ const SliderMenu = ({ close }: { close: () => void }) => {
     >
       <div className="w-full h-fit bg-white text-zinc-600">
         <Container>
-          {/* <div className="flex flex-col items-end w-full"> */}
+          <Link
+            href="/aboutus"
+            className={`h-full w-full flex items-center py-2 justify-end ${
+              pathname === "/aboutus" && "text-accent "
+            }`}
+            passHref
+          >
+            회사소개
+          </Link>
           <Link
             href="/contact"
             className={`h-full w-full flex items-center py-2 justify-end ${
@@ -35,13 +43,12 @@ const SliderMenu = ({ close }: { close: () => void }) => {
           >
             포트폴리오
           </Link>
-          <Link
+          {/* <Link
             href="/column"
             className="h-full py-2 flex items-center justify-end"
           >
             전문가 칼럼
-          </Link>
-          {/* </div> */}
+          </Link> */}
         </Container>
       </div>
     </div>

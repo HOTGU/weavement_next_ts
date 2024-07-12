@@ -6,6 +6,9 @@ import { TiMessages } from "react-icons/ti";
 import { MdFactory } from "react-icons/md";
 import { FaHeadset, FaTruck, FaPencilRuler, FaInfo } from "react-icons/fa";
 import Link from "next/link";
+import Footer from "../Footer";
+import Image from "next/image";
+import Navbar from "../navbar/Navbar";
 
 const Header = () => {
   const targetRef = useRef<HTMLDivElement | null>(null);
@@ -43,10 +46,10 @@ const Header = () => {
     >
       <motion.div
         style={{ position, scale, x: "-50%" }}
-        className="fixed left-1/2 z-10 flex flex-col items-center"
+        className="sticky left-1/2 z-10 flex flex-col items-center"
       >
         <div className="pt-12 h-auto">
-          <div className=" text-6xl font-extrabold leading-snug pb-6">
+          <div className="text-5xl lg:text-6xl font-extrabold leading-snug pb-6">
             <h2>조형물 제작,</h2>
             <div>
               <span className="text-accent text-bold">위브먼트</span>가 있습니다
@@ -60,6 +63,8 @@ const Header = () => {
   );
 };
 
+const mobileHeader = () => {};
+
 const MainImg = () => {
   const targetRef = useRef<HTMLDivElement | null>(null);
   const { scrollYProgress } = useScroll({
@@ -69,14 +74,14 @@ const MainImg = () => {
 
   const scale = useTransform(
     scrollYProgress,
-    [0.1, 0.4, 0.75, 1],
-    [1, 1.4, 2.2, 1.6]
+    [0.1, 0.6, 0.9, 1],
+    [1, 1.5, 2, 1.6]
   );
 
   const opacity = useTransform(scrollYProgress, [0.9, 1], [1, 0]);
 
   return (
-    <section ref={targetRef} className="relative z-10 mt-[-50vh] h-[300vh]">
+    <section ref={targetRef} className="relative z-10 mt-[-50vh] h-[200vh]">
       <div className="sticky top-0">
         <div className="flex justify-center">
           <motion.div style={{ scale }} className="origin-top">
@@ -101,14 +106,14 @@ const SlidingImage = () => {
 
   const animationOffset = {
     init: 0,
-    fadeInImageEnd: 0.15,
+    fadeInImageEnd: 0.2,
     fadeInTextOneEnd: 0.25,
-    showTextOne: 0.3,
+    showTextOne: 0.35,
     fadeOutTextOneEnd: 0.4,
     moveImageEnd: 0.5,
-    fadeInTextTwoEnd: 0.6,
+    fadeInTextTwoEnd: 0.55,
     showTextTwo: 0.65,
-    fadeOutTextTwoEnd: 0.75,
+    fadeOutTextTwoEnd: 0.7,
     centerMoveImageEnd: 0.8,
     fadeOutImageEnd: 1,
   };
@@ -194,36 +199,38 @@ const SlidingImage = () => {
   );
 
   return (
-    <section ref={targetRef} className="relative z-10 h-[800vh]">
-      <div className="sticky top-1/2 -translate-y-1/2">
+    <section ref={targetRef} className="relative z-10 h-[400vh]">
+      <div className="sticky top-1/2 -translate-y-1/2 w-full">
         <motion.div
           style={{ scale, y, x }}
           className="absolute top-1/2 left-1/2 w-[50vw]"
         >
           <motion.img
             style={{ opacity }}
-            src="/meta_img.png"
+            src="/aboutus/img1.webp"
             className="h-auto w-full max-h-none"
           />
         </motion.div>
 
-        <motion.div
+        <motion.p
           style={{ opacity: textOpacity, y: textY }}
-          className="w-[50vw] mr-[55vw] space-y-4 absolute left-0 top-1/2 ml-[10vw]"
+          className=" absolute pl-32 top-1/2 text-4xl leading-snug font-bold"
         >
-          <p className="text-4xl text-bold">소재도 방법도 제한이 없습니다</p>
-          <p className="text-4xl text-bold text-accent">편하게 문의주세요</p>
-        </motion.div>
+          위브먼트에게는 조형물의
+          <br />
+          크기도, 목적도, 소재도
+          <br />
+          제한이 없습니다
+        </motion.p>
 
-        <motion.div
+        <motion.p
           style={{ opacity: textTwoOpacity, y: textTwoY }}
-          className="w-[50vw] mr-[55vw] space-y-4  absolute left-1/2 top-1/2 ml-[10vw]"
+          className="absolute pr-32 right-0 top-1/2 text-4xl leading-snug font-bold"
         >
-          <p className="text-4xl text-bold text-blue-500">
-            소재도 방법도 제한이 없습니다
-          </p>
-          <p className="text-4xl text-bold text-accent">편하게 문의주세요</p>
-        </motion.div>
+          예산과 일정, 목적에 알맞은
+          <br />
+          예술적인 결과를 만들어갑니다
+        </motion.p>
       </div>
     </section>
   );
@@ -239,11 +246,11 @@ const BoxAndSlogan = () => {
 
   const animationOffset = {
     init: 0,
-    fadeInBoxEnd: 0.14,
-    showText: 0.5,
-    fadeOutBoxEnd: 0.6,
-    fadeInTextEnd: 0.75,
-    showLastText: 0.85,
+    fadeInBoxEnd: 0.2,
+    showText: 0.7,
+    fadeOutBoxEnd: 0.8,
+    fadeInTextEnd: 0.81,
+    showLastText: 0.9,
     fadeOutTextEnd: 1,
   };
 
@@ -301,14 +308,10 @@ const BoxAndSlogan = () => {
     [1, 0.8]
   );
   const lastTextX = useTransform(scrollYProgress, [0, 1], ["-50%", "-50%"]);
-  const lastTextY = useTransform(
-    scrollYProgress,
-    [animationOffset.fadeOutBoxEnd, animationOffset.fadeInTextEnd],
-    ["0%", "-50%"]
-  );
+  const lastTextY = useTransform(scrollYProgress, [0, 1], ["-50%", "-50%"]);
 
   return (
-    <section ref={targetRef} className="relative z-10 h-[400vh] -mt-[60vh]">
+    <section ref={targetRef} className="relative z-10 h-[250vh] -mt-[50vh]">
       <div className="sticky top-1/2">
         <motion.div
           style={{ opacity, x, y, scale }}
@@ -316,9 +319,9 @@ const BoxAndSlogan = () => {
         ></motion.div>
         <motion.p
           style={{ y: textY, x: textX }}
-          className="absolute right-0 text-8xl font-bold [-webkit-text-stroke:1px_var(--color-heading)]"
+          className="absolute right-0 text-8xl font-bold whitespace-nowrap [-webkit-text-stroke:1px_var(--color-heading)]"
         >
-          조형물 제작 위브먼트 감각적인 제조
+          감각적인 조형물 제작 위브먼트
         </motion.p>
         <motion.p
           style={{
@@ -329,9 +332,11 @@ const BoxAndSlogan = () => {
           }}
           className="absolute left-1/2 top-1/2 text-7xl"
         >
-          <span>조형물 제작 위브먼트</span>
+          감각적인
           <br />
-          <span>감각적인 제조</span>
+          조형물 제작
+          <br />
+          위브먼트
         </motion.p>
       </div>
     </section>
@@ -362,7 +367,7 @@ const Features = () => {
   const text1Y = useTransform(
     scrollYProgress,
     [0.3, 0.4, 0.5],
-    ["-40%", "-50%", "-60%"]
+    ["-10%", "-20%", "-30%"]
   );
 
   const text2Opacity = useTransform(
@@ -384,49 +389,55 @@ const Features = () => {
   const text3Y = useTransform(
     scrollYProgress,
     [0.7, 0.8, 0.9],
-    ["-40%", "-50%", "-60%"]
+    ["-70%", "-80%", "-90%"]
   );
 
   return (
-    <section className="flex flex-col items-center h-[600vh]" ref={targetRef}>
+    <section className="flex flex-col items-center h-[300vh]" ref={targetRef}>
       <div className="sticky top-[16.7vh] h-[66.8vh] px-16 text-4xl">
         <motion.div style={{ x, scale }} className="relative h-full">
           <motion.figure style={{ opacity }} className="h-full">
-            <img src="/meta_img.png" className="h-full w-auto" />
+            <img src="/aboutus/img3.webp" className="h-full w-auto" />
           </motion.figure>
         </motion.div>
         <motion.p
           style={{ opacity: text1Opacity, y: text1Y }}
-          className="w-[30vw] absolute top-1/2 left-0 whitespace-break-spaces"
+          className="w-[40vw] absolute top-1/2 left-0 whitespace-break-spaces break-words "
         >
-          <span className="text-accent">1.위브먼트의 장점</span>
+          <span className="text-accent">Onestop Service</span>
           <br />
-          <span className=" ">
-            모든 서비스를 원스톱으로 누려보세요 디자인부터 제작 설치까지 모두
-            가능합니다 프로젝트 진행은 1명의 프로젝트 매니저가 전담합니다
-          </span>
+          위브먼트는
+          <br />
+          조형물 디자인, 제작, 설치까지
+          <br />
+          원스톱 서비스를 제공합니다
         </motion.p>
         <motion.p
           style={{ opacity: text2Opacity, y: text2Y }}
-          className="w-[30vw] absolute top-1/2 left-0 whitespace-break-spaces"
+          className="w-[40vw] absolute top-1/2 left-0 whitespace-break-spaces"
         >
-          <span className="text-accent">2.위브먼트의 장점</span>
+          <span className="text-accent pb-4">Specialized Directing</span>
           <br />
-          <span className=" ">
-            패브릭 FRP 인형탈까지 소재와 목적에 제한없이 모두 제작 가능합니다
-            편하게 연락주세요
-          </span>
+          위브먼트는
+          <br />
+          전문적인 지식과 섬세한 감각을 갖춘
+          <br />
+          프로젝트 디렉팅을 제공합니다.
         </motion.p>
         <motion.p
           style={{ opacity: text3Opacity, y: text3Y }}
-          className="w-[30vw] absolute top-1/2 left-0 whitespace-break-spaces"
+          className="w-[40vw] absolute top-1/2 left-0 whitespace-break-spaces"
         >
-          <span className="text-accent">3.위브먼트 장점</span>
-          <br />
-          <span className=" ">
-            조형물 스타트업으로 타 업체와 다른 신재생 에너지 또한 제작이
-            가능합니다 지구와 환경을 지켜주세요
+          <span className="text-accent">
+            Art Service <br />
+            (Various Contents)
           </span>
+          <br />
+          위브먼트는
+          <br />
+          조형물, 인형탈, 신소재 활용까지
+          <br />
+          폭넓은 아트 콘텐츠를 제작합니다.
         </motion.p>
       </div>
     </section>
@@ -438,12 +449,12 @@ const MoreFeatures = () => {
     {
       icon: FaHeadset,
       title: "상담",
-      text: "문의내용을 검토하여 디렉터와 무료상담이 진행됩니다. 많은 프로젝트를 진행한 전문적인 프로젝트매니저가 직접 상담합니다.",
+      text: "문의 내용을 검토하여 디렉터와 1:1 무료 상담이 진행됩니다. 풍부한 노하우를 가진 전문 디렉터가 직접 상담하고, 프로젝트를 진행합니다.",
     },
     {
       icon: FaPencilRuler,
-      title: "디자인",
-      text: "제작을 위한 사전 단계로 디자인이 필요하시면 2D디자인, 3D디자인 혹은 기술 설계 과정이 포함됩니다. ",
+      title: "기획 및 디자인",
+      text: "제작을 위한 사전 단계로 목적에 맞은 컨텐츠 기획, 2D디자인, 3D디자인, 기술 설계 과정 등이 포함됩니다.",
     },
     {
       icon: MdFactory,
@@ -453,29 +464,29 @@ const MoreFeatures = () => {
     {
       icon: TiMessages,
       title: "소통",
-      text: "기획단계나 제작과정 중 궁금한 것이 있으시면 편하게 연락주시면 친절하게 소통합니다",
+      text: "상담부터 제작에 이르기까지 1:1 디렉터가 배정되어 책임지고 프로젝트를 완수합니다. 빠르고 원활한 소통이 가능합니다.",
     },
     {
       icon: FaTruck,
-      title: "설치",
-      text: "제작된 컨텐츠의 특징, 현장 상황에 알맞게 안전한 운반과 설치가 진행됩니다.",
+      title: "운반 및 설치",
+      text: "제작된 컨텐츠의 특징, 현장 상황에 알맞게 꼼꼼하고 안전한 포장, 운반, 설치가 진행됩니다.",
     },
     {
       icon: FaInfo,
-      title: "강점",
-      text: "수 차례 공공기관과 기업들과 협엽한 경험을 바탕으로 원활한 진행을 경험하실 수 있습니다.",
+      title: "인증",
+      text: "기업, 기관과 협업한 경험과 노하우를 바탕으로 다양한 계약에 필요한 제반서류, 인증서 등을 제공합니다.",
     },
   ];
 
   return (
-    <section className="mx-auto grid w-full max-w-[120rem] grid-cols-3 gap-32 p-40">
+    <section className="mx-auto grid w-full max-w-[120rem] grid-cols-3 gap-4 md:gap-16 lg:gap-32 p-4 md:p-20 lg:p-40 ">
       {content.map(({ icon: Icon, title, text }) => (
-        <div key={title}>
-          <span className="mb-4 flex h-24 w-24 items-center justify-center rounded-lg bg-neutral-100">
-            <Icon className="w-8 h-8" color="black" />
+        <div key={title} className="text-pretty">
+          <span className="mb-4 flex h-12 md:h-24 w-12 md:w-24 items-center justify-center rounded-lg bg-neutral-200">
+            <Icon className="w-6 h-6 md:w-8 md:h-8" color="black" />
           </span>
-          <h3 className="mb-2 text-xl">{title}</h3>
-          <p className="text-md">{text}</p>
+          <h3 className="mb-2 text-base md:text-xl">{title}</h3>
+          <div className="text-xs md:text-base">{text}</div>
         </div>
       ))}
     </section>
@@ -497,7 +508,7 @@ const Nav = () => {
       >
         <motion.div
           initial={false}
-          className="fixed"
+          className="fixed z-30"
           animate={active ? "open" : "close"}
           variants={{
             open: {
@@ -524,7 +535,6 @@ const Nav = () => {
           <motion.button
             initial={false}
             onClick={() => {
-              console.log(2);
               setActive(!active);
             }}
             className="fixed top-[20px] right-[20px] w-[80px] h-[80px] z-20 rounded-2xl"
@@ -625,15 +635,83 @@ const Nav = () => {
 const AboutUsClient = () => {
   return (
     <main>
-      <Nav />
-      <Header />
-      <div className="relative z-10 w-full overflow-x-clip ">
-        <MainImg />
-        <SlidingImage />
-        <BoxAndSlogan />
-        <Features />
+      <div className="hidden md:block">
+        <Nav />
+        <Header />
+        <div className="relative z-10 w-full overflow-x-clip ">
+          <MainImg />
+          <SlidingImage />
+          <BoxAndSlogan />
+          <Features />
+          <MoreFeatures />
+        </div>
+      </div>
+      <div className="block md:hidden">
+        <Navbar />
+        <section className="pt-10 text-black">
+          <div className="flex flex-col items-center">
+            <div className="pt-4 h-auto">
+              <div className=" text-3xl font-extrabold leading-snug pb-2">
+                <h2>조형물 제작,</h2>
+                <div>
+                  <span className="text-accent text-bold">위브먼트</span>가
+                  있습니다
+                </div>
+                <div className="border-b w-[200px] border-black mt-4" />
+              </div>
+              <div className=" font-bold pb-4">감각적인 제조, 위브먼트</div>
+            </div>
+          </div>
+        </section>
+        <section className="p-4 md:p-20 lg:p-40">
+          <div className="flex flex-col">
+            <div className=" relative w-full aspect-video">
+              <Image
+                src="/aboutus/img1.webp"
+                fill
+                alt="위브먼트 조형물 사진"
+                objectFit="cover"
+              />
+            </div>
+            <p className="pt-2 text-neutral-500">
+              크기도, 목적도, 소재도 제한이 없습니다
+            </p>
+
+            <p className=" text-neutral-500">
+              예산과 일정, 목적에 알맞은 예술적인 결과를 만들어갑니다
+            </p>
+          </div>
+        </section>
+        <section className="p-4 md:p-20 lg:p-40 bg-neutral-200 space-y-4">
+          <p className="w-full bg-white p-2 rounded ">
+            <span className="text-accent">Onestop Service</span>
+            <br />
+            조형물 디자인, 제작, 설치까지
+            <br />
+            원스톱 서비스를 제공합니다
+          </p>
+          <p className="w-full bg-white p-2 rounded ">
+            <span className="text-accent pb-4">Specialized Directing</span>
+            <br />
+            전문적인 지식과 섬세한 감각을 갖춘
+            <br />
+            프로젝트 디렉팅을 제공합니다.
+          </p>
+          <p className="w-full bg-white p-2 rounded ">
+            <span className="text-accent">
+              Art Service <br />
+              (Various Contents)
+            </span>
+            <br />
+            조형물, 인형탈, 신소재 활용까지
+            <br />
+            폭넓은 아트 콘텐츠를 제작합니다.
+          </p>
+        </section>
         <MoreFeatures />
       </div>
+
+      <Footer />
     </main>
   );
 };

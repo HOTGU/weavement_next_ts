@@ -20,7 +20,7 @@ const Menu = () => {
             }`}
             passHref
           >
-            위브먼트소개
+            회사소개
           </Link>
         </li> */}
         <li className="list-none">
@@ -45,17 +45,15 @@ const Menu = () => {
             포트폴리오
           </Link>
         </li>
-        <li className="list-none">
+        {/* <li className="list-none">
           <Link
             href="/column"
-            // href="https://blog.naver.com/PostList.naver?blogId=weavement&from=postList&categoryNo=6"
             className="h-full flex items-center"
-            // target="_blank"
             passHref
           >
             전문가 칼럼
           </Link>
-        </li>
+        </li> */}
       </div>
     </ul>
   );
