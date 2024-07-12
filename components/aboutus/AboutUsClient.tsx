@@ -214,7 +214,7 @@ const SlidingImage = () => {
 
         <motion.p
           style={{ opacity: textOpacity, y: textY }}
-          className=" absolute pl-16 top-1/2 text-3xl leading-snug font-bold"
+          className=" absolute pl-32 top-1/2 text-4xl leading-snug font-bold"
         >
           위브먼트에게는 조형물의
           <br />
@@ -225,7 +225,7 @@ const SlidingImage = () => {
 
         <motion.p
           style={{ opacity: textTwoOpacity, y: textTwoY }}
-          className="absolute pr-16 right-0 top-1/2 text-2xl leading-snug font-bold"
+          className="absolute pr-32 right-0 top-1/2 text-3xl leading-snug font-bold"
         >
           예산과 일정, 목적에 알맞은
           <br />
@@ -246,7 +246,7 @@ const BoxAndSlogan = () => {
 
   const animationOffset = {
     init: 0,
-    fadeInBoxEnd: 0.3,
+    fadeInBoxEnd: 0.2,
     showText: 0.7,
     fadeOutBoxEnd: 0.8,
     fadeInTextEnd: 0.81,
@@ -311,7 +311,7 @@ const BoxAndSlogan = () => {
   const lastTextY = useTransform(scrollYProgress, [0, 1], ["-50%", "-50%"]);
 
   return (
-    <section ref={targetRef} className="relative z-10 h-[200vh] -mt-[0vh]">
+    <section ref={targetRef} className="relative z-10 h-[250vh] -mt-[50vh]">
       <div className="sticky top-1/2">
         <motion.div
           style={{ opacity, x, y, scale }}
@@ -367,7 +367,7 @@ const Features = () => {
   const text1Y = useTransform(
     scrollYProgress,
     [0.3, 0.4, 0.5],
-    ["-40%", "-50%", "-60%"]
+    ["-10%", "-20%", "-30%"]
   );
 
   const text2Opacity = useTransform(
@@ -389,7 +389,7 @@ const Features = () => {
   const text3Y = useTransform(
     scrollYProgress,
     [0.7, 0.8, 0.9],
-    ["-40%", "-50%", "-60%"]
+    ["-70%", "-80%", "-90%"]
   );
 
   return (
@@ -508,11 +508,11 @@ const Nav = () => {
       >
         <motion.div
           initial={false}
-          className="fixed"
+          className="fixed z-30"
           animate={active ? "open" : "close"}
           variants={{
             open: {
-              width: "2%",
+              width: "100%",
               height: "100%",
               top: 0,
               right: 0,
@@ -535,7 +535,6 @@ const Nav = () => {
           <motion.button
             initial={false}
             onClick={() => {
-              console.log(2);
               setActive(!active);
             }}
             className="fixed top-[20px] right-[20px] w-[80px] h-[80px] z-20 rounded-2xl"
