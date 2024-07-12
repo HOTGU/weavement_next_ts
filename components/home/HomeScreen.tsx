@@ -33,9 +33,9 @@ const HomeScreen = ({ portfolios }: HomeScreenProps) => {
           <span className="text-sm sm:text-lg md:text-xl lg:text-3xl">
             감각적인 제조, 위브먼트
           </span>
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl">
             <RacingFont>WEAVEMENT</RacingFont>
-          </h1>
+          </h2>
         </div>
       </div>
       <motion.div

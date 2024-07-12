@@ -225,7 +225,7 @@ const SlidingImage = () => {
 
         <motion.p
           style={{ opacity: textTwoOpacity, y: textTwoY }}
-          className="absolute pr-32 right-0 top-1/2 text-3xl leading-snug font-bold"
+          className="absolute pr-32 right-0 top-1/2 text-4xl leading-snug font-bold"
         >
           예산과 일정, 목적에 알맞은
           <br />
