@@ -82,7 +82,10 @@ const page = async ({ params }: { params: IParams }) => {
             {portfolio.category.length > 0 && (
               <div className="flex gap-4">
                 {portfolio.category.map((category) => (
-                  <div className="inline-block px-2 py-1 rounded bg-neutral-200">
+                  <div
+                    className="inline-block px-2 py-1 rounded bg-neutral-200"
+                    key={category}
+                  >
                     #{category}
                   </div>
                 ))}
