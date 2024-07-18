@@ -169,6 +169,7 @@ const PortfolioUpload = ({ close }: { close: () => void }) => {
             control={control}
             name="thumb"
             label="대표사진선택"
+            compressWidth={2560}
             disabled={loading}
             onlyOne
           />
@@ -176,7 +177,7 @@ const PortfolioUpload = ({ close }: { close: () => void }) => {
             control={control}
             name="files"
             label="사진선택"
-            compressWidth={1024}
+            compressWidth={768}
             multiple
             disabled={loading}
           />
