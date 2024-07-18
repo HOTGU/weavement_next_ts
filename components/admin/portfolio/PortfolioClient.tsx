@@ -1,13 +1,11 @@
 "use client";
 
 import { Portfolio } from "@prisma/client";
-import React from "react";
+import React, { useMemo, useState } from "react";
 
 import PortfolioUpload from "./PortfolioUpload";
-import PortfolioBlock from "./PortfolioBlock";
-import useUpdatePortfolio from "@/hooks/useUpdatePortfolio";
-import PortfolioUpdate from "./PortfolioUpdate";
-import PortfolioPagination from "@/components/portfolio/PortfolioPagination";
+import PortfolioList from "./PortfolioList";
+import { useRouter } from "next/navigation";
 
 interface PortfolioClientProps {
   portfolios: Portfolio[];
@@ -20,21 +18,42 @@ const PortfolioClient = ({
   allPage,
   currentPage,
 }: PortfolioClientProps) => {
-  const updatePortfolio = useUpdatePortfolio();
+  const [isUpload, setIsUpload] = useState(false);
+  const router = useRouter();
+
+  const close = () => setIsUpload(false);
 
   return (
-    <div className="flex flex-col sm:flex-row h-full sm:h-[calc(100vh-50px)] gap-8">
-      <div className="w-full md:w-1/3 h-full max-h-[400px] sm:max-h-[calc(100vh-50px)] pb-4 flex flex-col border rounded">
-        <div className="h-full overflow-y-auto">
-          {portfolios.map((portfolio) => (
-            <PortfolioBlock portfolio={portfolio} key={portfolio.id} />
-          ))}
+    <div className="flex h-full gap-4">
+      <div className="space-y-2 py-4 w-[80px]">
+        <div
+          className={`${
+            !isUpload && "bg-accent text-white"
+          } px-2 py-1 rounded border text-center cursor-pointer`}
+          onClick={close}
+        >
+          목록
         </div>
-        <PortfolioPagination allPage={allPage} currentPage={currentPage} />
+        <div
+          className={`${
+            isUpload && "bg-accent text-white"
+          } px-2 py-1 rounded border text-center cursor-pointer`}
+          onClick={() => {
+            setIsUpload(true);
+          }}
+        >
+          업로드
+        </div>
       </div>
-      <div className="hidden sm:block w-full sm:w-2/3 h-full border rounded">
-        {updatePortfolio.isUpdate ? <PortfolioUpdate /> : <PortfolioUpload />}
-      </div>
+      {isUpload ? (
+        <PortfolioUpload close={close} />
+      ) : (
+        <PortfolioList
+          portfolios={portfolios}
+          allPage={allPage}
+          currentPage={currentPage}
+        />
+      )}
     </div>
   );
 };

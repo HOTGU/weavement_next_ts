@@ -46,6 +46,9 @@ export async function PUT(request: Request, { params }: { params: IParams }) {
         images.push(value);
       } else if (key === "isRep") {
         body[key] = value ? true : false;
+      } else if (key === "category" || key === "metaKeywords") {
+        const dataValue = value as string;
+        body[key] = dataValue ? dataValue.split(",") : [];
       } else {
         body[key] = value;
       }

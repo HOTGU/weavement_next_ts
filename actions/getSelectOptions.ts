@@ -10,6 +10,15 @@ export default () => {
     { value: "제작", label: "제작" },
   ];
 
+  const portfolioCategoryOptions: OptionType[] = [
+    { value: "에어조형물", label: "에어조형물" },
+    { value: "캐릭터조형물", label: "캐릭터조형물" },
+    { value: "패브릭조형물", label: "패브릭조형물" },
+    { value: "FRP조형물", label: "FRP조형물" },
+    { value: "스티로폼조형물", label: "스티로폼조형물" },
+    { value: "인형탈", label: "인형탈" },
+  ];
+
   const hasDesignOptions: OptionType[] = [
     { value: "2D디자인(사진포함)", label: "2D디자인(사진포함)" },
     { value: "3D디자인", label: "3D디자인" },
@@ -115,5 +124,6 @@ export default () => {
     pmOptions,
     contactPathOptions,
     meterialOptions,
+    portfolioCategoryOptions,
   };
 };

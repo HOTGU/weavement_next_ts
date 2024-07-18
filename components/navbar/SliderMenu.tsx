@@ -43,12 +43,6 @@ const SliderMenu = ({ close }: { close: () => void }) => {
           >
             포트폴리오
           </Link>
-          {/* <Link
-            href="/column"
-            className="h-full py-2 flex items-center justify-end"
-          >
-            전문가 칼럼
-          </Link> */}
         </Container>
       </div>
     </div>

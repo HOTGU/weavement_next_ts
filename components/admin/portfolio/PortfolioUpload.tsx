@@ -1,22 +1,28 @@
 "use client";
 
-import React, { useCallback, useState, useEffect } from "react";
+import React, { useCallback, useState, useEffect, useMemo } from "react";
 import axios from "axios";
 import Image from "next/legacy/image";
 import { useRouter } from "next/navigation";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { HiXMark } from "react-icons/hi2";
+import { FaCheck } from "react-icons/fa6";
+import { FaMinus } from "react-icons/fa";
 
 import Button from "@/components/Button";
 import File from "@/components/inputs/File";
 import Input from "@/components/inputs/Input";
 import Textarea from "@/components/inputs/Textarea";
 import getTotalFileSize from "@/utils/getTotalFileSize";
+import Select from "@/components/inputs/Select";
+import getSelectOptions from "@/actions/getSelectOptions";
 
-const PortfolioUpload = () => {
+const PortfolioUpload = ({ close }: { close: () => void }) => {
   const router = useRouter();
+  const selectOptions = getSelectOptions();
   const [loading, setLoading] = useState<boolean>(false);
+  const [step, setStep] = useState<"desc" | "seo">("desc");
 
   const [thumbSize, setThumbSize] = useState<number>(0);
   const [filesSize, setFilesSize] = useState<number>(0);
@@ -28,6 +34,7 @@ const PortfolioUpload = () => {
     watch,
     reset,
     setValue,
+    resetField,
   } = useForm<FieldValues>({
     defaultValues: {
       title: "",
@@ -35,6 +42,7 @@ const PortfolioUpload = () => {
       metaTitle: "",
       metaDescription: "",
       metaKeywords: "",
+      category: "",
       files: [],
       thumb: [],
       isRep: "",
@@ -44,6 +52,7 @@ const PortfolioUpload = () => {
   const resetInput = useCallback(() => {
     reset({
       title: "",
+      category: "",
       description: "",
       metaTitle: "",
       metaDescription: "",
@@ -58,6 +67,7 @@ const PortfolioUpload = () => {
 
   const title = watch("title");
   const description = watch("description");
+  const category = watch("category");
   const watchFiles = watch("files");
   const watchThumb = watch("thumb");
   const watchIsRep = watch("isRep");
@@ -90,6 +100,18 @@ const PortfolioUpload = () => {
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     if (!watchThumb[0]) return toast.error("대표사진을 선택해주세요");
     if (watchFiles.length === 0) return toast.error("하위사진을 선택해주세요");
+    if (step === "desc") {
+      setValue("metaTitle", title);
+      setValue("metaDescription", description);
+      setValue(
+        "metaKeywords",
+        `조형물제작, 조형물제작업체, ${title},${category.map(
+          (c: string) => ` ${c}`
+        )} `
+      );
+      setStep("seo");
+      return;
+    }
 
     setLoading(true);
 
@@ -102,6 +124,7 @@ const PortfolioUpload = () => {
       fd.append("images", data.files[i], data.files[i].name);
     }
     fd.append("title", data.title);
+    fd.append("category", data.category);
     fd.append("description", data.description);
     fd.append("isRep", data.isRep);
     fd.append("metaTitle", data.metaTitle);
@@ -113,6 +136,7 @@ const PortfolioUpload = () => {
       .then(() => {
         toast.success("생성 성공", { id: loadingToast });
         router.refresh();
+        close();
         resetInput();
       })
       .catch((error) => {
@@ -137,18 +161,116 @@ const PortfolioUpload = () => {
     setValue("filesPreview", deleteFilesPreview);
   };
 
+  let body = (
+    <>
+      <div className="flex gap-4 justify-between">
+        <div className="flex gap-4">
+          <File
+            control={control}
+            name="thumb"
+            label="대표사진선택"
+            disabled={loading}
+            onlyOne
+          />
+          <File
+            control={control}
+            name="files"
+            label="사진선택"
+            compressWidth={1024}
+            multiple
+            disabled={loading}
+          />
+        </div>
+        <div
+          className={` ${
+            Boolean(watchIsRep) && "bg-accent text-white"
+          } border border-neutral-300 w-36 h-12 rounded-md flex items-center justify-center cursor-pointer transition-colors`}
+          onClick={() => {
+            Boolean(watchIsRep)
+              ? setValue("isRep", "")
+              : setValue("isRep", "on");
+          }}
+        >
+          {Boolean(watchIsRep) ? <FaCheck className="" /> : <FaMinus />}
+          <span className="pl-2">메인페이지 등록</span>
+        </div>
+      </div>
+      <Select
+        errors={errors}
+        control={control}
+        name="category"
+        label="카테고리"
+        options={selectOptions.portfolioCategoryOptions}
+        placeholder="카테고리"
+        isMulti
+        required
+      />
+
+      <Input
+        control={control}
+        errors={errors}
+        required
+        name="title"
+        label="제목"
+        disabled={loading}
+      />
+      <Textarea
+        control={control}
+        errors={errors}
+        name="description"
+        required
+        label="본문"
+        disabled={loading}
+      />
+    </>
+  );
+  let actionLabel = "다음";
+
+  if (step === "seo") {
+    actionLabel = "생성";
+    body = (
+      <>
+        <div className=" font-bold text-center">SEO</div>
+        <Input
+          control={control}
+          errors={errors}
+          required
+          name="metaTitle"
+          label="SEO제목"
+          disabled={loading}
+        />
+        <Textarea
+          control={control}
+          errors={errors}
+          required
+          name="metaDescription"
+          label="SEO본문"
+          disabled={loading}
+        />
+        <Input
+          control={control}
+          errors={errors}
+          required
+          name="metaKeywords"
+          label="SEO키워드"
+          disabled={loading}
+        />
+      </>
+    );
+  }
+
   return (
-    <div className="flex gap-6 h-[calc(100vh-50px)] p-6 overflow-y-auto relative">
-      <div className="w-2/3 h-fit flex flex-col gap-4 items-center">
-        <div className="flex flex-col items-center">
+    <div className="flex gap-4 min-h-[calc(100vh-50px)] w-full py-4 ">
+      <div className="flex-1 h-full flex flex-col gap-4 p-2 items-center border rounded">
+        <div className="flex flex-col items-center gap-1">
           {thumbSize + filesSize > 4 && (
             <div className="text-xs text-rose-500">
               사진이 4MB를 초과했습니다.
             </div>
           )}
-          <span className="text-xs">
-            {(thumbSize + filesSize).toFixed(2)}MB / 4MB (썸네일: {thumbSize}MB
-            하위사진:
+          <span className="text-xs text-neutral-500">
+            {(thumbSize + filesSize).toFixed(2)}MB / 4MB (썸네일: {thumbSize}
+            MB 하위사진:
             {filesSize}MB )
           </span>
         </div>
@@ -203,86 +325,23 @@ const PortfolioUpload = () => {
             ))}
         </div>
       </div>
-      <div className="w-1/3 h-fit sticky top-0 flex flex-col gap-4 p-4 shadow-xl border rounded">
-        <div className="flex gap-4">
-          <File
-            control={control}
-            name="thumb"
-            label="대표사진선택"
-            // compressWidth={2560} //대표사진은 노압축이 화질이 좋음
+      <div className="flex-1 h-[80vh] sticky top-14 flex flex-col gap-4 p-4 shadow-xl border rounded ">
+        {body}
+        <div className="mt-auto flex gap-4">
+          {step === "seo" && (
+            <Button
+              label="이전"
+              disabled={loading}
+              onClick={() => setStep("desc")}
+              outline
+            />
+          )}
+          <Button
+            label={actionLabel}
             disabled={loading}
-            onlyOne
-          />
-          <File
-            control={control}
-            name="files"
-            label="사진선택"
-            compressWidth={1024}
-            multiple
-            disabled={loading}
+            onClick={handleSubmit(onSubmit)}
           />
         </div>
-
-        <Input
-          control={control}
-          errors={errors}
-          required
-          name="title"
-          label="제목"
-          disabled={loading}
-        />
-        <Textarea
-          control={control}
-          errors={errors}
-          name="description"
-          required
-          label="본문"
-          disabled={loading}
-        />
-        <label className="flex items-center gap-2">
-          <input
-            type="checkbox"
-            checked={Boolean(watchIsRep)}
-            onChange={(e) => {
-              if (e.target.checked) {
-                setValue("isRep", "on");
-              } else {
-                setValue("isRep", "");
-              }
-            }}
-            className="w-4 h-4"
-          />
-          메인페이지 등록
-        </label>
-        <Input
-          control={control}
-          errors={errors}
-          required
-          name="metaTitle"
-          label="SEO제목"
-          disabled={loading}
-        />
-        <Textarea
-          control={control}
-          errors={errors}
-          required
-          name="metaDescription"
-          label="SEO본문"
-          disabled={loading}
-        />
-        <Input
-          control={control}
-          errors={errors}
-          required
-          name="metaKeywords"
-          label="SEO키워드"
-          disabled={loading}
-        />
-        <Button
-          label="포트폴리오 생성"
-          disabled={loading}
-          onClick={handleSubmit(onSubmit)}
-        />
       </div>
     </div>
   );

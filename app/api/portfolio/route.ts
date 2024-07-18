@@ -21,12 +21,14 @@ export async function POST(request: Request) {
     });
     const thumb = data.get("thumb") as File;
     const title = data.get("title") as string;
+    const dataCategory = data.get("category") as string;
     const isRep = data.get("isRep") ? true : false;
     const description = data.get("description") as string;
     const metaTitle = data.get("metaTitle") as string;
     const metaDescription = data.get("metaDescription") as string;
     const dataMetaKeywords = data.get("metaKeywords") as string;
 
+    const category = dataCategory ? dataCategory.split(",") : [];
     const metaKeywords = dataMetaKeywords ? dataMetaKeywords.split(",") : [];
 
     //create blur image
@@ -55,6 +57,7 @@ export async function POST(request: Request) {
     const portfolio = await prisma.portfolio.create({
       data: {
         title,
+        category,
         description,
         isRep,
         thumb: thumbLocation,

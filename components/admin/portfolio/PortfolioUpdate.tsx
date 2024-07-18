@@ -2,25 +2,31 @@
 
 import React, { useEffect, useMemo, useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
-
-import useUpdatePortfolio from "@/hooks/useUpdatePortfolio";
-import File from "@/components/inputs/File";
+import axios from "axios";
+import { toast } from "react-hot-toast";
+import { useRouter } from "next/navigation";
 import { HiXMark } from "react-icons/hi2";
+import { FaCheck, FaMinus } from "react-icons/fa";
+
+import File from "@/components/inputs/File";
 import Image from "next/legacy/image";
 import Input from "@/components/inputs/Input";
 import Textarea from "@/components/inputs/Textarea";
 import Button from "@/components/Button";
-import axios from "axios";
-import { toast } from "react-hot-toast";
-import { useRouter } from "next/navigation";
 import getTotalFileSize from "@/utils/getTotalFileSize";
+import getSelectOptions from "@/actions/getSelectOptions";
+import Select from "@/components/inputs/Select";
+import { Portfolio } from "@prisma/client";
 
-const PortfolioUpdate = () => {
-  const updatePortfolio = useUpdatePortfolio();
+const PortfolioUpdate = ({ portfolio }: { portfolio: Portfolio }) => {
+  // const updatePortfolio = useUpdatePortfolio();
+  const selectOptions = getSelectOptions();
   const router = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
   const [thumbSize, setThumbSize] = useState<number>(0);
   const [filesSize, setFilesSize] = useState<number>(0);
+  const [step, setStep] = useState<"desc" | "seo">("desc");
+
   const {
     reset,
     handleSubmit,
@@ -31,21 +37,22 @@ const PortfolioUpdate = () => {
   } = useForm<FieldValues>({
     values: useMemo(() => {
       return {
-        title: updatePortfolio.target?.title,
-        description: updatePortfolio.target?.description,
-        metaTitle: updatePortfolio.target?.metaTitle,
-        metaDescription: updatePortfolio.target?.metaDescription,
-        metaKeywords: updatePortfolio.target?.metaKeywords,
-        isRep: updatePortfolio.target?.isRep ? "on" : "",
-        blurThumb: updatePortfolio.target?.blurThumb,
-        oldFiles: updatePortfolio.target?.images,
-        oldThumb: updatePortfolio.target?.thumb,
+        title: portfolio.title,
+        category: portfolio.category,
+        description: portfolio.description,
+        metaTitle: portfolio.metaTitle,
+        metaDescription: portfolio.metaDescription,
+        metaKeywords: portfolio.metaKeywords,
+        isRep: portfolio.isRep ? "on" : "",
+        blurThumb: portfolio.blurThumb,
+        oldFiles: portfolio.images,
+        oldThumb: portfolio.thumb,
         files: [],
         filesPreview: [],
         thumb: [],
         thumbPreview: "",
       };
-    }, [updatePortfolio.target]),
+    }, [portfolio]),
   });
 
   const title = watch("title");
@@ -81,9 +88,11 @@ const PortfolioUpdate = () => {
   }, [watchFiles]);
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    if (updatePortfolio.target) {
+    if (portfolio) {
       if (watchOldFiles?.length === 0 && watchFiles.length === 0)
         return toast.error("하위사진을 선택해주세요");
+
+      if (step === "desc") return setStep("seo");
 
       setLoading(true);
       const loadingToast = toast.loading("포트폴리오 수정중..");
@@ -100,6 +109,7 @@ const PortfolioUpdate = () => {
         fd.append("images", data.files[i], data.files[i].name);
       }
       fd.append("title", data.title);
+      fd.append("category", data.category);
       fd.append("description", data.description);
       fd.append("isRep", data.isRep);
       fd.append("blurThumb", data.blurThumb);
@@ -108,11 +118,11 @@ const PortfolioUpdate = () => {
       fd.append("metaKeywords", data.metaKeywords);
 
       axios
-        .put(`/api/portfolio/${updatePortfolio.target.id}`, fd)
+        .put(`/api/portfolio/${portfolio.id}`, fd)
         .then(() => {
           toast.success("수정 성공", { id: loadingToast });
+          router.push("/admin/portfolio");
           router.refresh();
-          updatePortfolio.onClose();
         })
         .catch((error) => {
           if (process.env.NODE_ENV === "development") {
@@ -142,18 +152,117 @@ const PortfolioUpdate = () => {
     setValue("files", deletedFiles);
   };
 
+  let body = (
+    <>
+      <div className="flex gap-4 justify-between">
+        <div className="flex gap-4">
+          <File
+            control={control}
+            name="thumb"
+            label="대표사진선택"
+            disabled={loading}
+            onlyOne
+          />
+          <File
+            control={control}
+            name="files"
+            label="사진선택"
+            compressWidth={1024}
+            multiple
+            disabled={loading}
+          />
+        </div>
+        <div
+          className={` ${
+            Boolean(watchIsRep) && "bg-accent text-white"
+          } border border-neutral-300 w-36 h-12 rounded-md flex items-center justify-center cursor-pointer transition-colors`}
+          onClick={() => {
+            Boolean(watchIsRep)
+              ? setValue("isRep", "")
+              : setValue("isRep", "on");
+          }}
+        >
+          {Boolean(watchIsRep) ? <FaCheck className="" /> : <FaMinus />}
+          <span className="pl-2">메인페이지 등록</span>
+        </div>
+      </div>
+      <Select
+        errors={errors}
+        control={control}
+        name="category"
+        label="카테고리"
+        options={selectOptions.portfolioCategoryOptions}
+        placeholder="카테고리"
+        isMulti
+        required
+      />
+
+      <Input
+        control={control}
+        errors={errors}
+        required
+        name="title"
+        label="제목"
+        disabled={loading}
+      />
+      <Textarea
+        control={control}
+        errors={errors}
+        name="description"
+        required
+        label="본문"
+        disabled={loading}
+      />
+    </>
+  );
+  let actionLabel = "다음";
+
+  if (step === "seo") {
+    actionLabel = "수정";
+    body = (
+      <>
+        <div className=" font-bold text-center">SEO</div>
+
+        <Input
+          control={control}
+          errors={errors}
+          required
+          name="metaTitle"
+          label="SEO제목"
+          disabled={loading}
+        />
+        <Textarea
+          control={control}
+          errors={errors}
+          required
+          name="metaDescription"
+          label="SEO본문"
+          disabled={loading}
+        />
+        <Input
+          control={control}
+          errors={errors}
+          required
+          name="metaKeywords"
+          label="SEO키워드"
+          disabled={loading}
+        />
+      </>
+    );
+  }
+
   return (
-    <div className="flex gap-6 h-[calc(100vh-50px)] p-6 overflow-y-auto relative">
-      <div className="w-2/3 h-fit flex flex-col gap-4 items-center">
-        <div className="flex flex-col items-center">
+    <div className="flex gap-4 min-h-[calc(100vh-50px)] w-full py-4 ">
+      <div className="w-1/2 h-full flex flex-col gap-4 p-2 items-center border rounded">
+        <div className="flex flex-col items-center gap-1 ">
           {thumbSize + filesSize > 4 && (
             <div className="text-xs text-rose-500">
               사진이 4MB를 초과했습니다.
             </div>
           )}
-          <span className="text-xs">
-            {(thumbSize + filesSize).toFixed(2)}MB / 4MB (썸네일: {thumbSize}MB
-            하위사진:
+          <span className="text-xs text-neutral-500">
+            {(thumbSize + filesSize).toFixed(2)}MB / 4MB (썸네일: {thumbSize}
+            MB 하위사진:
             {filesSize}MB )
           </span>
         </div>
@@ -232,92 +341,23 @@ const PortfolioUpdate = () => {
           ))}
         </div>
       </div>
-      <div className="w-1/3 h-fit sticky top-0 flex flex-col gap-4 p-4 shadow-xl border rounded">
-        <div className="flex gap-4">
-          <File
-            control={control}
-            name="thumb"
-            label="대표사진선택"
-            compressWidth={2560}
+      <div className="w-1/2 h-[80vh] sticky top-14 flex flex-col gap-4 p-4 shadow-xl border rounded">
+        {body}
+        <div className="mt-auto flex gap-4">
+          {step === "seo" && (
+            <Button
+              label="이전"
+              disabled={loading}
+              onClick={() => setStep("desc")}
+              outline
+            />
+          )}
+          <Button
+            label={actionLabel}
             disabled={loading}
-            onlyOne
-          />
-          <File
-            control={control}
-            name="files"
-            label="사진선택"
-            compressWidth={1024}
-            multiple
-            disabled={loading}
+            onClick={handleSubmit(onSubmit)}
           />
         </div>
-
-        <Input
-          control={control}
-          errors={errors}
-          required
-          name="title"
-          label="제목"
-          disabled={loading}
-        />
-        <Textarea
-          control={control}
-          errors={errors}
-          name="description"
-          required
-          label="본문"
-          disabled={loading}
-        />
-        <label className="flex items-center gap-2">
-          <input
-            type="checkbox"
-            onChange={(e) => {
-              if (e.target.checked) {
-                setValue("isRep", "on");
-              } else {
-                setValue("isRep", "");
-              }
-            }}
-            checked={Boolean(watchIsRep)}
-            className="w-4 h-4"
-          />
-          메인페이지 등록
-        </label>
-        <Input
-          control={control}
-          errors={errors}
-          required
-          name="metaTitle"
-          label="SEO제목"
-          disabled={loading}
-        />
-        <Textarea
-          control={control}
-          errors={errors}
-          required
-          name="metaDescription"
-          label="SEO본문"
-          disabled={loading}
-        />
-        <Input
-          control={control}
-          errors={errors}
-          required
-          name="metaKeywords"
-          label="SEO키워드"
-          disabled={loading}
-        />
-        <Button
-          label="포트폴리오 수정"
-          disabled={loading}
-          onClick={handleSubmit(onSubmit)}
-        />
-        <Button
-          label="수정 취소"
-          outline
-          disabled={loading}
-          onClick={updatePortfolio.onClose}
-        />
       </div>
     </div>
   );
