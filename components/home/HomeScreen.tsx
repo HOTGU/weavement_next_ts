@@ -14,7 +14,7 @@ import Image5 from "@/public/imgs/home/메인페이지5.webp";
 
 const HomeScreen = () => {
   const [index, setIndex] = useState(0);
-  const images = [Image1, Image2, Image3, Image4, Image5];
+  const images = [Image1, Image3, Image5, Image4, Image2];
 
   useEffect(() => {
     const interval = setInterval(() => {
