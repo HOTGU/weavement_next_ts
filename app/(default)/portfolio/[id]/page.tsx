@@ -3,7 +3,6 @@ import { Metadata } from "next";
 import Image from "next/legacy/image";
 
 import getPortfolio, { IParams } from "@/actions/db/getPortfolio";
-import getPortfolios from "@/actions/db/getPortfolios";
 import Container from "@/components/Container";
 import metadataConfig from "@/constants/metadataConfig";
 import prisma from "@/libs/prismadb";
@@ -80,6 +79,18 @@ const page = async ({ params }: { params: IParams }) => {
             <h2 className="text-md sm:text-lg md:text-xl lg:text-2xl font-semibold">
               {portfolio.title}
             </h2>
+            {portfolio.category.length > 0 && (
+              <div className="flex gap-4">
+                {portfolio.category.map((category) => (
+                  <div
+                    className="inline-block px-2 py-1 rounded bg-neutral-200"
+                    key={category}
+                  >
+                    #{category}
+                  </div>
+                ))}
+              </div>
+            )}
             <p className="text-sm md:text-md lg:text-lg whitespace-pre-wrap text-center">
               {portfolio.description}
             </p>

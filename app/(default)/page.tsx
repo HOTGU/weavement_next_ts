@@ -9,13 +9,12 @@ import metadataConfig from "@/constants/metadataConfig";
 export const metadata = metadataConfig.homeMetadata;
 
 export default async function Home() {
-  const isRep = true;
   const take = 6;
-  const data = await getPortfolios({ isRep, take });
+  const data = await getPortfolios({ take });
 
   return (
     <>
-      <HomeScreen portfolios={data.portfolios} />
+      <HomeScreen />
       <div className="homeColumn">
         <HomeAbout />
       </div>

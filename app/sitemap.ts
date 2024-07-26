@@ -3,7 +3,7 @@ import { MetadataRoute } from "next";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const URL = "https://weavement.co.kr";
-  const routes = ["", "/contact", "/portfolio"];
+  const routes = ["", "/contact", "/portfolio", "/aboutus"];
   const portfolios = await prisma.portfolio.findMany({
     orderBy: { createdAt: "desc" },
   });

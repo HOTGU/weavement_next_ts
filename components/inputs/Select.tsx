@@ -45,15 +45,15 @@ const Select = ({
   return (
     <div
       className={`relative w-full rounded-md ${
-        errors[name] && "border border-red-500"
+        errors[name] && "border border-rose-500"
       }`}
     >
       <ReactSelect
         options={options}
         classNames={{
-          control: () => "p-2 border-1",
-          input: () => "text-lg border-1",
-          option: () => "text-lg",
+          control: () => "p-2 border-none",
+          // input: () => "text-lg border-1",
+          // option: () => "text-lg",
         }}
         theme={(theme) => ({
           ...theme,
@@ -89,11 +89,11 @@ const Select = ({
         isDisabled={disabled}
       />
       <label
-        className={`absolute origin-[0] top-0 transition peer-focus:text-red-500 text-md -translate-y-1/2 bg-white scale-75 left-4 px-1 ${
+        className={`absolute origin-[0] top-0 transition text-md -translate-y-1/2 bg-white scale-75 left-4 px-1 ${
           isFocus
             ? "text-black"
             : errors[name]
-            ? "text-red-500"
+            ? "text-rose-500"
             : "text-zinc-400 "
         } `}
       >
