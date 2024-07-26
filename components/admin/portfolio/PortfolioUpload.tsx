@@ -1,14 +1,12 @@
 "use client";
 
-import React, { useCallback, useState, useEffect, useMemo } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import axios from "axios";
 import Image from "next/legacy/image";
 import { useRouter } from "next/navigation";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { HiXMark } from "react-icons/hi2";
-import { FaCheck } from "react-icons/fa6";
-import { FaMinus } from "react-icons/fa";
 
 import Button from "@/components/Button";
 import File from "@/components/inputs/File";
@@ -57,7 +55,7 @@ const PortfolioUpload = ({ close }: { close: () => void }) => {
       metaTitle: "",
       metaDescription: "",
       metaKeywords: "",
-      isRep: "",
+      // isRep: "",
       files: [],
       filesPreview: [],
       thumb: [],
@@ -70,7 +68,7 @@ const PortfolioUpload = ({ close }: { close: () => void }) => {
   const category = watch("category");
   const watchFiles = watch("files");
   const watchThumb = watch("thumb");
-  const watchIsRep = watch("isRep");
+  // const watchIsRep = watch("isRep");
   const thumbPreview = watch("thumbPreview");
   const filesPreview = watch("filesPreview");
 
@@ -126,7 +124,7 @@ const PortfolioUpload = ({ close }: { close: () => void }) => {
     fd.append("title", data.title);
     fd.append("category", data.category);
     fd.append("description", data.description);
-    fd.append("isRep", data.isRep);
+    // fd.append("isRep", data.isRep);
     fd.append("metaTitle", data.metaTitle);
     fd.append("metaDescription", data.metaDescription);
     fd.append("metaKeywords", data.metaKeywords);
@@ -182,7 +180,7 @@ const PortfolioUpload = ({ close }: { close: () => void }) => {
             disabled={loading}
           />
         </div>
-        <div
+        {/* <div
           className={` ${
             Boolean(watchIsRep) && "bg-accent text-white"
           } border border-neutral-300 w-36 h-12 rounded-md flex items-center justify-center cursor-pointer transition-colors`}
@@ -194,7 +192,7 @@ const PortfolioUpload = ({ close }: { close: () => void }) => {
         >
           {Boolean(watchIsRep) ? <FaCheck className="" /> : <FaMinus />}
           <span className="pl-2">메인페이지 등록</span>
-        </div>
+        </div> */}
       </div>
       <Select
         errors={errors}

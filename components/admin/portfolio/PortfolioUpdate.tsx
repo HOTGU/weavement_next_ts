@@ -43,7 +43,7 @@ const PortfolioUpdate = ({ portfolio }: { portfolio: Portfolio }) => {
         metaTitle: portfolio.metaTitle,
         metaDescription: portfolio.metaDescription,
         metaKeywords: portfolio.metaKeywords,
-        isRep: portfolio.isRep ? "on" : "",
+        // isRep: portfolio.isRep ? "on" : "",
         blurThumb: portfolio.blurThumb,
         oldFiles: portfolio.images,
         oldThumb: portfolio.thumb,
@@ -57,7 +57,7 @@ const PortfolioUpdate = ({ portfolio }: { portfolio: Portfolio }) => {
 
   const title = watch("title");
   const description = watch("description");
-  const watchIsRep = watch("isRep");
+  // const watchIsRep = watch("isRep");
   const watchOldFiles = watch("oldFiles");
   const watchOldThumb = watch("oldThumb");
 
@@ -172,7 +172,7 @@ const PortfolioUpdate = ({ portfolio }: { portfolio: Portfolio }) => {
             disabled={loading}
           />
         </div>
-        <div
+        {/* <div
           className={` ${
             Boolean(watchIsRep) && "bg-accent text-white"
           } border border-neutral-300 w-36 h-12 rounded-md flex items-center justify-center cursor-pointer transition-colors`}
@@ -184,7 +184,7 @@ const PortfolioUpdate = ({ portfolio }: { portfolio: Portfolio }) => {
         >
           {Boolean(watchIsRep) ? <FaCheck className="" /> : <FaMinus />}
           <span className="pl-2">메인페이지 등록</span>
-        </div>
+        </div> */}
       </div>
       <Select
         errors={errors}
