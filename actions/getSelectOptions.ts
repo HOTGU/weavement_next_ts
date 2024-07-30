@@ -17,6 +17,7 @@ export default () => {
     { value: "FRP조형물", label: "FRP조형물" },
     { value: "스티로폼조형물", label: "스티로폼조형물" },
     { value: "인형탈", label: "인형탈" },
+    { value: "기타", label: "기타" },
   ];
 
   const hasDesignOptions: OptionType[] = [
