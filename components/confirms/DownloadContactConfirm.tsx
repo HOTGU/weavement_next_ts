@@ -14,8 +14,6 @@ interface IFetchData {
   data: ContactWithClients[];
 }
 
-type IExcelData = any;
-
 const DownloadContactConfirm = () => {
   const confirm = useContactDownloadConfirm();
   const [excelData, setExcelData] = useState<any[]>([]);
@@ -31,11 +29,12 @@ const DownloadContactConfirm = () => {
     { label: "예산", key: "cost" },
     { label: "디자인여부", key: "hasDesign" },
     { label: "일정", key: "schedule" },
-    { label: "유입플랫폼", key: "knowPlatform" },
+    { label: "알게된경로", key: "knowPlatform" },
     { label: "문의경로", key: "contactPath" },
     { label: "문의내용", key: "description" },
     { label: "PM", key: "pm" },
     { label: "소재", key: "meterial" },
+
     { label: "콘텐츠", key: "content" },
     { label: "협력사", key: "orderCompany" },
     { label: "상담내용", key: "note" },
@@ -81,7 +80,9 @@ const DownloadContactConfirm = () => {
               client &&
               client.length > 0 &&
               client.map((c) => {
-                return `${c.name}${c.position} ${c.phone} ${c.email}\n`;
+                return `고객:${c.name}${c.position}\n번호:${
+                  c.phone || "모름"
+                }\n이메일:${c.email || "모름"}\n`;
               }),
             cost,
             hasDesign,
