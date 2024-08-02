@@ -1,11 +1,20 @@
 import React from "react";
 import { Metadata } from "next";
 import Image from "next/legacy/image";
+import Link from "next/link";
+import { Portfolio } from "@prisma/client";
 
 import getPortfolio, { IParams } from "@/actions/db/getPortfolio";
 import Container from "@/components/Container";
 import metadataConfig from "@/constants/metadataConfig";
 import prisma from "@/libs/prismadb";
+import PortfolioBlock from "@/components/portfolio/PortfolioBlock";
+
+type Data = {
+  portfolio: Portfolio;
+
+  samCategoryData: { name: string; next?: Portfolio; prev?: Portfolio }[];
+};
 
 export const generateMetadata = async ({
   params,
@@ -55,11 +64,70 @@ export const generateStaticParams = async () => {
   }));
 };
 
+const getPortfolioDetail = async ({ id }: { id: string }) => {
+  try {
+    const portfolio = await prisma.portfolio.findUnique({ where: { id } });
+
+    const category = portfolio?.category;
+
+    let data = {
+      portfolio,
+      samCategoryData: category?.map((c) => {
+        return {
+          name: c,
+          data: [],
+        };
+      }),
+    } as Data;
+
+    if (category && category.length > 0) {
+      for (let i = 0; i < category.length; i++) {
+        const nextPortfolios = await prisma.portfolio.findMany({
+          where: {
+            category: {
+              has: category[i],
+            },
+          },
+          take: 1,
+          skip: 1,
+          orderBy: {
+            createdAt: "desc",
+          },
+          cursor: { id },
+        });
+        const prevPortfolios = await prisma.portfolio.findMany({
+          where: {
+            category: {
+              has: category[i],
+            },
+          },
+          take: -1,
+          skip: 1,
+          orderBy: {
+            createdAt: "desc",
+          },
+          cursor: { id },
+        });
+
+        data.samCategoryData[i].name = category[i];
+        data.samCategoryData[i].next = nextPortfolios[0];
+        data.samCategoryData[i].prev = prevPortfolios[0];
+      }
+    }
+
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const page = async ({ params }: { params: IParams }) => {
   const { id } = params;
-  const portfolio = await getPortfolio({ id });
+  const data = await getPortfolioDetail({ id });
 
-  if (!portfolio) return <></>;
+  if (!data) return <></>;
+
+  const { portfolio, samCategoryData } = data;
 
   return (
     <Container>
@@ -105,6 +173,45 @@ const page = async ({ params }: { params: IParams }) => {
               />
             ))}
           </div>
+        </div>
+        <hr />
+        <div>
+          {samCategoryData.map((data) => {
+            return (
+              <>
+                {(data.prev || data.next) && (
+                  <div className="py-4" key={data.name}>
+                    <div className=" text-neutral-500 text-sm sm:text-base md:text-lg lg:text-xl pb-2">
+                      다른 #{data.name} 사례
+                    </div>
+                    <div className="flex items-center gap-4 w-full">
+                      {data.prev && (
+                        <Link
+                          href={`/portfolio/${data.prev.id}`}
+                          className="flex items-center gap-2 w-1/2"
+                        >
+                          <div className="relative w-full aspect-video overflow-hidden">
+                            <PortfolioBlock portfolio={data.prev} />
+                          </div>
+                        </Link>
+                      )}
+
+                      {data.next && (
+                        <Link
+                          href={`/portfolio/${data.next.id}`}
+                          className="flex items-center gap-2 w-1/2"
+                        >
+                          <div className="relative w-full aspect-video overflow-hidden">
+                            <PortfolioBlock portfolio={data.next} />
+                          </div>
+                        </Link>
+                      )}
+                    </div>
+                  </div>
+                )}
+              </>
+            );
+          })}
         </div>
       </div>
     </Container>
