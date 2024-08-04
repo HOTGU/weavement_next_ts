@@ -131,88 +131,85 @@ const page = async ({ params }: { params: IParams }) => {
 
   return (
     <Container>
-      <div className="py-8">
-        <div className=" flex flex-col items-center gap-6 md:gap-8 lg:gap-10 xl:gap-24 py-2 sm:py-4 md:py-6 lg:py-8 xl:py-10">
-          <div className="w-full aspect-video relative">
-            <Image
-              src={portfolio?.thumb}
-              layout="fill"
-              objectFit="cover"
-              className="rounded-md"
-              sizes="100vw"
-              alt="포트폴리오 대표사진"
+      <div className=" flex flex-col items-center gap-6 md:gap-8 lg:gap-10 xl:gap-24">
+        <div className="w-full aspect-video relative">
+          <Image
+            src={portfolio?.thumb}
+            layout="fill"
+            objectFit="cover"
+            className="rounded-md"
+            sizes="100vw"
+            alt="포트폴리오 대표사진"
+          />
+        </div>
+        <div className="flex flex-col gap-2 md:gap-4 xl:gap-6 items-center justify-center">
+          <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-semibold">
+            {portfolio.title}
+          </h2>
+          {portfolio.category.length > 0 && (
+            <div className="flex gap-4">
+              {portfolio.category.map((category) => (
+                <div
+                  className="inline-block px-2 py-1 rounded bg-neutral-200 text-xs md:text-sm lg:text-base"
+                  key={category}
+                >
+                  #{category}
+                </div>
+              ))}
+            </div>
+          )}
+          <p className="text-sm md:text-base lg:text-lg whitespace-pre-wrap text-center">
+            {portfolio.description}
+          </p>
+        </div>
+        <div className="columns-2 lg:columns-3">
+          {portfolio.images.map((image, index) => (
+            <img
+              alt={`포트폴리오 사진 ${index}`}
+              src={image}
+              key={index}
+              className="mb-6 rounded"
             />
-          </div>
-          <div className="flex flex-col gap-2 md:gap-4 xl:gap-6 items-center justify-center">
-            <h2 className="text-md sm:text-lg md:text-xl lg:text-2xl font-semibold">
-              {portfolio.title}
-            </h2>
-            {portfolio.category.length > 0 && (
-              <div className="flex gap-4">
-                {portfolio.category.map((category) => (
-                  <div
-                    className="inline-block px-2 py-1 rounded bg-neutral-200 text-xs md:text-sm lg:text-base"
-                    key={category}
-                  >
-                    #{category}
-                  </div>
-                ))}
-              </div>
-            )}
-            <p className="text-sm md:text-md lg:text-lg whitespace-pre-wrap text-center">
-              {portfolio.description}
-            </p>
-          </div>
-          <div className="columns-2 lg:columns-3">
-            {portfolio.images.map((image, index) => (
-              <img
-                alt={`포트폴리오 사진 ${index}`}
-                src={image}
-                key={index}
-                className="mb-6 rounded"
-              />
-            ))}
-          </div>
+          ))}
         </div>
-        <hr />
-        <div>
-          {samCategoryData.map((data) => {
-            return (
-              <>
-                {(data.prev || data.next) && (
-                  <div className="py-4" key={data.name}>
-                    <div className=" text-neutral-500 text-sm sm:text-base md:text-lg lg:text-xl pb-2">
-                      다른 #{data.name} 사례
-                    </div>
-                    <div className="flex items-center gap-4 w-full">
-                      {data.prev && (
-                        <Link
-                          href={`/portfolio/${data.prev.id}`}
-                          className="flex items-center gap-2 w-1/2"
-                        >
-                          <div className="relative w-full aspect-video overflow-hidden">
-                            <PortfolioBlock portfolio={data.prev} />
-                          </div>
-                        </Link>
-                      )}
+      </div>
+      <div className="pb-4 md:pt-8 md:pb-6 lg:pt-16 xl:pt-20 lg:pb-8">
+        {samCategoryData.map((data) => {
+          return (
+            <div className=" space-y-4" key={data.name}>
+              {(data.prev || data.next) && (
+                <div key={data.name}>
+                  <div className=" text-neutral-500 text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl pb-2">
+                    다른 #{data.name} 사례
+                  </div>
+                  <div className="flex items-center gap-4 w-full">
+                    {data.prev && (
+                      <Link
+                        href={`/portfolio/${data.prev.id}`}
+                        className="flex items-center gap-2 w-1/2"
+                      >
+                        <div className="relative w-full aspect-video overflow-hidden">
+                          <PortfolioBlock portfolio={data.prev} />
+                        </div>
+                      </Link>
+                    )}
 
-                      {data.next && (
-                        <Link
-                          href={`/portfolio/${data.next.id}`}
-                          className="flex items-center gap-2 w-1/2"
-                        >
-                          <div className="relative w-full aspect-video overflow-hidden">
-                            <PortfolioBlock portfolio={data.next} />
-                          </div>
-                        </Link>
-                      )}
-                    </div>
+                    {data.next && (
+                      <Link
+                        href={`/portfolio/${data.next.id}`}
+                        className="flex items-center gap-2 w-1/2"
+                      >
+                        <div className="relative w-full aspect-video overflow-hidden">
+                          <PortfolioBlock portfolio={data.next} />
+                        </div>
+                      </Link>
+                    )}
                   </div>
-                )}
-              </>
-            );
-          })}
-        </div>
+                </div>
+              )}
+            </div>
+          );
+        })}
       </div>
     </Container>
   );

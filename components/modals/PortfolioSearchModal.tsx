@@ -17,7 +17,7 @@ export const PortfolioSearchModal = () => {
   const { isOpen, onClose } = usePortfolioSearchModal();
   const selectOptions = getSelectOptions();
 
-  const paramsTitle = params?.get("title");
+  const paramsTerm = params?.get("term");
   const paramsCategory = params?.get("category");
 
   const {
@@ -26,7 +26,7 @@ export const PortfolioSearchModal = () => {
     formState: { errors },
   } = useForm<FieldValues>({
     values: {
-      title: paramsTitle,
+      term: paramsTerm,
       category: paramsCategory,
     },
   });
@@ -82,9 +82,7 @@ export const PortfolioSearchModal = () => {
       actionLabel="검색"
       title="포트폴리오 검색"
       secondaryAction={init}
-      secondaryActionLabel={
-        paramsCategory || paramsTitle ? "초기화" : undefined
-      }
+      secondaryActionLabel={paramsCategory || paramsTerm ? "초기화" : undefined}
       enableEnterKey
     />
   );

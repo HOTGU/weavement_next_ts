@@ -66,7 +66,7 @@ const Navbar = ({ currentUser }: CurrentUserProps) => {
               />
             </Link>
           </h1>
-          <div className="block sm:hidden">
+          <div className="block lg:hidden">
             <div onClick={() => setIsSlider(!isSlider)}>
               {isSlider ? <FaTimes size={25} /> : <FaBars size={25} />}
             </div>
@@ -78,14 +78,12 @@ const Navbar = ({ currentUser }: CurrentUserProps) => {
                   animate={sliderNav.visible}
                   exit={sliderNav.exit}
                 >
-                  {/* <div className="absolute top-0 left-0 w-screen h-screen bg-red-500"> */}
                   <SliderMenu close={sliderClose} />
-                  {/* </div> */}
                 </motion.div>
               ) : null}
             </AnimatePresence>
           </div>
-          <div className="hidden sm:block">
+          <div className="hidden lg:block">
             <Menu />
           </div>
         </div>
