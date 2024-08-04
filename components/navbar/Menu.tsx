@@ -10,8 +10,8 @@ const Menu = () => {
 
   return (
     <ul>
-      <div className="block sm:hidden"></div>
-      <div className="hidden sm:flex gap-6 font-bold h-full">
+      <div className="block lg:hidden"></div>
+      <div className="hidden lg:flex gap-6 font-bold h-full">
         <li className="list-none">
           <Link
             href="/aboutus"
@@ -45,15 +45,6 @@ const Menu = () => {
             포트폴리오
           </Link>
         </li>
-        {/* <li className="list-none">
-          <Link
-            href="/column"
-            className="h-full flex items-center"
-            passHref
-          >
-            전문가 칼럼
-          </Link>
-        </li> */}
       </div>
     </ul>
   );
