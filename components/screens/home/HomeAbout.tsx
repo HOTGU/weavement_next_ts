@@ -3,7 +3,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { slidingText } from "@/libs/framer";
-import Container from "../Container";
+import Container from "../../Container";
 
 const HomeAbout = () => {
   return (

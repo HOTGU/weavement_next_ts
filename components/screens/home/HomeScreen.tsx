@@ -4,7 +4,7 @@ import Image from "next/legacy/image";
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
-import RacingFont from "../RacingFont";
+import RacingFont from "../../RacingFont";
 
 import Image1 from "@/public/imgs/home/메인페이지1.webp";
 import Image2 from "@/public/imgs/home/메인페이지2.webp";

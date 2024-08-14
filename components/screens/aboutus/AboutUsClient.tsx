@@ -6,9 +6,9 @@ import { TiMessages } from "react-icons/ti";
 import { MdFactory } from "react-icons/md";
 import { FaHeadset, FaTruck, FaPencilRuler, FaInfo } from "react-icons/fa";
 import Link from "next/link";
-import Footer from "../Footer";
+import Footer from "../../Footer";
 import Image from "next/image";
-import Navbar from "../navbar/Navbar";
+import Navbar from "../../navbar/Navbar";
 
 const Header = () => {
   const targetRef = useRef<HTMLDivElement | null>(null);

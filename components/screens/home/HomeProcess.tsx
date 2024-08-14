@@ -4,8 +4,8 @@ import React from "react";
 import Image from "next/legacy/image";
 import { motion } from "framer-motion";
 
-import Container from "../Container";
-import SlidingText from "../framer/SlidingText";
+import Container from "../../Container";
+import SlidingText from "../../framer/SlidingText";
 
 const HomeProcess = () => {
   const photos = [

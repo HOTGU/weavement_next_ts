@@ -1,4 +1,4 @@
-import ContactClient from "@/components/contact/ContactClient";
+import ContactClient from "@/components/screens/contact/ContactClient";
 import React from "react";
 import metadataConfig from "@/constants/metadataConfig";
 

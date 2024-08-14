@@ -1,9 +1,9 @@
 import Link from "next/link";
 import React from "react";
 
-import Container from "../Container";
-import AnimateText from "../framer/AnimateText";
-import ScaleBtn from "../framer/ScaleBtn";
+import Container from "../../Container";
+import AnimateText from "../../framer/AnimateText";
+import ScaleBtn from "../../framer/ScaleBtn";
 
 const HomeBottom = () => {
   return (

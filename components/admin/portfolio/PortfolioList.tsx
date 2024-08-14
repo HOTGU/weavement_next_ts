@@ -1,6 +1,6 @@
 import React from "react";
 import PortfolioBlock from "./PortfolioBlock";
-import PortfolioPagination from "@/components/portfolio/PortfolioPagination";
+import PortfolioPagination from "@/components/screens/portfolio/PortfolioPagination";
 import { Portfolio } from "@prisma/client";
 
 const PortfolioList = ({

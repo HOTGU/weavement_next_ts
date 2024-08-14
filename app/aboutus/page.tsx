@@ -1,7 +1,6 @@
 import React from "react";
 import metadataConfig from "@/constants/metadataConfig";
-import Container from "@/components/Container";
-import AboutUsClient from "@/components/aboutus/AboutUsClient";
+import AboutUsClient from "@/components/screens/aboutus/AboutUsClient";
 
 export const metadata = metadataConfig.aboutusMetadata;
 

@@ -1,9 +1,9 @@
 import getPortfolios from "@/actions/db/getPortfolios";
-import HomeAbout from "@/components/home/HomeAbout";
-import HomeBottom from "@/components/home/HomeBottom";
-import HomePortfolio from "@/components/home/HomePortfolio";
-import HomeProcess from "@/components/home/HomeProcess";
-import HomeScreen from "@/components/home/HomeScreen";
+import HomeAbout from "@/components/screens/home/HomeAbout";
+import HomeBottom from "@/components/screens/home/HomeBottom";
+import HomePortfolio from "@/components/screens/home/HomePortfolio";
+import HomeProcess from "@/components/screens/home/HomeProcess";
+import HomeScreen from "@/components/screens/home/HomeScreen";
 import metadataConfig from "@/constants/metadataConfig";
 
 export const metadata = metadataConfig.homeMetadata;

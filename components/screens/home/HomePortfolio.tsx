@@ -5,9 +5,9 @@ import Link from "next/link";
 import { Portfolio } from "@prisma/client";
 import { motion } from "framer-motion";
 
-import Container from "../Container";
-import SlidingText from "../framer/SlidingText";
-import ScaleBtn from "../framer/ScaleBtn";
+import Container from "../../Container";
+import SlidingText from "../../framer/SlidingText";
+import ScaleBtn from "../../framer/ScaleBtn";
 import Image from "next/legacy/image";
 
 interface HomePortfolioProps {
