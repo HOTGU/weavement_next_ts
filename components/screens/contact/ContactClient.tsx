@@ -7,17 +7,19 @@ import { toast } from "react-hot-toast";
 import { FaCheck } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 
-import ContactCreateForm from "../forms/ContactCreateForm";
-import Container from "../Container";
-import Select from "../inputs/Select";
+import ContactCreateForm from "../../forms/ContactCreateForm";
+import Container from "../../Container";
+import Select from "../../inputs/Select";
 import getSelectOptions from "@/actions/getSelectOptions";
-import Input from "../inputs/Input";
-import Textarea from "../inputs/Textarea";
-import File from "../inputs/File";
-import RacingFont from "../RacingFont";
-import FilesName from "../FilesName";
+import Input from "../../inputs/Input";
+import Textarea from "../../inputs/Textarea";
+import File from "../../inputs/File";
+import RacingFont from "../../RacingFont";
+import FilesName from "../../FilesName";
+import ContactFormStep from "./ContactFormStep";
+import ContactInfo from "./ContactInfo";
 
-enum STEPS {
+export enum STEPS {
   INFO = 0,
   DESC = 1,
   CLIENT = 2,
@@ -53,6 +55,13 @@ const ContactClient = () => {
     scheduleOptions,
     knowPlatformOptions,
   } = getSelectOptions();
+
+  // 알 수 없음 목록에서 삭제
+
+  costOptions.splice(costOptions.length - 1, 1);
+  scheduleOptions.splice(scheduleOptions.length - 1, 1);
+  knowPlatformOptions.splice(knowPlatformOptions.length - 1, 1);
+
   const {
     handleSubmit,
     formState: { errors },
@@ -142,12 +151,6 @@ const ContactClient = () => {
     title: "환영합니다",
     subtitle: "아래항목을 체크해주세요!",
   };
-
-  // 알 수 없음 목록에서 삭제
-
-  costOptions.splice(costOptions.length - 1, 1);
-  scheduleOptions.splice(scheduleOptions.length - 1, 1);
-  knowPlatformOptions.splice(knowPlatformOptions.length - 1, 1);
 
   let content = (
     <div className="flex flex-col gap-5">
@@ -305,54 +308,9 @@ const ContactClient = () => {
   return (
     <Container>
       <div className="flex my-2 md:my-4 lg:my-8 2xl:my-10 md:gap-4 lg:gap-8 md:justify-center md:items-center h-full">
-        <div className="hidden flex-1 md:flex flex-col md:text-center md:gap-4 lg:gap-6 h-full">
-          <h2 className="md:text-6xl lg:text-7xl xl:text-8xl font-racing font-semibold">
-            <RacingFont>Contact</RacingFont>
-          </h2>
-          <h3 className=" font-semibold md:text-xs lg:text-sm xl:text-base">
-            감각적인 제조가 필요하신가요? <br />
-            컨텐츠의 크기도, 목적도, 소재도 제약이 없습니다.
-            <br />
-            편안한 마음으로 문의해주세요!
-          </h3>
-        </div>
+        <ContactInfo />
         <div className="w-full md:w-1/2 lg:w-1/2 xl:w-2/5 ">
-          <div className="flex justify-around items-center mb-2 font-bold">
-            <div
-              className={`w-10 h-10 flex items-center justify-center rounded-full border ${
-                step === STEPS.INFO
-                  ? "bg-accent text-white"
-                  : "bg-accent/70 text-white"
-              }`}
-            >
-              {step === STEPS.INFO ? "1" : <FaCheck />}
-            </div>
-            <div
-              className={`w-10 h-10 flex items-center justify-center rounded-full border ${
-                step === STEPS.DESC
-                  ? "bg-accent text-white"
-                  : step > STEPS.DESC && "bg-accent/70 text-white"
-              }`}
-            >
-              {step > STEPS.DESC ? <FaCheck /> : "2"}
-            </div>
-            <div
-              className={`w-10 h-10 flex items-center justify-center rounded-full border ${
-                step === STEPS.CLIENT
-                  ? "bg-accent text-white"
-                  : step > STEPS.CLIENT && "bg-accent/70 text-white"
-              }`}
-            >
-              {step > STEPS.CLIENT ? <FaCheck /> : "3"}
-            </div>
-            <div
-              className={`w-10 h-10 flex items-center justify-center rounded-full border ${
-                step === STEPS.ACCEPT ? "bg-accent text-white" : ""
-              }`}
-            >
-              4
-            </div>
-          </div>
+          <ContactFormStep step={step} />
           <ContactCreateForm
             disabled={isLoading}
             content={content}

@@ -1,5 +1,5 @@
 import { PortfolioSearchModal } from "@/components/modals/PortfolioSearchModal";
-import { PortfolioSearchButton } from "@/components/portfolio/PortfolioSearchButton";
+import { PortfolioSearchButton } from "@/components/screens/portfolio/PortfolioSearchButton";
 import { PropsWithChildren } from "react";
 
 export default function PortfolioLayout({ children }: PropsWithChildren) {

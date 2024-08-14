@@ -3,8 +3,8 @@ import React from "react";
 import getPortfolios from "@/actions/db/getPortfolios";
 import { IPortfolioParams } from "@/actions/db/getPortfolios";
 import Container from "@/components/Container";
-import PortfolioBlock from "@/components/portfolio/PortfolioBlock";
-import PortfolioPagination from "@/components/portfolio/PortfolioPagination";
+import PortfolioBlock from "@/components/screens/portfolio/PortfolioBlock";
+import PortfolioPagination from "@/components/screens/portfolio/PortfolioPagination";
 import metadataConfig from "@/constants/metadataConfig";
 
 export const metadata = metadataConfig.portfolioMetadata;

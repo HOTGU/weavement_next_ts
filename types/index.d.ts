@@ -14,4 +14,8 @@ export type ContactWithClients = Prisma.ContactGetPayload<{
   include: { client: true };
 }>;
 
-export type PortfolioWithBlurData = Portfolio & { blurData: string };
+export type SameCategoryPortfolioData = {
+  name: string;
+  next?: Portfolio;
+  prev?: Portfolio;
+}[];
