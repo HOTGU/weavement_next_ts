@@ -1,5 +1,5 @@
 import { Portfolio } from "@prisma/client";
-import Image from "next/image";
+import Image from "next/legacy/image";
 import React from "react";
 
 const PortfolioDetail = ({ portfolio }: { portfolio: Portfolio }) => {
@@ -47,7 +47,7 @@ const PortfolioDetail = ({ portfolio }: { portfolio: Portfolio }) => {
             alt={`포트폴리오 사진 ${index}`}
             src={image}
             key={index}
-            className="mb-6 rounded"
+            className="mb-6 rounded object-cover"
           />
         ))}
       </div>
