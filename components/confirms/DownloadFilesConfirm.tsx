@@ -44,6 +44,9 @@ const DownloadFilesConfirm = () => {
       confirm.onClose();
       fileModal.onClose();
     } catch (error) {
+      if (process.env.NODE_ENV === "development") {
+        console.log(error);
+      }
       toast.error("파일 다운로드 실패", { id: loadingToast });
     } finally {
       setLoading(false);
