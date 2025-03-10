@@ -8,8 +8,11 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        racing: ["var(--racing)"],
-        pretendard: ["var(--pretendard)"],
+        // racing: ["var(--racing)"],
+        // pretendard: ["var(--pretendard)"],
+        pretendard: ["Pretendard", "sans-serif"],
+        racing: ["Racing Sans One", "sans-serif"],
+        ibm: ["IBM Plex Sans KR", "sans-serif"],
       },
       colors: {
         accent: "#A6192E",

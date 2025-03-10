@@ -1,110 +1,118 @@
 "use client";
 
-import Link from "next/link";
-import { useEffect, useState } from "react";
-import { usePathname } from "next/navigation";
-import { MdAdminPanelSettings } from "react-icons/md";
-import { FaBars, FaTimes } from "react-icons/fa";
 import {
-  useMotionValueEvent,
-  useScroll,
   motion,
   AnimatePresence,
+  useScroll,
+  useMotionValueEvent,
 } from "framer-motion";
-
-import { CurrentUserProps } from "@/types";
+import { useState } from "react";
+import Link from "next/link";
 import Container from "../Container";
-import Logo from "./Logo";
-import Menu from "./Menu";
-import SliderMenu from "./SliderMenu";
-import { sliderNav } from "@/libs/framer";
+import { is } from "date-fns/locale";
 
-const Navbar = ({ currentUser }: CurrentUserProps) => {
-  const pathname = usePathname();
-  const { scrollY } = useScroll();
-  const [isSlider, setIsSlider] = useState(false);
-  const [isScroll, setIsScroll] = useState(false);
+const Underline = ({ href, label }: { href: string; label: string }) => {
+  const [isHovered, setIsHovered] = useState(false);
 
-  useMotionValueEvent(scrollY, "change", (scroll) => {
-    if (scroll === 0) {
-      setIsScroll(false);
-    } else {
-      setIsScroll(true);
-    }
-  });
-
-  useEffect(() => {
-    setIsSlider(false);
-  }, [pathname]);
-
-  const sliderClose = () => setIsSlider(false);
-
-  const isHome = Boolean(pathname === "/");
+  const underlineVariants = {
+    initial: { width: "0%", left: "0%" },
+    hover: {
+      width: "100%",
+      left: "0%",
+      transition: { duration: 0.3, ease: [0.61, 0, 1, 1] },
+    },
+    exit: {
+      width: "0%",
+      left: "100%",
+      transition: { duration: 0.6, ease: "easeInOut" },
+    },
+  };
 
   return (
     <div
-      className={`w-full h-10 md:h-12 lg:h-14 border-b z-20 fixed shadow-sm transition duration-500
-      ${
-        !isHome || isScroll || isSlider ? "text-black bg-white" : "text-white"
-      }`}
+      className="cursor-pointer inline-block relative py-1"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
+      <Link
+        href={href}
+        className="relative z-10 mix-blend-difference text-white"
+      >
+        <span>{label}</span>
+        <AnimatePresence mode="wait">
+          {isHovered && (
+            <motion.div
+              key="underline"
+              className="absolute bottom-0 bg-white h-[1px] mix-blend-difference"
+              style={{ transformOrigin: "left" }}
+              variants={underlineVariants}
+              initial="initial"
+              animate="hover"
+              exit="exit"
+            />
+          )}
+        </AnimatePresence>
+      </Link>
+    </div>
+  );
+};
+
+const Navbar = () => {
+  const { scrollY } = useScroll();
+  const [isTop, setIsTop] = useState(true);
+  const [isOpen, setIsOpen] = useState(true);
+
+  useMotionValueEvent(scrollY, "change", (scroll) => {
+    if (scroll < 200) {
+      setIsTop(true);
+      setIsOpen(true);
+    } else {
+      setIsTop(false);
+      setIsOpen(false);
+    }
+  });
+
+  return (
+    <div className="fixed pt-8 w-full z-[99] mix-blend-difference">
       <Container>
-        <div className="flex items-center justify-between h-full gap-3 md:gap-0 z-10">
-          <h1 className={` h-full flex items-center justify-center`}>
-            <span className="hidden">조형물 제작 위브먼트</span>
-            <Link
-              href="/"
-              className={`flex items-center h-full ${!isHome && "w-full"}`}
-              passHref
-            >
-              <Logo
-                src={
-                  !isHome || isScroll || isSlider
-                    ? "/red_logo.webp"
-                    : "/white_logo.webp"
-                }
-              />
-            </Link>
-          </h1>
-          <div className="block lg:hidden">
-            <div onClick={() => setIsSlider(!isSlider)}>
-              {isSlider ? <FaTimes size={25} /> : <FaBars size={25} />}
+        <div className="h-full flex items-start justify-between">
+          <div className="flex-1">
+            <div className="font-racing text-6xl tracking-[-12px] text-white mix-blend-difference">
+              <Link href="/">WM</Link>
             </div>
-            <AnimatePresence>
-              {isSlider ? (
-                <motion.div
-                  variants={sliderNav}
-                  initial={sliderNav.hidden}
-                  animate={sliderNav.visible}
-                  exit={sliderNav.exit}
-                >
-                  <SliderMenu close={sliderClose} />
-                </motion.div>
-              ) : null}
-            </AnimatePresence>
           </div>
-          <div className="hidden lg:block">
-            <Menu />
+          <div className="relative w-auto h-10 font-ibm font-[300] text-right">
+            <div
+              className={`${
+                isOpen
+                  ? "opacity-0 translate-x-2 -translate-y-6"
+                  : "opacity-100 translate-x-2 translate-y-2"
+              } cursor-pointer transition-all duration-500 p-2 text-white mix-blend-difference`}
+              onMouseEnter={() => setIsOpen(true)}
+            >
+              Menu
+            </div>
+            <div
+              className={`${
+                isOpen
+                  ? "translate-x-2 -translate-y-10 opacity-100"
+                  : "pointer-events-none translate-x-2 -translate-y-2 opacity-0"
+              } transition-all duration-500 flex flex-col p-2`}
+              onMouseLeave={() => {
+                if (isTop) {
+                  setIsOpen(true);
+                  return;
+                }
+                setIsOpen(false);
+              }}
+            >
+              <Underline href="/" label="Home" />
+              <Underline href="/contact" label="Contact" />
+              <Underline href="/portfolio" label="Portfolio" />
+              <Underline href="/aboutus" label="About" />
+            </div>
           </div>
         </div>
-        {currentUser && currentUser.isAdmin && (
-          <Link
-            href={{
-              pathname:
-                currentUser.admin_id === process.env.NEXT_PUBLIC_MASTER_ID
-                  ? "/admin"
-                  : "/admin/analysis/state",
-              query:
-                currentUser.admin_id === process.env.NEXT_PUBLIC_MASTER_ID
-                  ? {}
-                  : { date: "month", year: new Date().getFullYear() },
-            }}
-            className="fixed bottom-10 right-1/2 translate-x-1/2 flex gap-1 text-black items-center bg-white rounded-full px-4 py-1 shadow-lg cursor hover:scale-105 transition cursor-pointer"
-          >
-            Admin
-            <MdAdminPanelSettings />
-          </Link>
-        )}
       </Container>
     </div>
   );

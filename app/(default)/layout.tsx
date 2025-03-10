@@ -11,7 +11,7 @@ export default async function RootLayout({
   return (
     <main lang="en">
       <div className=" min-h-screen">
-        <Navbar currentUser={currentUser} />
+        <Navbar />
         {children}
         <div className=" sticky top-[100vh]">
           <Footer />

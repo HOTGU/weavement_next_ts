@@ -9,7 +9,7 @@ interface LogoProps {
 
 const Logo = ({ src }: LogoProps) => {
   return (
-    <div className="relative h-4/5 aspect-video">
+    <div className="relative h-full aspect-video">
       <Image alt="logo" src={src} objectFit="contain" layout="fill" />
     </div>
   );

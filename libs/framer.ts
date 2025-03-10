@@ -10,7 +10,7 @@ export const fetchContainer = {
 };
 
 export const fetchItem = {
-  hidden: { opacity: 0, y: 20 },
+  hidden: { opacity: 0, y: 30 },
   visible: {
     opacity: 1,
     y: 0,
@@ -18,9 +18,8 @@ export const fetchItem = {
 };
 
 export const slidingText = {
-  hidden: { opacity: 0, y: "100%" },
+  hidden: { y: "100%" },
   visible: {
-    opacity: 1,
     y: 0,
     transition: {
       type: "tween",
@@ -33,4 +32,23 @@ export const sliderNav = {
   hidden: { opacity: 0 },
   visible: { opacity: 1 },
   exit: { opacity: 0 },
+};
+
+export const fadeUp = {
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.5,
+    },
+  },
+};
+
+export const fadeDown = {
+  hidden: { opacity: 0, y: -30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+  },
 };
