@@ -11,6 +11,7 @@ interface AdminProps {
 const AdminContactPage = async ({ searchParams }: AdminProps) => {
   const asyncSearchParams = await searchParams;
   const copySearchParams = { ...asyncSearchParams };
+  delete copySearchParams.take;
   const searchString = queryString.stringify(copySearchParams, {
     skipNull: true,
   });
