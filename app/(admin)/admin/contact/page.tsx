@@ -5,12 +5,12 @@ import ContactPage from "./contactPage";
 import queryString from "query-string";
 import AdminContactSkeleton from "@/components/skeleton/AdminContactSkeleton";
 interface AdminProps {
-  params?: { [key: string]: string | string[] | undefined };
+  searchParams?: { [key: string]: string | string[] | undefined };
 }
 
-const AdminContactPage = async ({ params }: AdminProps) => {
-  const searchParams = await params;
-  const copySearchParams = { ...searchParams };
+const AdminContactPage = async ({ searchParams }: AdminProps) => {
+  const asyncSearchParams = await searchParams;
+  const copySearchParams = { ...asyncSearchParams };
   const searchString = queryString.stringify(copySearchParams, {
     skipNull: true,
   });
@@ -18,7 +18,7 @@ const AdminContactPage = async ({ params }: AdminProps) => {
   return (
     <Suspense fallback={<AdminContactSkeleton />} key={searchString}>
       {/* @ts-expect-error Async Server Component */}
-      <ContactPage searchParams={searchParams} />
+      <ContactPage searchParams={asyncSearchParams} />
     </Suspense>
   );
 };
