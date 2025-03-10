@@ -37,12 +37,6 @@ export default cache(async (params: IContactParams) => {
             { client: { some: { name: { contains: term } } } },
           ],
         },
-        {
-          description: { contains: term },
-        },
-        {
-          note: { contains: term },
-        },
       ];
     }
 
