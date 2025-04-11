@@ -10,6 +10,7 @@ import { useState } from "react";
 import Link from "next/link";
 import Container from "../Container";
 import { is } from "date-fns/locale";
+import HiddenUpText from "../framer/HiddenUpText";
 
 const Underline = ({ href, label }: { href: string; label: string }) => {
   const [isHovered, setIsHovered] = useState(false);
@@ -77,11 +78,14 @@ const Navbar = () => {
       <Container>
         <div className="h-full flex items-start justify-between">
           <div className="flex-1">
-            <div className="font-racing text-6xl tracking-[-12px] text-white mix-blend-difference">
-              <Link href="/">WM</Link>
-            </div>
+            <HiddenUpText>
+              <div className="font-racing text-6xl tracking-[-12px] text-white mix-blend-difference">
+                <Link href="/">WM</Link>
+              </div>
+            </HiddenUpText>
           </div>
-          <div className="relative w-auto h-10 font-ibm font-[300] text-right">
+
+          <div className="relative w-auto h-auto font-ibm font-[300] text-right">
             <div
               className={`${
                 isOpen

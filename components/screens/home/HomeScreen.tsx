@@ -26,16 +26,16 @@ const HomeScreen = () => {
     <div className="w-full h-[60vh] md:h-[80vh] lg:h-screen relative overflow-hidden">
       <div className="absolute bottom-0 left-0 z-10">
         <Container>
-          <div className="flex flex-col font-ibm py-8 font-[400]">
+          <div className="flex flex-col gap-4 font-ibm py-8 font-[400]">
             <HiddenUpText
               children={"감감적인 제조"}
               delay={1}
-              className="text-7xl"
+              className="text-8xl font-pretendard"
             />
             <HiddenUpText
               children={"WEAVEMENT"}
               delay={1}
-              className="text-7xl"
+              className="text-8xl font-racing"
             />
           </div>
         </Container>
