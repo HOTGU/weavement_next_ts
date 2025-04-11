@@ -11,10 +11,11 @@ import Image2 from "@/public/imgs/home/메인페이지2.webp";
 import Image3 from "@/public/imgs/home/메인페이지3.webp";
 import Image4 from "@/public/imgs/home/메인페이지4.webp";
 import Image5 from "@/public/imgs/home/메인페이지5.webp";
+import Image6 from "@/public/imgs/home/메인페이지6.webp";
 
 const HomeScreen = () => {
   const [index, setIndex] = useState(0);
-  const images = [Image1, Image2, Image3, Image4, Image5];
+  const images = [Image1, Image2, Image3, Image4, Image5, Image6];
 
   useEffect(() => {
     const interval = setInterval(() => {
