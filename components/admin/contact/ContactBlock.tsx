@@ -37,7 +37,7 @@ const ContactBlock = ({ contact }: ContactBlockProps) => {
     >
       <div className="w-full flex items-center justify-between gap-2 text-sm">
         <div className="text-xs text-neutral-500 font-extralight">
-          {format(new Date(contact.createdAt), "MM/dd hh:mm aaa")}
+          {format(new Date(contact.createdAt), "yy/MM/dd hh:mm aaa")}
         </div>
         <div className="flex gap-1 text-xs">
           <div className={`font-extrabold ${pmColor.text} `}>{contact.pm}</div>

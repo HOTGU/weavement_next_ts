@@ -23,7 +23,7 @@ const Footer = () => {
           <div className="flex flex-col-reverse md:flex-row justify-between items-center mt-0 md:mt-6 ">
             <div className="text-neutral-500 text-center md:text-start text-xs md:text-base">
               <div>영업시간 10:00 ~ 19:00 | 토,일 휴무</div>
-              <div>서울시 강서구 양천로 738 한강G트리타워, 711호</div>
+              <div>경기 고양시 덕양구 향동로 201 GL메트로시티향동, A1410호</div>
               <div>사업자등록번호 313-47-00901</div>
             </div>
             <div className="mb-4 md:mb-0">
@@ -68,7 +68,7 @@ const Footer = () => {
             </div>
 
             <span className="text-neutral-400">
-              © 2024 WEAVEMENT CO.LTD. ALL RIGHTS RESERVED.
+              © 2022-2025 WEAVEMENT CO.LTD. ALL RIGHTS RESERVED.
             </span>
           </div>
         </div>
