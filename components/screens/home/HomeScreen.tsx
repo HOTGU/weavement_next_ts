@@ -46,6 +46,8 @@ const HomeScreen = () => {
         transition={{ ease: "easeIn", duration: 0.5 }}
         className="flex w-fit relative"
       >
+        {/* <video src="/imgs/home/메인페이지영상.mp4" autoPlay loop muted></video> */}
+
         {images.map((image, i) => (
           <motion.div
             className="w-screen aspect-video h-[60vh] md:h-[80vh] lg:h-screen relative "

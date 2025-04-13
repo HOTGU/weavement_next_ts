@@ -52,8 +52,6 @@ const Select = ({
         options={options}
         classNames={{
           control: () => "p-2 border-none",
-          // input: () => "text-lg border-1",
-          // option: () => "text-lg",
         }}
         theme={(theme) => ({
           ...theme,
@@ -87,6 +85,7 @@ const Select = ({
         isClearable={isClearable}
         isMulti={isMulti}
         isDisabled={disabled}
+        isSearchable={false}
       />
       <label
         className={`absolute origin-[0] top-0 transition text-md -translate-y-1/2 bg-white scale-75 left-4 px-1 ${
