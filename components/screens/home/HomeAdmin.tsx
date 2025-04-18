@@ -1,8 +1,34 @@
 "use client";
 
 import Container from "@/components/Container";
-import Image from "next/legacy/image";
+import Image from "next/image";
 import React from "react";
+
+const processArray = [
+  {
+    photo: "/의뢰.png",
+    title: "프로젝트 의뢰",
+    subTitle: "문의내용을 검토하여 디렉터와 무료상담이 진행됩니다.",
+  },
+  {
+    photo: "/기획.png",
+    title: "기획 | 디자인",
+    subTitle:
+      "제작을 위한 사전 단계로 2D디자인, 3D디자인 혹은 기술 설계 과정이 포함됩니다.",
+  },
+  {
+    photo: "/제작.png",
+    title: "제작",
+    subTitle:
+      "기획, 디자인, 설계 내용을 토대로 최적의 소재와 방식을 이용해 컨텐츠를 제작합니다.",
+  },
+  {
+    photo: "/운송.png",
+    title: "운송 | 설치",
+    subTitle:
+      "제작된 컨텐츠의 특징, 현장 상황에 알맞게 안전한 운반과 설치가 진행됩니다.",
+  },
+];
 
 const HomeAdmin = () => {
   return (
@@ -50,7 +76,7 @@ const HomeAdmin = () => {
         {/* padding section */}
         <div className="pt-80"></div>
 
-        {/* 회사 소개 */}
+        {/* 작업 procexx */}
         <div className="flex justify-between text-white font-pretendard">
           <div className="w-1/2 pr-40">
             <div className="text-6xl mb-10 leading-tight">
@@ -64,12 +90,35 @@ const HomeAdmin = () => {
             </div>
           </div>
           <div className="w-1/2 space-y-10">
-            <div className="w-full aspect-[679/320] rounded bg-neutral-900 p-10">
-              <div className=" text-4xl font-bold">1</div>
-            </div>
-            <div className="w-full aspect-[679/320] rounded bg-neutral-900"></div>
+            {processArray.map((item, index) => (
+              <div
+                key={index}
+                className="w-full aspect-[679/320] rounded bg-neutral-900 p-10 flex flex-col justify-between"
+              >
+                <div className="flex items-center gap-4">
+                  <div className=" w-[54px] aspect-square rounded-full bg-neutral-800 p-2">
+                    <div className="relative w-full h-full">
+                      <Image
+                        src={item.photo}
+                        alt={`${item.title} 사진`}
+                        layout="fill"
+                        objectFit="cover"
+                      />
+                    </div>
+                  </div>
+                  <div className=" text-4xl font-bold">{item.title}</div>
+                </div>
+
+                <div className=" text-2xl text-neutral-400 whitespace-pre-wrap break-keep w-3/4">
+                  {item.subTitle}
+                </div>
+              </div>
+            ))}
           </div>
         </div>
+
+        {/* padding section */}
+        <div className="pt-80"></div>
       </Container>
     </div>
   );
