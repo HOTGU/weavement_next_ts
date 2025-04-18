@@ -8,6 +8,8 @@ import Image2 from "@/public/imgs/home/메인페이지2.webp";
 import Image3 from "@/public/imgs/home/메인페이지3.webp";
 import Image4 from "@/public/imgs/home/메인페이지4.webp";
 import Image5 from "@/public/imgs/home/메인페이지5.webp";
+import Image6 from "@/public/imgs/home/메인페이지6.webp";
+
 import Container from "@/components/Container";
 
 import HiddenUpText from "@/components/framer/HiddenUpText";
@@ -15,6 +17,8 @@ import HiddenUpText from "@/components/framer/HiddenUpText";
 const HomeScreen = () => {
   const images = [Image1, Image2, Image3, Image4, Image5];
   const [randomImage, setRandomImage] = useState<any>(null);
+
+  const [index, setIndex] = useState(0);
 
   useEffect(() => {
     // 클라이언트 측에서 랜덤 이미지 선택

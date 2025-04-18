@@ -35,6 +35,11 @@ model Contact {
   orderCompany  String?
   note          String?
   client        Client[]
+
+  @@index([pm]) // pm 필드에 인덱스
+  @@index([state]) // state 필드에 인덱스
+  @@index([clientCompany]) // clientCompany 필드에 인덱스
+  @@index([createdAt]) // 날짜 범위 검색용 인덱스
 }
 
 model Client {
@@ -45,6 +50,10 @@ model Client {
   position  String?
   contactId String  @db.ObjectId
   contact   Contact @relation(fields: [contactId], references: [id], onDelete: Cascade)
+
+  @@index([name]) // name 필드에 인덱스
+  @@index([phone]) // phone 필드에 인덱스
+  @@index([contactId]) // 관계 필드에 인덱스
 }
 
 model Portfolio {

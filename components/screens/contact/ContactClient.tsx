@@ -4,7 +4,6 @@ import React, { useMemo, useState } from "react";
 import axios from "axios";
 import { useForm, SubmitHandler, FieldValues } from "react-hook-form";
 import { toast } from "react-hot-toast";
-import { FaCheck } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 
 import ContactCreateForm from "../../forms/ContactCreateForm";
@@ -14,7 +13,6 @@ import getSelectOptions from "@/actions/getSelectOptions";
 import Input from "../../inputs/Input";
 import Textarea from "../../inputs/Textarea";
 import File from "../../inputs/File";
-import RacingFont from "../../RacingFont";
 import FilesName from "../../FilesName";
 import ContactFormStep from "./ContactFormStep";
 import ContactInfo from "./ContactInfo";

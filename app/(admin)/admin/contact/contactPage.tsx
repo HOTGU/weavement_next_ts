@@ -8,8 +8,15 @@ interface IContactPage {
 }
 
 const ContactPage = async ({ searchParams }: IContactPage) => {
-  const contacts = await getContacts(searchParams);
-
+  const { pm, state, term, startDate, endDate, take } = searchParams;
+  const contacts = await getContacts({
+    pm,
+    state,
+    term,
+    startDate,
+    endDate,
+    take,
+  });
   return (
     <div className="flex gap-4 sm:gap-8 flex-col sm:flex-row">
       <ContactList contacts={contacts} />
