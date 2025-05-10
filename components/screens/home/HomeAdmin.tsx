@@ -2,37 +2,89 @@
 
 import Container from "@/components/Container";
 import Image from "next/image";
-import React from "react";
+import React, { useRef, useState } from "react";
 
-const processArray = [
+import { useInView, motion, AnimatePresence } from "framer-motion";
+
+const processArr = [
   {
-    photo: "/의뢰.png",
-    title: "프로젝트 의뢰",
-    subTitle: "문의내용을 검토하여 디렉터와 무료상담이 진행됩니다.",
+    title: "01",
+    text: "프로젝트 의뢰",
+    description:
+      " 고객의 요구사항을 파악하고, 프로젝트의 목표와 범위를 정의합니다.",
   },
   {
-    photo: "/기획.png",
-    title: "기획 | 디자인",
-    subTitle:
-      "제작을 위한 사전 단계로 2D디자인, 3D디자인 혹은 기술 설계 과정이 포함됩니다.",
+    title: "02",
+    text: "기획 및 디자인",
+    description:
+      " 고객의 요구사항을 바탕으로 프로젝트의 기획과 디자인을 진행합니다.",
   },
   {
-    photo: "/제작.png",
-    title: "제작",
-    subTitle:
-      "기획, 디자인, 설계 내용을 토대로 최적의 소재와 방식을 이용해 컨텐츠를 제작합니다.",
+    title: "03",
+    text: "제작",
+    description: "제작 과정에서 고객과의 소통을 통해 디자인을 구현합니다.",
   },
   {
-    photo: "/운송.png",
-    title: "운송 | 설치",
-    subTitle:
-      "제작된 컨텐츠의 특징, 현장 상황에 알맞게 안전한 운반과 설치가 진행됩니다.",
+    title: "04",
+    text: "운송 및 설치",
+    description: "제작된 조형물을 고객의 요구에 맞게 운송하고 설치합니다.",
   },
 ];
 
-const HomeAdmin = () => {
+const ProcessItem = ({ item }: { item: any }) => {
+  const [active, setActive] = useState(false);
+
   return (
-    <div className="bg-black">
+    <div className="w-[70%] border-t border-neutral-300">
+      <div className="pt-8" />
+      {/* 항시 보여지는 부분 */}
+      <div
+        className="flex items-center font-normal cursor-pointer"
+        onClick={() => setActive(!active)}
+      >
+        <div className="w-1/12 text-xl">{item.title}</div>
+        <div className="flex-1 text-3xl">{item.text}</div>
+        <motion.div className="relative" animate={active ? "minus" : "plus"}>
+          <motion.div
+            variants={{ plus: { rotate: 90 }, minus: { rotate: 0 } }}
+            className="absolute h-[2px] w-5 bg-neutral-800 right-0"
+          />
+          <motion.div className="absolute h-[2px] w-5 bg-neutral-800 right-0" />
+        </motion.div>
+      </div>
+
+      {/* active시 보여지는 부분 */}
+      <motion.div
+        className="overflow-hidden"
+        initial={{ height: 0, opacity: 0 }}
+        animate={{ height: active ? "auto" : 0, opacity: active ? 1 : 0 }}
+        exit={{ height: 0, opacity: 0 }}
+        transition={{ duration: 0.3 }}
+      >
+        <div className="pt-8" />
+        <div className="flex">
+          <div className="w-1/12"></div>
+          <div className="font-light">{item.description}</div>
+        </div>
+      </motion.div>
+
+      <div className="pt-10" />
+    </div>
+  );
+};
+
+const HomeAdmin = () => {
+  const whiteSection = useRef(null);
+  const isInWhiteSection = useInView(whiteSection, {
+    margin: "-20% 0px -20% 0px",
+  });
+
+  return (
+    <motion.div
+      animate={{ backgroundColor: isInWhiteSection ? "white" : "black" }}
+      className="transition duration-1000 "
+      transition={{ duration: 0.5 }}
+    >
       <Container>
         {/* padding section */}
         <div className="pt-60"></div>
@@ -76,51 +128,77 @@ const HomeAdmin = () => {
         {/* padding section */}
         <div className="pt-80"></div>
 
-        {/* 작업 procexx */}
+        {/* 회사소개 */}
         <div className="flex justify-between text-white font-pretendard">
           <div className="w-1/2 pr-40">
             <div className="text-6xl mb-10 leading-tight">
-              위브먼트가 함께
+              감각적인 제조를
               <br />
-              고객과 일하는 방식:
+              위한 최고의 선택
             </div>
             <div className="text-xl whitespace-pre-wrap break-keep ">
-              우리는 고객이 원하는 바를 정확히 파악하기 위해 끊임없이 소통하며
-              최고의 결과를 만들어냅니다.
+              우리는 클라이언트들과 협력하고 원하는 바를 정확히 파악하기 위해
+              끊임없이 소통하며 아이디어를 한단계 더 발전시킵니다
             </div>
           </div>
           <div className="w-1/2 space-y-10">
-            {processArray.map((item, index) => (
-              <div
-                key={index}
-                className="w-full aspect-[679/320] rounded bg-neutral-900 p-10 flex flex-col justify-between"
-              >
-                <div className="flex items-center gap-4">
-                  <div className=" w-[54px] aspect-square rounded-full bg-neutral-800 p-2">
-                    <div className="relative w-full h-full">
-                      <Image
-                        src={item.photo}
-                        alt={`${item.title} 사진`}
-                        layout="fill"
-                        objectFit="cover"
-                      />
-                    </div>
-                  </div>
-                  <div className=" text-4xl font-bold">{item.title}</div>
+            <div className="w-full aspect-[679/320] rounded bg-neutral-900 p-10 flex flex-col justify-between">
+              <div className="flex items-center gap-4">
+                <div className=" text-3xl font-bold">프로젝트 문의</div>
+              </div>
+              <div className="flex justify-between">
+                <div className=" text-5xl text-neutral-400 whitespace-pre-wrap break-keep ">
+                  2520+
                 </div>
-
-                <div className=" text-2xl text-neutral-400 whitespace-pre-wrap break-keep w-3/4">
-                  {item.subTitle}
+                <div className=" text-xl font-light font-ibm text-neutral-400 whitespace-pre-wrap break-keep self-end ">
+                  2023년부터 매 해 2배 성장
                 </div>
               </div>
-            ))}
+            </div>
+            <div className="w-full aspect-[679/320] rounded bg-neutral-900 p-10 flex flex-col justify-between">
+              <div className="flex items-center gap-4">
+                <div className=" text-3xl font-bold">프로젝트 클라이언트</div>
+              </div>
+              <div className="flex justify-between">
+                <div className=" text-5xl text-neutral-400 whitespace-pre-wrap break-keep ">
+                  207+
+                </div>
+                <div className=" text-xl font-light font-ibm text-neutral-400 whitespace-pre-wrap break-keep self-end ">
+                  공공기관 및 주요 기업과 협업
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
         {/* padding section */}
         <div className="pt-80"></div>
+
+        {/* white bacgriond section */}
+        <div ref={whiteSection}>
+          {/* 회사 클라이언트 */}
+          <div className="flex gap-4">
+            <div className="flex-1 bg-neutral-900 aspect-[5/4] p-10"></div>
+            <div className="flex-1 bg-neutral-900 aspect-[5/4] p-10"></div>
+          </div>
+
+          {/* padding section */}
+          <div className="pt-60"></div>
+
+          {/* 회사 작업 과정 */}
+
+          <div>
+            <div className=" text-7xl">우리가 일하는 방식:</div>
+            <div className="pt-20"></div>
+            <div className="flex flex-col items-end">
+              {processArr.map((item) => (
+                <ProcessItem item={item} key={item.title} />
+              ))}
+            </div>
+          </div>
+        </div>
       </Container>
-    </div>
+    </motion.div>
   );
 };
 

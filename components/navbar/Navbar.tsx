@@ -74,34 +74,60 @@ const Navbar = () => {
   });
 
   return (
-    <div className="fixed pt-8 w-full z-[99] mix-blend-difference">
+    <div className="fixed pt-8 w-full mix-blend-difference pointer-events-none z-10">
       <Container>
         <div className="h-full flex items-start justify-between">
           <div className="flex-1">
             <HiddenUpText>
-              <div className="font-racing text-6xl tracking-[-12px] text-white mix-blend-difference">
+              <div className="font-racing text-6xl tracking-[-12px] text-white mix-blend-difference pointer-events-auto">
                 <Link href="/">WM</Link>
               </div>
             </HiddenUpText>
           </div>
 
-          <div className="relative w-auto h-auto font-ibm font-[300] text-right">
+          <div className="relative p-2 translate-x-2 w-auto h-auto font-ibm font-[300] text-right pointer-events-auto">
             <div
               className={`${
                 isOpen
-                  ? "opacity-0 translate-x-2 -translate-y-6"
-                  : "opacity-100 translate-x-2 translate-y-2"
-              } cursor-pointer transition-all duration-500 p-2 text-white mix-blend-difference`}
+                  ? "opacity-0  -translate-y-6"
+                  : "opacity-100  translate-y-2"
+              } cursor-pointer transition-all duration-300 ease-in-out text-white mix-blend-difference`}
               onMouseEnter={() => setIsOpen(true)}
             >
               Menu
             </div>
-            <div
+            <AnimatePresence>
+              {isOpen && (
+                <motion.div
+                  initial={{ opacity: 0, x: "16px", y: 0 }}
+                  animate={{ opacity: 1, y: -40 }}
+                  exit={{ opacity: 0, y: 0 }}
+                  transition={{
+                    duration: 0.3,
+                    ease: "easeInOut",
+                  }}
+                  className="flex flex-col p-4"
+                  onMouseLeave={() => {
+                    if (isTop) {
+                      setIsOpen(true);
+                      return;
+                    }
+                    setIsOpen(false);
+                  }}
+                >
+                  <Underline href="/" label="Home" />
+                  <Underline href="/contact" label="Contact" />
+                  <Underline href="/portfolio" label="Portfolio" />
+                  <Underline href="/aboutus" label="About" />
+                </motion.div>
+              )}
+            </AnimatePresence>
+            {/* <div
               className={`${
                 isOpen
                   ? "translate-x-2 -translate-y-10 opacity-100"
                   : "pointer-events-none translate-x-2 -translate-y-2 opacity-0"
-              } transition-all duration-500 flex flex-col p-2`}
+              } transition-all duration-500 flex flex-col p-2 `}
               onMouseLeave={() => {
                 if (isTop) {
                   setIsOpen(true);
@@ -114,7 +140,7 @@ const Navbar = () => {
               <Underline href="/contact" label="Contact" />
               <Underline href="/portfolio" label="Portfolio" />
               <Underline href="/aboutus" label="About" />
-            </div>
+            </div> */}
           </div>
         </div>
       </Container>
