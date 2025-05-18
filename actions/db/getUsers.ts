@@ -3,7 +3,7 @@ import prisma from "@/libs/prismadb";
 export default async () => {
   try {
     const users = await prisma.user.findMany({
-      select: { id: true, admin_id: true, isAdmin: true },
+      select: { id: true, admin_id: true, isAdmin: true, username: true },
     });
 
     return users;

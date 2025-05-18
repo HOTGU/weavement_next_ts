@@ -1,7 +1,7 @@
 "use client";
 
 import axios from "axios";
-import { fi } from "date-fns/locale";
+
 import React, { useState } from "react";
 import { toast } from "react-hot-toast";
 
@@ -11,9 +11,12 @@ const AttendanceClient = ({ userId }: { userId: string }) => {
 
   const handleClick = async (type: "checkin" | "checkout") => {
     setLoading(true);
+    console.log(type);
+
     try {
       const res = await axios.post("/api/attendance", {
-        body: JSON.stringify({ userId, type }),
+        userId,
+        type,
       });
 
       if (res.data.ok) {
@@ -27,14 +30,17 @@ const AttendanceClient = ({ userId }: { userId: string }) => {
   };
 
   return (
-    <div className="flex flex-col gap-14 p-14">
-      <button onClick={() => handleClick("checkin")} disabled={loading}>
-        출근
-      </button>
-      <button onClick={() => handleClick("checkout")} disabled={loading}>
-        퇴근
-      </button>
-      {status && <p>최근 상태: {status === "checkin" ? "출근" : "퇴근"}</p>}
+    <div className="flex">
+      {<div></div>}
+      <div className="flex flex-col gap-14 p-14">
+        <button onClick={() => handleClick("checkin")} disabled={loading}>
+          출근
+        </button>
+        <button onClick={() => handleClick("checkout")} disabled={loading}>
+          퇴근
+        </button>
+        {status && <p>최근 상태: {status === "checkin" ? "출근" : "퇴근"}</p>}
+      </div>
     </div>
   );
 };
