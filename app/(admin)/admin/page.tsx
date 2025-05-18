@@ -13,7 +13,7 @@ const AdminPage = async () => {
   const currentUser = await getCurrentUser();
 
   if (currentUser?.admin_id !== process.env.MASTER_ID) {
-    return redirect("/admin/analysis/state");
+    return redirect("/admin/attendance");
   }
 
   const users = await getUsers();

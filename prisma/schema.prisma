@@ -70,3 +70,11 @@ model Portfolio {
   metaKeywords    String[]
   createdAt       DateTime @default(now())
 }
+
+model Attendance {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    Int
+  type      String // 'checkin' or 'checkout'
+  timestamp DateTime @default(now())
+  ip        String
+}
