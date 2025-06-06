@@ -1,7 +1,6 @@
 import React from "react";
 import { format } from "date-fns";
 import { Attendance } from "@prisma/client";
-import { ko } from "date-fns/locale";
 import Link from "next/link";
 
 interface AttendanceListProps {
@@ -63,10 +62,7 @@ const AttendanceList = ({
             <div className="w-3/5">
               {format(
                 new Date(attendance.timestamp),
-                "yy/MM/dd(EEE) a hh:mm:ss",
-                {
-                  locale: ko,
-                }
+                "yy/MM/dd(EEE) a hh:mm:ss"
               )}
             </div>
           </div>
