@@ -2,25 +2,26 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/libs/prismadb";
 import { endOfDay, startOfDay } from "date-fns";
 
-const ALLOWED_IPS = ["125.143.21.245", "::1"];
+const ALLOWED_IP =
+  process.env.NODE_ENV === "production" ? process.env.ALLOWED_IP : "::1";
 
 export async function POST(req: NextRequest) {
-  console.log(req.headers.get("x-forwarded-for"));
-  const ip = req.headers.get("x-forwarded-for")?.split(",")[0] || "unknown";
+  const ip =
+    req.headers.get("x-forwarded-for")?.split(",")[0] ||
+    req.headers.get("x-real-ip") ||
+    req.headers.get("cf-connecting-ip") ||
+    "unknown";
 
-  if (!ALLOWED_IPS.includes(ip)) {
+  if (ALLOWED_IP !== ip) {
     return new NextResponse("인증되지 않은 IP입니다", { status: 403 });
   }
 
-  const { userId, type } = await req.json(); // type: 'checkin' or 'checkout'
-  console.log(userId, type);
+  const { userId, type, username } = await req.json(); // type: 'checkin' or 'checkout'
   const now = new Date();
 
-  // 오늘 하루 범위 구하기
   const todayStart = startOfDay(now);
   const todayEnd = endOfDay(now);
 
-  // 오늘 이미 해당 type으로 기록이 있는지 확인
   const existing = await prisma.attendance.findFirst({
     where: {
       userId,
@@ -42,6 +43,7 @@ export async function POST(req: NextRequest) {
   const record = await prisma.attendance.create({
     data: {
       userId,
+      username,
       type,
       ip,
     },

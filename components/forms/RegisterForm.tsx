@@ -62,6 +62,13 @@ const RegisterForm = () => {
         required
       />
       <Input
+        name="username"
+        control={control}
+        errors={errors}
+        label="이름"
+        required
+      />
+      <Input
         name="password"
         control={control}
         errors={errors}

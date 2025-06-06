@@ -75,7 +75,10 @@ model Portfolio {
 model Attendance {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   userId    String
+  username  String
   type      String // 'checkin' or 'checkout'
   timestamp DateTime @default(now())
   ip        String
+
+  @@index([userId, type, timestamp])
 }
