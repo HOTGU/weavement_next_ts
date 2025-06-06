@@ -15,6 +15,12 @@ const AttendanceList = ({
   page,
   totalPages,
 }: AttendanceListProps) => {
+  const convertToKoreanTime = (timestamp: Date) => {
+    return process.env.NODE_ENV === "production"
+      ? new Date(new Date(timestamp).getTime() + 9 * 60 * 60 * 1000)
+      : new Date(timestamp);
+  };
+
   return (
     <div className="w-full bg-gray-200 rounded-lg p-6">
       <div className="flex justify-between items-center mb-6">
@@ -62,7 +68,7 @@ const AttendanceList = ({
             </div>
             <div className="w-3/5">
               {format(
-                new Date(attendance.timestamp),
+                convertToKoreanTime(attendance.timestamp), // 한국 시간으로 변환 (배포환경에서만)
                 "yy/MM/dd(EEEE) a hh:mm:ss",
                 { locale: ko }
               )}
