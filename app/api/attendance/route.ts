@@ -22,23 +22,23 @@ export async function POST(req: NextRequest) {
   const todayStart = startOfDay(now);
   const todayEnd = endOfDay(now);
 
-  const existing = await prisma.attendance.findFirst({
-    where: {
-      userId,
-      type,
-      timestamp: {
-        gte: todayStart,
-        lte: todayEnd,
-      },
-    },
-  });
+  // const existing = await prisma.attendance.findFirst({
+  //   where: {
+  //     userId,
+  //     type,
+  //     timestamp: {
+  //       gte: todayStart,
+  //       lte: todayEnd,
+  //     },
+  //   },
+  // });
 
-  if (existing) {
-    return new NextResponse(
-      `이미 오늘 ${type === "checkin" ? "출근" : "퇴근"} 기록이 있습니다.`,
-      { status: 409 }
-    );
-  }
+  // if (existing) {
+  //   return new NextResponse(
+  //     `이미 오늘 ${type === "checkin" ? "출근" : "퇴근"} 기록이 있습니다.`,
+  //     { status: 409 }
+  //   );
+  // }
 
   const record = await prisma.attendance.create({
     data: {

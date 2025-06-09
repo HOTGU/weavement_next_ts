@@ -6,16 +6,22 @@ import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { toast } from "react-hot-toast";
 import { FadeLoader } from "react-spinners";
+import { addHours, format } from "date-fns";
+import { Attendance } from "@prisma/client";
 
 const AttendanceClient = ({
   userId,
   username,
+  todayCheckin,
 }: {
   userId: string;
   username: string;
+  todayCheckin: Attendance | null;
 }) => {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+
+  console.log(todayCheckin);
 
   const handleClick = async (type: "checkin" | "checkout") => {
     setLoading(true);
@@ -28,11 +34,23 @@ const AttendanceClient = ({
       });
 
       toast.success(
-        `${type === "checkin" ? "출근" : "퇴근"} 기록이 완료되었습니다.`
+        `${
+          type === "checkin"
+            ? `${username}님 출근 🎉  \n 퇴근이 가능한 시간은 ${format(
+                addHours(new Date(res.data.record.timestamp), 9),
+                "HH시 mm분"
+              )}입니다`
+            : `${username}님 오늘도 고생하셨습니다 👋`
+        }`,
+        {
+          duration: 5000,
+        }
       );
       router.refresh();
       return;
     } catch (error: any) {
+      console.log(error);
+
       return toast.error(error.response.data);
     } finally {
       setLoading(false);
@@ -57,11 +75,13 @@ const AttendanceClient = ({
           </button>
           <button
             onClick={() => {
-              if (loading) return;
+              if (loading || !todayCheckin) return;
               handleClick("checkout");
             }}
             disabled={loading}
-            className="bg-rose-500 text-white p-4 rounded w-full"
+            className={`${
+              todayCheckin ? "bg-rose-500" : "bg-gray-300"
+            } text-white p-4 rounded w-full`}
           >
             <span className="text-2xl">퇴근</span>
           </button>
