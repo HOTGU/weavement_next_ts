@@ -3,10 +3,10 @@
 import axios from "axios";
 import { useRouter } from "next/navigation";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { FadeLoader } from "react-spinners";
-import { addHours, format } from "date-fns";
+import { addHours, format, intervalToDuration, isBefore } from "date-fns";
 import { Attendance } from "@prisma/client";
 
 const AttendanceClient = ({
@@ -18,10 +18,40 @@ const AttendanceClient = ({
   username: string;
   todayCheckin: Attendance | null;
 }) => {
-  const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
+  const [timeLeft, setTimeLeft] = useState("퇴근");
+  const [posibleCheckout, setPosibleCheckout] = useState(false);
 
-  console.log(todayCheckin);
+  useEffect(() => {
+    if (!todayCheckin) return;
+
+    const targetTime = addHours(new Date(todayCheckin.timestamp), 9);
+
+    const interval = setInterval(() => {
+      const now = new Date();
+
+      if (isBefore(targetTime, now)) {
+        setTimeLeft("퇴근 가능!");
+        setPosibleCheckout(true);
+        clearInterval(interval);
+        return;
+      }
+
+      const duration = intervalToDuration({
+        start: now,
+        end: targetTime,
+      });
+
+      setTimeLeft(
+        `${duration.hours ?? 0}시간 ${duration.minutes ?? 0}분 ${
+          duration.seconds ?? 0
+        }초`
+      );
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [todayCheckin]);
 
   const handleClick = async (type: "checkin" | "checkout") => {
     setLoading(true);
@@ -33,11 +63,14 @@ const AttendanceClient = ({
         type,
       });
 
+      const checkinTime = new Date(res.data.record.timestamp);
+      const checkoutTime = addHours(checkinTime, 9);
+
       toast.success(
         `${
           type === "checkin"
             ? `${username}님 출근 🎉  \n 퇴근이 가능한 시간은 ${format(
-                addHours(new Date(res.data.record.timestamp), 9),
+                checkoutTime,
                 "HH시 mm분"
               )}입니다`
             : `${username}님 오늘도 고생하셨습니다 👋`
@@ -80,10 +113,10 @@ const AttendanceClient = ({
             }}
             disabled={loading}
             className={`${
-              todayCheckin ? "bg-rose-500" : "bg-gray-300 cursor-not-allowed"
-            } text-white p-4 rounded w-full`}
+              posibleCheckout ? "bg-rose-500" : "bg-gray-300 cursor-not-allowed"
+            } text-white p-4 rounded w-full transition-colors duration-300`}
           >
-            <span className="text-2xl">퇴근</span>
+            <span className="text-2xl">{timeLeft}</span>
           </button>
         </>
       )}
