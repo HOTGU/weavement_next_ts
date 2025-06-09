@@ -80,7 +80,7 @@ const AttendanceClient = ({
             }}
             disabled={loading}
             className={`${
-              todayCheckin ? "bg-rose-500" : "bg-gray-300"
+              todayCheckin ? "bg-rose-500" : "bg-gray-300 cursor-not-allowed"
             } text-white p-4 rounded w-full`}
           >
             <span className="text-2xl">퇴근</span>
