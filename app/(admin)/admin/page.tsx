@@ -13,7 +13,7 @@ const AdminPage = async () => {
   const currentUser = await getCurrentUser();
 
   if (currentUser?.admin_id !== process.env.MASTER_ID) {
-    return redirect("/admin/analysis/state");
+    return redirect("/admin/attendance");
   }
 
   const users = await getUsers();
@@ -25,8 +25,8 @@ const AdminPage = async () => {
       <CreateUserModal />
       <UpdateUserModal />
       <DeleteUserConfirm />
-      <div className="flex justify-center w-full max-w-[1000px] gap-10 mt-10 mx-auto  ">
-        <div className="w-1/2 flex flex-col gap-6 p-4 border rounded">
+      <div className="flex justify-center w-full gap-10 mt-10 mx-auto  ">
+        <div className="w-1/3 flex flex-col gap-6 p-4 border rounded">
           <div className="text-center font-bold text-2xl">
             위브먼트 직원일동
           </div>
@@ -39,7 +39,9 @@ const AdminPage = async () => {
           </div>
           <UserCreateButton />
         </div>
-        <div className="w-1/2">{/* <AdminDbChangeForm /> */}</div>
+        <div className="w-2/3 flex flex-col gap-6 p-4 border rounded"></div>
+
+        {/* <AdminDbChangeForm /> */}
       </div>
     </Container>
   );

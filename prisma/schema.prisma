@@ -13,6 +13,7 @@ datasource db {
 model User {
   id       String  @id @default(auto()) @map("_id") @db.ObjectId
   admin_id String  @unique
+  username String
   password String
   isAdmin  Boolean @default(false)
 }
@@ -69,4 +70,15 @@ model Portfolio {
   metaDescription String?
   metaKeywords    String[]
   createdAt       DateTime @default(now())
+}
+
+model Attendance {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String
+  username  String
+  type      String // 'checkin' or 'checkout'
+  timestamp DateTime @default(now())
+  ip        String
+
+  @@index([userId, type, timestamp])
 }

@@ -54,6 +54,7 @@ export default () => {
     { value: "유튜브", label: "유튜브" },
     { value: "기존고객", label: "기존고객" },
     { value: "소개", label: "소개" },
+    { value: "크몽", label: "크몽" },
     { value: "기타", label: "기타" },
     { value: "알수없음", label: "알수없음" },
   ];
@@ -94,6 +95,7 @@ export default () => {
     { value: "인스타(문자)", label: "인스타(문자)" },
     { value: "인스타(카톡)", label: "인스타(카톡)" },
     { value: "인스타(DM)", label: "인스타(DM)" },
+    { value: "크몽", label: "크몽" },
     { value: "기타", label: "기타" },
   ];
 
