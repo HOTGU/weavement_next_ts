@@ -8,6 +8,7 @@ import { toast } from "react-hot-toast";
 import { FadeLoader } from "react-spinners";
 import { Attendance } from "@prisma/client";
 import { addHours, format, intervalToDuration, isBefore } from "date-fns";
+import { workedSecondsToKorean } from "@/utils/workedSecondsToKorean";
 
 const AttendanceClient = ({
   userId,
@@ -92,28 +93,23 @@ const AttendanceClient = ({
     setLoading(true);
 
     try {
+      const checkinTime = new Date(todayCheckin.timestamp);
+      const current = new Date();
+      const workedSeconds = Math.floor(
+        (current.getTime() - checkinTime.getTime()) / 1000
+      );
+
       await axios.post("/api/attendance", {
         userId,
         username,
         type: "checkout",
+        workedSeconds,
       });
-
-      const checkinTime = new Date(todayCheckin.timestamp);
-      const current = new Date();
-
-      const duration = intervalToDuration({
-        start: checkinTime,
-        end: current,
-      });
-
-      const { hours, minutes, seconds } = duration;
-      let result = "";
-      if (hours) result += `${hours}시간 `;
-      if (minutes) result += `${minutes}분 `;
-      if (seconds) result += `${seconds}초`;
 
       toast.success(
-        `${username}님 ${result}동안 일하셨습니다! \n 오늘도 고생하셨습니다! 👏👏`,
+        `${username}님 ${workedSecondsToKorean(
+          workedSeconds
+        )}동안 일하셨습니다! \n 오늘도 고생하셨습니다! 👏👏`,
         {
           duration: 5000,
         }
