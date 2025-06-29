@@ -16,7 +16,7 @@ export async function POST(req: NextRequest) {
     return new NextResponse("인증되지 않은 IP입니다", { status: 403 });
   }
 
-  const { userId, type, username } = await req.json(); // type: 'checkin' or 'checkout'
+  const { userId, type, username, workedSeconds } = await req.json(); // type: 'checkin' or 'checkout'
   const now = new Date();
 
   const todayStart = startOfDay(now);
@@ -46,6 +46,7 @@ export async function POST(req: NextRequest) {
       username,
       type,
       ip,
+      workedSeconds: workedSeconds ? workedSeconds : null,
     },
   });
 

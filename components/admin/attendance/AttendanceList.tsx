@@ -1,9 +1,9 @@
 import React from "react";
-import { format, intervalToDuration } from "date-fns";
+import { format } from "date-fns";
 import { Attendance } from "@prisma/client";
 import Link from "next/link";
 import { ko } from "date-fns/locale";
-import { durationToKoreanString, findCheckin } from "@/utils/timeUtills";
+import { workedSecondsToKorean } from "@/utils/workedSecondsToKorean";
 
 interface AttendanceListProps {
   attendances: Attendance[];
@@ -59,22 +59,10 @@ const AttendanceList = ({
         <div className="w-1/6 min-w-[100px]">이름</div>
         <div className="w-1/6 min-w-[70px]">타입</div>
         <div className="w-2/6 min-w-[180px]">시간</div>
-        <div className="w-2/6 min-w-[120px]">근무시간</div>
+        <div className="w-2/6 min-w-[120px]">근무시간 (휴게시간 1시간포함)</div>
       </div>
       <div>
         {attendances.map((attendance) => {
-          let workTimeString = "";
-          if (attendance.type === "checkout") {
-            const checkin = findCheckin(attendance, attendances);
-            if (checkin) {
-              const duration = intervalToDuration({
-                start: new Date(checkin.timestamp),
-                end: new Date(attendance.timestamp),
-              });
-              workTimeString = durationToKoreanString(duration);
-            }
-          }
-
           return (
             <div className="flex items-center mb-2" key={attendance.id}>
               <div className="w-1/6 min-w-[100px]">{attendance.username}</div>
@@ -89,9 +77,9 @@ const AttendanceList = ({
                 )}
               </div>
               <div className="w-2/6 min-w-[120px]">
-                {attendance.type === "checkout" && workTimeString
-                  ? `${workTimeString}`
-                  : ""}
+                {attendance.type === "checkout" &&
+                  attendance.workedSeconds &&
+                  workedSecondsToKorean(attendance.workedSeconds)}
               </div>
             </div>
           );
