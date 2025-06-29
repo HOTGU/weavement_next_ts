@@ -14,7 +14,7 @@ export default async function Home() {
     <>
       <div className="">
         <HomeScreen />
-        <HomeAdmin />
+        <HomeAdmin portfolios={data.portfolios} />
       </div>
     </>
   );

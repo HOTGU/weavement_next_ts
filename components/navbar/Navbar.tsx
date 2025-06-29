@@ -9,54 +9,8 @@ import {
 import { useState } from "react";
 import Link from "next/link";
 import Container from "../Container";
-import { is } from "date-fns/locale";
 import HiddenUpText from "../framer/HiddenUpText";
-
-const Underline = ({ href, label }: { href: string; label: string }) => {
-  const [isHovered, setIsHovered] = useState(false);
-
-  const underlineVariants = {
-    initial: { width: "0%", left: "0%" },
-    hover: {
-      width: "100%",
-      left: "0%",
-      transition: { duration: 0.3, ease: [0.61, 0, 1, 1] },
-    },
-    exit: {
-      width: "0%",
-      left: "100%",
-      transition: { duration: 0.6, ease: "easeInOut" },
-    },
-  };
-
-  return (
-    <div
-      className="cursor-pointer inline-block relative py-1"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
-      <Link
-        href={href}
-        className="relative z-10 mix-blend-difference text-white"
-      >
-        <span>{label}</span>
-        <AnimatePresence mode="wait">
-          {isHovered && (
-            <motion.div
-              key="underline"
-              className="absolute bottom-0 bg-white h-[1px] mix-blend-difference"
-              style={{ transformOrigin: "left" }}
-              variants={underlineVariants}
-              initial="initial"
-              animate="hover"
-              exit="exit"
-            />
-          )}
-        </AnimatePresence>
-      </Link>
-    </div>
-  );
-};
+import UnderlineText from "../framer/UnderlineText";
 
 const Navbar = () => {
   const { scrollY } = useScroll();
@@ -115,32 +69,13 @@ const Navbar = () => {
                     setIsOpen(false);
                   }}
                 >
-                  <Underline href="/" label="Home" />
-                  <Underline href="/contact" label="Contact" />
-                  <Underline href="/portfolio" label="Portfolio" />
-                  <Underline href="/aboutus" label="About" />
+                  <UnderlineText href="/" label="Home" />
+                  <UnderlineText href="/contact" label="Contact" />
+                  <UnderlineText href="/portfolio" label="Portfolio" />
+                  <UnderlineText href="/aboutus" label="About" />
                 </motion.div>
               )}
             </AnimatePresence>
-            {/* <div
-              className={`${
-                isOpen
-                  ? "translate-x-2 -translate-y-10 opacity-100"
-                  : "pointer-events-none translate-x-2 -translate-y-2 opacity-0"
-              } transition-all duration-500 flex flex-col p-2 `}
-              onMouseLeave={() => {
-                if (isTop) {
-                  setIsOpen(true);
-                  return;
-                }
-                setIsOpen(false);
-              }}
-            >
-              <Underline href="/" label="Home" />
-              <Underline href="/contact" label="Contact" />
-              <Underline href="/portfolio" label="Portfolio" />
-              <Underline href="/aboutus" label="About" />
-            </div> */}
           </div>
         </div>
       </Container>

@@ -5,6 +5,10 @@ import Image from "next/image";
 import React, { useRef, useState } from "react";
 
 import { useInView, motion, AnimatePresence } from "framer-motion";
+import { Portfolio } from "@prisma/client";
+import Link from "next/link";
+import ReverseUnderlineText from "@/components/framer/ReverseUnderlineText";
+import { MdSubdirectoryArrowRight } from "react-icons/md";
 
 const processArr = [
   {
@@ -73,15 +77,26 @@ const ProcessItem = ({ item }: { item: any }) => {
   );
 };
 
-const HomeAdmin = () => {
+const HomeAdmin = ({ portfolios }: { portfolios: Portfolio[] }) => {
   const whiteSection = useRef(null);
+  const primarySection = useRef(null);
+
   const isInWhiteSection = useInView(whiteSection, {
+    margin: "-20% 0px -20% 0px",
+  });
+  const isInPrimarySection = useInView(primarySection, {
     margin: "-20% 0px -20% 0px",
   });
 
   return (
     <motion.div
-      animate={{ backgroundColor: isInWhiteSection ? "white" : "black" }}
+      animate={{
+        backgroundColor: isInWhiteSection
+          ? "white"
+          : isInPrimarySection
+          ? "#C09C83"
+          : "black",
+      }}
       className="transition duration-1000 "
       transition={{ duration: 0.5 }}
     >
@@ -122,7 +137,12 @@ const HomeAdmin = () => {
 
         {/* 포트폴리오 더보기 버튼 */}
         <div className="flex items-center justify-center">
-          <div className="text-white">포트폴리오 더보기</div>
+          <ReverseUnderlineText
+            href="/portfolio"
+            size={"sm"}
+            color={"white"}
+            label="포트폴리오 더 보기"
+          />
         </div>
 
         {/* padding section */}
@@ -186,7 +206,6 @@ const HomeAdmin = () => {
           <div className="pt-60"></div>
 
           {/* 회사 작업 과정 */}
-
           <div>
             <div className=" text-7xl">우리가 일하는 방식:</div>
             <div className="pt-20"></div>
@@ -195,6 +214,39 @@ const HomeAdmin = () => {
                 <ProcessItem item={item} key={item.title} />
               ))}
             </div>
+          </div>
+        </div>
+
+        <div ref={primarySection}>
+          {/* padding section */}
+          <div className="pt-80"></div>
+          <div className="pt-40"></div>
+
+          {/* 회사 포트폴리오 */}
+          <div className="flex gap-4 items-center pb-40">
+            {portfolios.map((portfolio) => (
+              <div key={portfolio.id} className="w-full aspect-[4/3] relative">
+                <Image
+                  className="text-white text-2xl font-bold"
+                  src={portfolio.thumb}
+                  fill
+                  alt={`${portfolio.title} 사진`}
+                />
+              </div>
+            ))}
+          </div>
+
+          <div className="flex flex-col justify-center items-center gap-20">
+            <div className="text-6xl">우리가 어떻게 도와드릴까요?</div>
+
+            <ReverseUnderlineText
+              href="/contact"
+              size="lg"
+              color="black"
+              label="문의하러 가기"
+            />
+
+            <div className="pt-60"></div>
           </div>
         </div>
       </Container>

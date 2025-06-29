@@ -14,12 +14,12 @@ const HomeScreen = () => {
           <div className="flex flex-col gap-4 font-ibm py-8 font-[400]">
             <HiddenUpText
               children={"감감적인 제조"}
-              delay={1}
+              delay={0.5}
               className="text-8xl font-pretendard"
             />
             <HiddenUpText
               children={"WEAVEMENT"}
-              delay={1}
+              delay={0.5}
               className="text-8xl font-racing"
             />
           </div>
