@@ -6,8 +6,8 @@ import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { FadeLoader } from "react-spinners";
-import { addHours, format, intervalToDuration, isBefore } from "date-fns";
 import { Attendance } from "@prisma/client";
+import { addHours, format, intervalToDuration, isBefore } from "date-fns";
 
 const AttendanceClient = ({
   userId,
@@ -53,28 +53,67 @@ const AttendanceClient = ({
     return () => clearInterval(interval);
   }, [todayCheckin]);
 
-  const handleClick = async (type: "checkin" | "checkout") => {
+  const handleCheckin = async () => {
+    if (loading) return;
     setLoading(true);
-
     try {
       const res = await axios.post("/api/attendance", {
         userId,
         username,
-        type,
+        type: "checkin",
       });
 
       const checkinTime = new Date(res.data.record.timestamp);
       const checkoutTime = addHours(checkinTime, 9);
 
       toast.success(
-        `${
-          type === "checkin"
-            ? `${username}님 출근 🎉  \n 퇴근이 가능한 시간은 ${format(
-                checkoutTime,
-                "HH시 mm분"
-              )}입니다`
-            : `${username}님 오늘도 고생하셨습니다 👋`
-        }`,
+        `${`${username}님 출근 🎉  \n 퇴근이 가능한 시간은 ${format(
+          checkoutTime,
+          "HH시 mm분"
+        )}입니다`}`,
+        {
+          duration: 5000,
+        }
+      );
+      router.refresh();
+      return;
+    } catch (error: any) {
+      console.log(error);
+
+      return toast.error(error.response.data);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleCheckout = async () => {
+    if (loading || !todayCheckin) return;
+
+    setLoading(true);
+
+    try {
+      await axios.post("/api/attendance", {
+        userId,
+        username,
+        type: "checkout",
+      });
+
+      const checkinTime = new Date(todayCheckin.timestamp);
+      const current = new Date();
+
+      const duration = intervalToDuration({
+        start: checkinTime,
+        end: current,
+      });
+
+      const { hours, minutes, seconds } = duration;
+      let result = "";
+      if (hours) result += `${hours}시간 `;
+      if (minutes) result += `${minutes}분 `;
+      if (seconds) result += `${seconds}초`;
+
+      toast.success(
+        `${username}님 ${result}동안 일하셨습니다! \n 오늘도 고생하셨습니다! 👏👏`,
         {
           duration: 5000,
         }
@@ -97,10 +136,7 @@ const AttendanceClient = ({
       ) : (
         <>
           <button
-            onClick={() => {
-              if (loading) return;
-              handleClick("checkin");
-            }}
+            onClick={handleCheckin}
             disabled={loading}
             className="bg-blue-500 text-white p-4 rounded w-full"
           >
@@ -108,12 +144,11 @@ const AttendanceClient = ({
           </button>
           <button
             onClick={() => {
-              if (loading || !todayCheckin) return;
-              handleClick("checkout");
+              confirm("퇴근하시겠습니까?") && handleCheckout();
             }}
             disabled={loading}
             className={`${
-              posibleCheckout ? "bg-rose-500" : "bg-gray-300 cursor-not-allowed"
+              posibleCheckout ? "bg-rose-500" : "bg-gray-300"
             } text-white p-4 rounded w-full transition-colors duration-300`}
           >
             <span className="text-2xl">{timeLeft}</span>
