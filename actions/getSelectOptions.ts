@@ -73,6 +73,7 @@ export default () => {
     { value: "SH", label: "SH" },
     { value: "DW", label: "DW" },
     { value: "YJ", label: "YJ" },
+    { value: "CH", label: "CH" },
   ];
 
   const contactPathOptions: OptionType[] = [
