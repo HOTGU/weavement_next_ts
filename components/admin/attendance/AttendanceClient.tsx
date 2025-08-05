@@ -8,7 +8,7 @@ import { toast } from "react-hot-toast";
 import { FadeLoader } from "react-spinners";
 import { Attendance } from "@prisma/client";
 import { addHours, format, intervalToDuration, isBefore } from "date-fns";
-import { workedSecondsToKorean } from "@/utils/workedSecondsToKorean";
+import { workedSecondsToKorean } from "@/utils/timeUtils";
 
 const AttendanceClient = ({
   userId,

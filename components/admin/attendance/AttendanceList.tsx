@@ -3,7 +3,7 @@ import { format } from "date-fns";
 import { Attendance } from "@prisma/client";
 import Link from "next/link";
 import { ko } from "date-fns/locale";
-import { workedSecondsToKorean } from "@/utils/workedSecondsToKorean";
+import { workedSecondsToKorean } from "@/utils/timeUtils";
 
 interface AttendanceListProps {
   attendances: Attendance[];
