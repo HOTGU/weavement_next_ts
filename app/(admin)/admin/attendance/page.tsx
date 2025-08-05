@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 import React from "react";
 import AttendanceList from "@/components/admin/attendance/AttendanceList";
 import client from "@/libs/prismadb";
-import { endOfDay, startOfDay } from "date-fns";
+import { getKstDayRange } from "@/utils/timeUtils";
 
 interface PageProps {
   searchParams: { page?: string };
@@ -29,6 +29,8 @@ const AttendancePage = async ({ searchParams }: PageProps) => {
 
   const skip = (page - 1) * pageSize;
 
+  const { startUtc, endUtc } = getKstDayRange(new Date());
+
   const [attendances, todayCheckin, total] = await Promise.all([
     client.attendance.findMany({
       skip,
@@ -40,8 +42,8 @@ const AttendancePage = async ({ searchParams }: PageProps) => {
         userId: currentUser.id,
         type: "checkin",
         timestamp: {
-          gte: startOfDay(new Date()),
-          lte: endOfDay(new Date()),
+          gte: startUtc,
+          lte: endUtc,
         },
       },
     }),
