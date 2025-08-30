@@ -6,13 +6,19 @@ import { Racing_Sans_One, IBM_Plex_Sans_KR } from "next/font/google";
 const pretendard = localFont({
   src: "../public/fonts/Pretendard-Regular.subset.woff2",
   preload: true,
+  variable: "--font-pretendard",
 });
 
 const ibm = IBM_Plex_Sans_KR({
   subsets: ["latin"],
   weight: ["100", "200", "300", "400", "500", "600", "700"],
+  variable: "--font-ibm",
 });
-const racingSansOne = Racing_Sans_One({ subsets: ["latin"], weight: ["400"] });
+const racingSansOne = Racing_Sans_One({
+  subsets: ["latin"],
+  weight: ["400"],
+  variable: "--font-racing",
+});
 
 export default async function RootLayout({
   children,
@@ -31,7 +37,9 @@ export default async function RootLayout({
           content="e0cdc465ab3662b580c637f908b0f730cd900dba"
         />
       </head>
-      <body className={``}>
+      <body
+        className={`${pretendard.variable} ${ibm.variable} ${racingSansOne.variable} font-pretendard`}
+      >
         <Toaster />
         {children}
       </body>

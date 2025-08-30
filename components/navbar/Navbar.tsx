@@ -18,7 +18,7 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(true);
 
   useMotionValueEvent(scrollY, "change", (scroll) => {
-    if (scroll < 200) {
+    if (scroll < 50) {
       setIsTop(true);
       setIsOpen(true);
     } else {
@@ -31,9 +31,9 @@ const Navbar = () => {
     <div className="fixed pt-8 w-full mix-blend-difference pointer-events-none z-10">
       <Container>
         <div className="h-full flex items-start justify-between">
-          <div className="flex-1">
+          <div className="w-max overflow-visible">
             <HiddenUpText>
-              <div className="font-racing text-6xl tracking-[-12px] text-white mix-blend-difference pointer-events-auto">
+              <div className="font-racing text-6xl w-max tracking-[-12px] pr-3 text-white mix-blend-difference pointer-events-auto whitespace-nowrap">
                 <Link href="/">WM</Link>
               </div>
             </HiddenUpText>
@@ -45,7 +45,7 @@ const Navbar = () => {
                 isOpen
                   ? "opacity-0  -translate-y-6"
                   : "opacity-100  translate-y-2"
-              } cursor-pointer transition-all duration-300 ease-in-out text-white mix-blend-difference`}
+              } cursor-pointer transition-all duration-300 ease-in-out text-white mix-blend-difference font-racing`}
               onMouseEnter={() => setIsOpen(true)}
             >
               Menu
@@ -60,7 +60,7 @@ const Navbar = () => {
                     duration: 0.3,
                     ease: "easeInOut",
                   }}
-                  className="flex flex-col p-4"
+                  className="flex flex-col p-4 font-racing"
                   onMouseLeave={() => {
                     if (isTop) {
                       setIsOpen(true);

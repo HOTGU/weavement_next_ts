@@ -8,9 +8,9 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        pretendard: ["Pretendard", "sans-serif"],
-        racing: ["Racing Sans One", "sans-serif"],
-        ibm: ["IBM Plex Sans KR", "sans-serif"],
+        pretendard: ["var(--font-pretendard)", "sans-serif"],
+        racing: ["var(--font-racing)", "sans-serif"],
+        ibm: ["var(--font-ibm)", "sans-serif"],
       },
       colors: {
         accent: "#A6192E",
