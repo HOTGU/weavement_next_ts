@@ -38,7 +38,7 @@ export async function POST(request: Request) {
       folderName: title,
       file: thumb,
       type: "PORTFOLIO",
-      resizeWidth: 2560,
+      resizeWidth: 5120,
       isRep,
     });
 

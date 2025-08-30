@@ -16,6 +16,8 @@ const ContactBlock = ({ contact }: ContactBlockProps) => {
     if (contact.pm === "SH") return { bg: "bg-pink-50", text: "text-pink-600" };
     if (contact.pm === "DW") return { bg: "bg-teal-50", text: "text-teal-600" };
     if (contact.pm === "YJ") return { bg: "bg-blue-50", text: "text-blue-600" };
+    if (contact.pm === "CH")
+      return { bg: "bg-orange-50", text: "text-orange-600" };
     return { bg: "bg-white", text: "text-neutral-500" };
   }, [contact.pm]);
 

@@ -63,6 +63,14 @@ const CreateUserModal = () => {
         required
       />
       <Input
+        name="username"
+        control={control}
+        errors={errors}
+        label="이름"
+        disabled={loading}
+        required
+      />
+      <Input
         name="password"
         control={control}
         errors={errors}

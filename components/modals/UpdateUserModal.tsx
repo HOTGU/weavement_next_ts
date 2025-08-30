@@ -24,6 +24,7 @@ const UpdateUserModal = () => {
       return {
         id: updateModal.target?.id,
         isAdmin: updateModal.target?.isAdmin,
+        username: updateModal.target?.username,
         password: "",
         verifyPassword: "",
       };
@@ -56,6 +57,13 @@ const UpdateUserModal = () => {
 
   const body = (
     <form className="flex flex-col gap-4 py-6">
+      <Input
+        name="username"
+        label="이름"
+        control={control}
+        errors={errors}
+        disabled={loading}
+      />
       <Input
         type="password"
         control={control}

@@ -4,6 +4,7 @@ interface User {
   id: string;
   admin_id: string;
   isAdmin: boolean;
+  username: string;
 }
 
 export interface CurrentUserProps {

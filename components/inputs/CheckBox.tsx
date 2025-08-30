@@ -49,16 +49,18 @@ const CheckBox: React.FC<InputProps> = ({
           {field.value && <FaCheck />}
         </div>
       </label>
-      <input
-        disabled={disabled}
-        hidden
-        name={name}
-        ref={inputRef}
-        checked={field.value}
-        value={field.value || false}
-        onChange={field.onChange}
-        type="checkbox"
-      />
+
+      {field && (
+        <input
+          disabled={disabled}
+          hidden
+          name={name}
+          ref={inputRef}
+          checked={!!field.value}
+          onChange={field.onChange}
+          type="checkbox"
+        />
+      )}
     </div>
   );
 };

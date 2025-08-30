@@ -10,6 +10,15 @@ const AdminMenu = () => {
   return (
     <>
       <Link
+        className={`${
+          pathname.includes("/admin/attendance") && "text-accent"
+        } `}
+        href="/admin/attendance"
+        passHref
+      >
+        출퇴근
+      </Link>
+      <Link
         className={`${pathname.includes("/admin/analysis") && "text-accent"} `}
         href="/admin/analysis"
         passHref

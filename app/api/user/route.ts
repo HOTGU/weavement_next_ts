@@ -6,7 +6,7 @@ import { NextResponse } from "next/server";
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { admin_id, password, verifyPassword } = body;
+    const { admin_id, password, verifyPassword, username } = body;
 
     if (!admin_id || !password || !verifyPassword)
       return new NextResponse("필수항목을 입력하세요", { status: 400 });
@@ -20,6 +20,7 @@ export async function POST(request: Request) {
       data: {
         admin_id,
         password: hashedPassword,
+        username,
       },
     });
 
@@ -37,7 +38,7 @@ export async function POST(request: Request) {
 export async function PUT(request: Request) {
   try {
     const body = await request.json();
-    const { isAdmin, password, verifyPassword, id } = body;
+    const { isAdmin, password, verifyPassword, id, username } = body;
 
     if (!id)
       return NextResponse.json(
@@ -45,7 +46,7 @@ export async function PUT(request: Request) {
         { status: 400 }
       );
 
-    let dataQuery = { isAdmin } as any;
+    let dataQuery = { isAdmin, username } as any;
 
     if (password && verifyPassword) {
       if (password !== verifyPassword)

@@ -8,7 +8,6 @@ import { useInView, motion, AnimatePresence } from "framer-motion";
 import { Portfolio } from "@prisma/client";
 import Link from "next/link";
 import ReverseUnderlineText from "@/components/framer/ReverseUnderlineText";
-import { MdSubdirectoryArrowRight } from "react-icons/md";
 
 const processArr = [
   {

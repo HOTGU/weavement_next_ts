@@ -47,6 +47,7 @@ export default async ({
       }/${folderName}/${returnCurrentDate()}${isRep ? "__대표사진__" : "__"}${
         file.name
       }`,
+      ContentType: "image/webp",
       Body: bufferData,
     };
 

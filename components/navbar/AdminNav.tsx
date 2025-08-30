@@ -1,6 +1,5 @@
 import React from "react";
 import { CurrentUserProps } from "@/types";
-import { signOut } from "next-auth/react";
 
 import Container from "../Container";
 import Link from "next/link";
@@ -18,7 +17,9 @@ const AdminNav = ({ currentUser }: CurrentUserProps) => {
                 <Link href="/" passHref>
                   <span className="text-4xl text-accent">WM</span>
                 </Link>
-                <span className="text-sm">Admin</span>
+                <Link href="/admin">
+                  <span className="text-sm">Admin</span>
+                </Link>
               </RacingFont>
             </div>
             <div className="flex gap-4">
