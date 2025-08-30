@@ -1,5 +1,5 @@
 import { Portfolio } from "@prisma/client";
-import Image from "next/legacy/image";
+import Image from "next/image";
 import React from "react";
 
 const PortfolioDetail = ({ portfolio }: { portfolio: Portfolio }) => {
@@ -8,10 +8,10 @@ const PortfolioDetail = ({ portfolio }: { portfolio: Portfolio }) => {
       <div className="w-full aspect-video relative">
         <Image
           src={portfolio?.thumb}
-          layout="fill"
-          objectFit="cover"
-          className="rounded-md"
-          sizes="100vw"
+          fill
+          className=" object-cover rounded-md"
+          sizes="(max-width: 1024px) 100vw,
+          2520px"
           alt="포트폴리오 대표사진"
           blurDataURL={
             portfolio.blurThumb
@@ -19,6 +19,7 @@ const PortfolioDetail = ({ portfolio }: { portfolio: Portfolio }) => {
               : "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+P+/HgAFhAJ/wlseKgAAAABJRU5ErkJggg=="
           }
           placeholder="blur"
+          quality={85}
         />
       </div>
       <div className="flex flex-col gap-2 md:gap-4 xl:gap-6 items-center justify-center">
