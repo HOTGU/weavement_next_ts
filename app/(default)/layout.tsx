@@ -1,6 +1,6 @@
 import Navbar from "@/components/navbar/Navbar";
 import getCurrentUser from "@/actions/getCurrentUser";
-import Footer from "@/components/Footer";
+import Footer from "@/components/global/Footer";
 
 export default async function RootLayout({
   children,
@@ -9,7 +9,7 @@ export default async function RootLayout({
 }) {
   const currentUser = await getCurrentUser();
   return (
-    <main lang="en">
+    <main lang="en bg-black">
       <div className=" min-h-screen">
         <Navbar />
         {children}

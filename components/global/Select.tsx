@@ -60,6 +60,7 @@ const Select: React.FC<SelectProps> = ({
         name={name}
         value={selected?.value ?? ""}
         required={required}
+        readOnly
       />
 
       {/* 트리거 버튼: Input과 동일한 톤 */}

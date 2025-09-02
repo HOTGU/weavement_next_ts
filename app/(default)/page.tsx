@@ -1,8 +1,8 @@
 import getPortfolios from "@/actions/db/getPortfolios";
 
-import HomeAdmin from "@/components/screens/home/HomeAdmin";
-import HomeScreen from "@/components/screens/home/HomeScreen";
 import metadataConfig from "@/constants/metadataConfig";
+import HomeClient from "./HomeClient";
+import MainScreen from "@/components/screens/home/MainScreen";
 
 export const metadata = metadataConfig.homeMetadata;
 
@@ -13,8 +13,9 @@ export default async function Home() {
   return (
     <>
       <div className="">
-        <HomeScreen />
-        <HomeAdmin portfolios={data.portfolios} />
+        {/* 풀화면을 위해 여기서 main screen component */}
+        <MainScreen />
+        <HomeClient portfolios={data.portfolios} />
       </div>
     </>
   );

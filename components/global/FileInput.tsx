@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { FaFolderOpen, FaTimes } from "react-icons/fa";
 
 interface FileInputProps {
   name: string;
@@ -40,7 +41,7 @@ const FileInput: React.FC<FileInputProps> = ({
   };
 
   return (
-    <div className={`flex flex-col gap-2 pt-4 relative ${className}`}>
+    <div className={`flex flex-col gap-2 pt-10 relative ${className}`}>
       {label && <span className="text-lg text-stone-400">{label}</span>}
 
       {/* 숨겨진 파일 input */}
@@ -52,33 +53,32 @@ const FileInput: React.FC<FileInputProps> = ({
         multiple
         onChange={handleChange}
         required={required && files.length === 0}
+        accept="image/*"
       />
 
       {/* 파일 선택 버튼 */}
       <label
         htmlFor={name}
-        className={`px-6 py-2 font-medium transition rounded-full cursor-pointer 
-          border border-stone-600 bg-black text-stone-400 hover:bg-stone-800 
-          ${buttonClassName}`}
+        className={`self-start flex gap-2 items-center w-auto px-4 py-2 font-medium transition cursor-pointer 
+    border border-stone-600 bg-black text-stone-400 hover:bg-stone-800 
+    ${buttonClassName}`}
       >
-        파일 선택
+        <span>파일선택</span>
+        <FaFolderOpen />
       </label>
 
       {/* 선택된 파일 리스트 */}
-      <div className="flex flex-col gap-1 mt-2">
+      <div className="flex flex-wrap gap-1 mt-2">
         {files.map((file, index) => (
           <div
             key={index}
-            className="flex items-center justify-between px-4 py-2 rounded-full border border-stone-600 bg-black text-stone-400"
+            className="flex items-center gap-2 justify-between px-4 py-2 rounded-full border border-stone-600 bg-black text-stone-400"
           >
             <span className="truncate max-w-[200px]">{file.name}</span>
-            <button
-              type="button"
+            <FaTimes
               onClick={() => removeFile(index)}
-              className="ml-2 text-red-500 font-bold"
-            >
-              X
-            </button>
+              className="text-red-500 cursor-pointer"
+            />
           </div>
         ))}
       </div>

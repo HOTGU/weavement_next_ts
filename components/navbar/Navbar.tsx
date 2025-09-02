@@ -33,7 +33,7 @@ const Navbar = () => {
         <div className="h-full flex items-start justify-between">
           <div className="w-max overflow-visible">
             <HiddenUpText>
-              <div className="font-racing text-6xl w-max tracking-[-12px] pr-3 text-white mix-blend-difference pointer-events-auto whitespace-nowrap">
+              <div className="font-racing text-6xl w-max tracking-[-12px] pr-4 text-white mix-blend-difference pointer-events-auto whitespace-nowrap">
                 <Link href="/">WM</Link>
               </div>
             </HiddenUpText>
@@ -45,7 +45,7 @@ const Navbar = () => {
                 isOpen
                   ? "opacity-0  -translate-y-6"
                   : "opacity-100  translate-y-2"
-              } cursor-pointer transition-all duration-300 ease-in-out text-white mix-blend-difference font-racing`}
+              } cursor-pointer transition-all duration-500 ease-in-out text-white mix-blend-difference font-racing`}
               onMouseEnter={() => setIsOpen(true)}
             >
               Menu
@@ -57,7 +57,7 @@ const Navbar = () => {
                   animate={{ opacity: 1, y: -40 }}
                   exit={{ opacity: 0, y: 0 }}
                   transition={{
-                    duration: 0.3,
+                    duration: 0.5,
                     ease: "easeInOut",
                   }}
                   className="flex flex-col p-4 font-racing"

@@ -9,6 +9,7 @@ import getSelectOptions from "@/actions/getSelectOptions";
 import Textarea from "@/components/global/Textarea";
 import Radio from "@/components/global/Radio";
 import FileInput from "@/components/global/FileInput";
+import ReverseUnderlineText from "@/components/framer/ReverseUnderlineText";
 
 export const metadata = metadataConfig.contactMetadata;
 
@@ -20,7 +21,7 @@ const ContactPage = () => {
   const { costOptions, hasDesignOptions, scheduleOptions } = getSelectOptions();
   return (
     <div className="bg-black min-h-screen text-slate-200">
-      <PaddingSection type="xl" />
+      <PaddingSection size="lg" />
       <Container>
         <div className="flex justify-between ">
           <div className=" space-y-10 w-[33%] font-ibm">
@@ -57,15 +58,22 @@ const ContactPage = () => {
                 label="일정을 선택해주세요 *"
                 required
               />
-              <FileInput label="참고사진" name="file" />
-              <PaddingSection type="sm" />
+              <FileInput label="참고사진 (최대5개)" name="file" />
+
+              <PaddingSection size="sm" />
+
               <FormColumnTitle>고객 정보</FormColumnTitle>
               <Input name="clientCompany" label="회사명" />
               <Input name="name" label="성함 *" required />
               <Input name="position" label="직급" />
               <Input name="phone" label="번호 *" />
               <Input name="email" label="이메일 *" />
-              <input type="submit" />
+
+              <PaddingSection size="sm" />
+
+              <ReverseUnderlineText label="제출하기" color="white" size="lg" />
+
+              <PaddingSection size="lg" />
             </form>
           </div>
         </div>

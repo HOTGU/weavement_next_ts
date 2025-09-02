@@ -11,7 +11,7 @@ const ReverseUnderlineText = ({
   size = "md",
   color = "black",
 }: {
-  href: string;
+  href?: string;
   label: string;
   size?: "lg" | "md" | "sm";
   color?: "black" | "white";
@@ -42,23 +42,26 @@ const ReverseUnderlineText = ({
 
   const emojiSize = size === "lg" ? 30 : size === "md" ? 24 : 20;
   const fontSize =
-    size === "lg" ? "text-4xl" : size === "md" ? "text-xl" : "text-lg";
+    size === "lg" ? "text-4xl" : size === "md" ? "text-2xl" : "text-lg";
 
   return (
-    <div className="inline-block relative" onMouseEnter={triggerAnimation}>
-      <Link href={href} className={`relative z-10 text-${color} font-semibold`}>
-        <div className="flex gap-2 items-center justify-center">
-          <MdSubdirectoryArrowRight size={emojiSize} />
-          <div className={`${fontSize}`}>{label}</div>
-        </div>
+    <div
+      className="inline-block relative cursor-pointer"
+      onMouseEnter={triggerAnimation}
+    >
+      <div
+        className={`flex gap-2 items-center justify-center text-${color} font-bold`}
+      >
+        <MdSubdirectoryArrowRight size={emojiSize} />
+        <div className={`${fontSize}`}>{label}</div>
+      </div>
 
-        {/* 애니메이션 줄 */}
-        <motion.span
-          className={`absolute -bottom-1 left-0 w-full h-[1px] bg-${color} pointer-events-none`}
-          initial={{ scaleX: 1, transformOrigin: "left" }}
-          animate={controls}
-        />
-      </Link>
+      {/* 애니메이션 줄 */}
+      <motion.span
+        className={`absolute -bottom-1 left-0 w-full h-[1px] bg-${color} pointer-events-none`}
+        initial={{ scaleX: 1, transformOrigin: "left" }}
+        animate={controls}
+      />
     </div>
   );
 };

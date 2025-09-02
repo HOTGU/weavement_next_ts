@@ -33,6 +33,7 @@ const Radio: React.FC<RadioGroupProps> = ({
         name={name}
         value={selected ?? ""}
         required={required}
+        readOnly
       />
 
       {label && <span className="text-lg text-stone-400">{label}</span>}

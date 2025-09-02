@@ -6,7 +6,7 @@ import Container from "@/components/Container";
 
 import HiddenUpText from "@/components/framer/HiddenUpText";
 
-const HomeScreen = () => {
+const MainScreen = () => {
   return (
     <div className="w-full h-[60vh] md:h-[80vh] lg:h-screen relative overflow-hidden">
       <div className="absolute bottom-0 left-0 z-10">
@@ -32,4 +32,4 @@ const HomeScreen = () => {
   );
 };
 
-export default HomeScreen;
+export default MainScreen;

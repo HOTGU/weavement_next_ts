@@ -1,16 +1,18 @@
 import React from "react";
 
 const PaddingSection = ({
-  type = "md",
+  size = "lg",
 }: {
-  type: "xl" | "lg" | "md" | "sm";
+  size?: "xl" | "lg" | "md" | "sm";
 }) => {
-  if (type === "xl") return <div className="pt-60" />;
-  if (type === "lg") return <div className="pt-48" />;
-  if (type === "md") return <div className="pt-24" />;
-  if (type === "sm") return <div className="pt-12" />;
+  const spacing = {
+    xl: "pt-80",
+    sm: "pt-20",
+    md: "pt-40",
+    lg: "pt-60",
+  };
 
-  return <div />;
+  return <div className={spacing[size]} />;
 };
 
 export default PaddingSection;
