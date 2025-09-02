@@ -131,8 +131,11 @@ const page = async ({ params }: { params: IParams }) => {
 
   return (
     <Container>
-      <PortfolioDetail portfolio={portfolio} />
-      <SameCategoryPortfolio sameCategoryData={sameCategoryPortfolioData} />
+      <div className="max-w-7xl mx-auto">
+        <PortfolioDetail portfolio={portfolio} />
+
+        <SameCategoryPortfolio sameCategoryData={sameCategoryPortfolioData} />
+      </div>
     </Container>
   );
 };
