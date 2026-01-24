@@ -10,6 +10,11 @@ const nextConfig = {
   output: "standalone",
   swcMinify: true,
   reactStrictMode: false,
+  experimental: {
+    serverActions: {
+      bodySizeLimit: "4mb",
+    },
+  },
 };
 
 module.exports = nextConfig;

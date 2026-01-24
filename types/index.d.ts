@@ -1,5 +1,19 @@
 import { Portfolio, Prisma } from "@prisma/client";
 
+export type ContactFormData = z.infer<typeof contactFormSchema> & {
+  images: File[];
+};
+
+export type ActionResult<T> =
+  | {
+      success: true;
+      data: T;
+    }
+  | {
+      success: false;
+      error: string;
+    };
+
 interface User {
   id: string;
   admin_id: string;

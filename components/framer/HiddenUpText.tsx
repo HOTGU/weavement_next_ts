@@ -1,6 +1,4 @@
-import { PropsWithChildren } from "react";
 import { motion } from "framer-motion";
-import { slidingText } from "@/libs/framer";
 
 export default ({
   children,

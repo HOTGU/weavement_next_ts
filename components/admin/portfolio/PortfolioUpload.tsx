@@ -180,19 +180,6 @@ const PortfolioUpload = ({ close }: { close: () => void }) => {
             disabled={loading}
           />
         </div>
-        {/* <div
-          className={` ${
-            Boolean(watchIsRep) && "bg-accent text-white"
-          } border border-neutral-300 w-36 h-12 rounded-md flex items-center justify-center cursor-pointer transition-colors`}
-          onClick={() => {
-            Boolean(watchIsRep)
-              ? setValue("isRep", "")
-              : setValue("isRep", "on");
-          }}
-        >
-          {Boolean(watchIsRep) ? <FaCheck className="" /> : <FaMinus />}
-          <span className="pl-2">메인페이지 등록</span>
-        </div> */}
       </div>
       <Select
         errors={errors}

@@ -1,6 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import compressImage from "@/utils/compressImage";
+import getTotalFileSize from "@/utils/getTotalFileSize";
+import React, { useEffect, useRef, useState } from "react";
 import { FaFolderOpen, FaTimes } from "react-icons/fa";
 
 interface FileInputProps {
@@ -20,9 +22,21 @@ const FileInput: React.FC<FileInputProps> = ({
   buttonClassName = "",
   maxFiles = 5,
 }) => {
+  const inputRef = useRef<HTMLInputElement>(null);
   const [files, setFiles] = useState<File[]>([]);
+  const maxTotalSizeMB = 4;
+  const totalSize = getTotalFileSize(files);
+  const isOverLimit = totalSize > maxTotalSizeMB;
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  useEffect(() => {
+    if (!inputRef.current) return;
+
+    const dataTransfer = new DataTransfer();
+    files.forEach((file) => dataTransfer.items.add(file));
+    inputRef.current.files = dataTransfer.files;
+  }, [files]);
+
+  const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
 
     const selectedFiles = Array.from(e.target.files);
@@ -32,8 +46,11 @@ const FileInput: React.FC<FileInputProps> = ({
       return;
     }
 
-    setFiles((prev) => [...prev, ...selectedFiles]);
-    e.target.value = ""; // 같은 파일 선택 가능하게 초기화
+    const compressed = await Promise.all(
+      selectedFiles.map((file) => compressImage(file))
+    );
+
+    setFiles((prev) => [...prev, ...compressed]);
   };
 
   const removeFile = (index: number) => {
@@ -47,6 +64,7 @@ const FileInput: React.FC<FileInputProps> = ({
       {/* 숨겨진 파일 input */}
       <input
         type="file"
+        ref={inputRef}
         name={name}
         id={name}
         className="hidden"
@@ -75,6 +93,9 @@ const FileInput: React.FC<FileInputProps> = ({
             className="flex items-center gap-2 justify-between px-4 py-2 rounded-full border border-stone-600 bg-black text-stone-400"
           >
             <span className="truncate max-w-[200px]">{file.name}</span>
+            <span className="text-stone-600 text-sm">
+              ({(file.size / 1024 / 1024).toFixed(2)} MB)
+            </span>
             <FaTimes
               onClick={() => removeFile(index)}
               className="text-red-500 cursor-pointer"
@@ -82,6 +103,23 @@ const FileInput: React.FC<FileInputProps> = ({
           </div>
         ))}
       </div>
+      {/* 총 파일 크기 표시 + 경고 UI */}
+      {files.length > 0 && (
+        <div className="mt-2 flex items-center gap-2">
+          <span
+            className={`font-medium ${
+              isOverLimit ? "text-red-500" : "text-stone-600"
+            }`}
+          >
+            총 용량: {totalSize} MB / {maxTotalSizeMB} MB
+          </span>
+          {isOverLimit && (
+            <span className="text-red-500 text-sm font-normal">
+              ⚠ 총 용량 초과! 일부 파일을 제거해주세요.
+            </span>
+          )}
+        </div>
+      )}
     </div>
   );
 };

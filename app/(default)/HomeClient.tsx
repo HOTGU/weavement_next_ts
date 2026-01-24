@@ -119,7 +119,7 @@ const HomeClient = ({ portfolios }: { portfolios: Portfolio[] }) => {
           <PaddingSection size="md" />
 
           {/* 회사 작업 과정 */}
-          <div>
+          <div className=" text-neutral-900">
             <div className="text-7xl">우리가 일하는 방식:</div>
             <div className="pt-20" />
             <div className="flex flex-col items-end">
@@ -137,7 +137,7 @@ const HomeClient = ({ portfolios }: { portfolios: Portfolio[] }) => {
 
           <PortfolioGrid portfolios={portfolios} />
 
-          <div className="flex flex-col justify-center items-center gap-20">
+          <div className="flex flex-col justify-center items-center gap-20 text-neutral-900">
             <div className="text-6xl">우리가 어떻게 도와드릴까요?</div>
 
             <Link href="/contact">

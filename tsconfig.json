@@ -1,7 +1,8 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "ES2017",
     "lib": ["dom", "dom.iterable", "esnext"],
+    "allowSyntheticDefaultImports": true,
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -29,6 +30,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "types/**/*.ts",
+    "types/**/*.d.ts",
     "next.config.js"
   ],
   "exclude": ["node_modules"]

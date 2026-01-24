@@ -1,5 +1,5 @@
-import ContactClient from "@/components/screens/contact/ContactClient";
 import React from "react";
+
 import metadataConfig from "@/constants/metadataConfig";
 import Container from "@/components/Container";
 import PaddingSection from "@/components/global/PaddingSection";
@@ -9,7 +9,8 @@ import getSelectOptions from "@/actions/getSelectOptions";
 import Textarea from "@/components/global/Textarea";
 import Radio from "@/components/global/Radio";
 import FileInput from "@/components/global/FileInput";
-import ReverseUnderlineText from "@/components/framer/ReverseUnderlineText";
+import SubmitButton from "@/components/global/SubmitButton";
+import { clientContactAddFormData } from "@/actions";
 
 export const metadata = metadataConfig.contactMetadata;
 
@@ -18,7 +19,19 @@ const FormColumnTitle = ({ children }: { children: React.ReactNode }) => (
 );
 
 const ContactPage = () => {
-  const { costOptions, hasDesignOptions, scheduleOptions } = getSelectOptions();
+  const {
+    costOptions,
+    hasDesignOptions,
+    scheduleOptions,
+    knowPlatformOptions,
+  } = getSelectOptions();
+
+  // 알 수 없음 목록에서 삭제
+
+  costOptions.splice(costOptions.length - 1, 1);
+  scheduleOptions.splice(scheduleOptions.length - 1, 1);
+  knowPlatformOptions.splice(knowPlatformOptions.length - 1, 1);
+
   return (
     <div className="bg-black min-h-screen text-slate-200">
       <PaddingSection size="lg" />
@@ -33,45 +46,61 @@ const ContactPage = () => {
           </div>
 
           <div className="w-1/2">
-            <form action="">
+            <form>
               <FormColumnTitle>프로젝트 정보</FormColumnTitle>
               <Textarea
                 name="description"
                 label="어떤 걸 만들고 싶으신가요? *"
-                required
+                // required
               />
               <Select
                 name="cost"
                 options={costOptions}
                 label="예산을 선택해주세요 *"
-                required
+                // required
               />
               <Radio
                 options={hasDesignOptions}
                 name="hasDesign"
                 label="디자인을 가지고 계신가요 *"
-                required
+                // required
               />
               <Radio
                 options={scheduleOptions}
                 name="schedule"
                 label="일정을 선택해주세요 *"
-                required
+                // required
               />
-              <FileInput label="참고사진 (최대5개)" name="file" />
+              <FileInput label="참고사진 (최대5개)" name="images" />
 
               <PaddingSection size="sm" />
 
               <FormColumnTitle>고객 정보</FormColumnTitle>
               <Input name="clientCompany" label="회사명" />
-              <Input name="name" label="성함 *" required />
+              <Input
+                name="name"
+                label="성함 *"
+                // required
+              />
               <Input name="position" label="직급" />
               <Input name="phone" label="번호 *" />
               <Input name="email" label="이메일 *" />
 
               <PaddingSection size="sm" />
 
-              <ReverseUnderlineText label="제출하기" color="white" size="lg" />
+              <FormColumnTitle>부가정보</FormColumnTitle>
+              <Select
+                name="knowPlatform"
+                options={knowPlatformOptions}
+                label="알게 된 경로를 선택해주세요 *"
+                // required
+              />
+
+              <PaddingSection size="sm" />
+              <SubmitButton
+                label="제출하기"
+                onSubmit={clientContactAddFormData as any}
+              />
 
               <PaddingSection size="lg" />
             </form>
@@ -79,9 +108,6 @@ const ContactPage = () => {
         </div>
       </Container>
     </div>
-    // <div className="pt-14 min-h-screen">
-    //   <ContactClient />
-    // </div>
   );
 };
 
