@@ -50,8 +50,7 @@ export default () => {
     { value: "블로그", label: "블로그" },
     { value: "홈페이지", label: "홈페이지" },
     { value: "인스타그램", label: "인스타그램" },
-    { value: "페이스북", label: "페이스북" },
-    { value: "유튜브", label: "유튜브" },
+    { value: "쇼핑", label: "쇼핑" },
     { value: "기존고객", label: "기존고객" },
     { value: "소개", label: "소개" },
     { value: "크몽", label: "크몽" },
@@ -97,6 +96,7 @@ export default () => {
     { value: "인스타(카톡)", label: "인스타(카톡)" },
     { value: "인스타(DM)", label: "인스타(DM)" },
     { value: "크몽", label: "크몽" },
+    { value: "쇼핑", label: "쇼핑" },
     { value: "기타", label: "기타" },
   ];
 
@@ -115,6 +115,7 @@ export default () => {
     { value: "종이", label: "종이" },
     { value: "레진", label: "레진" },
     { value: "디자인", label: "디자인" },
+    { value: "PET", label: "PET" },
     { value: "기타", label: "기타" },
   ];
 
