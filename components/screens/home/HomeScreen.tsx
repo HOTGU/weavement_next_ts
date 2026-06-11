@@ -14,19 +14,9 @@ import Image5 from "@/public/imgs/home/메인페이지5.webp";
 import Image6 from "@/public/imgs/home/메인페이지6.webp";
 import Image7 from "@/public/imgs/home/메인페이지7.webp";
 import Image8 from "@/public/imgs/home/메인페이지8.webp";
-import Image9 from "@/public/imgs/home/메인페이지9.webp";
+// import Image9 from "@/public/imgs/home/메인페이지9.webp";
 
-const images = [
-  Image1,
-  Image2,
-  Image3,
-  Image4,
-  Image5,
-  Image6,
-  Image7,
-  Image8,
-  Image9,
-];
+const images = [Image1, Image2, Image3, Image4, Image5, Image6, Image7, Image8];
 
 const HomeScreen = () => {
   // 랜덤 시작 위치
