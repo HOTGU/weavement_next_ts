@@ -28,6 +28,7 @@ export default async function RootLayout({
       <body className={`${pretendard.className}`}>
         <Toaster />
         {children}
+        <Analytics />
       </body>
     </html>
   );
