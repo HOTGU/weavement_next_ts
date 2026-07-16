@@ -23,20 +23,20 @@ const PortfolioDetail = ({ portfolio }: { portfolio: Portfolio }) => {
         />
       </div>
       <div className="flex flex-col gap-2 md:gap-4 xl:gap-6 items-center justify-center">
-        <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-semibold">
+        <h1 className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-semibold">
           {portfolio.title}
-        </h2>
+        </h1>
         {portfolio.category.length > 0 && (
-          <div className="flex gap-4">
+          <ol className="flex gap-4">
             {portfolio.category.map((category) => (
-              <div
+              <li
                 className="inline-block px-2 py-1 rounded bg-neutral-200 text-xs md:text-sm lg:text-base"
                 key={category}
               >
                 #{category}
-              </div>
+              </li>
             ))}
-          </div>
+          </ol>
         )}
         <p className="text-sm md:text-base lg:text-lg whitespace-pre-wrap text-center">
           {portfolio.description}

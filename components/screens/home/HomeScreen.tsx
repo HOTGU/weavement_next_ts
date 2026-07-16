@@ -41,16 +41,16 @@ const HomeScreen = () => {
   }, [reorderedImages.length]);
 
   return (
-    <div className="w-full h-[60vh] md:h-[80vh] lg:h-screen relative overflow-hidden">
+    <section className="w-full h-[60vh] md:h-[80vh] lg:h-screen relative overflow-hidden">
       <div className="absolute bottom-0 right-0 z-10">
         <div className="flex flex-col items-end font-bold text-white p-2 md:p-6 lg:p-8 xl:p-10 2xl:p-12">
-          <span className="text-sm sm:text-lg md:text-xl lg:text-3xl">
+          <p className="text-sm sm:text-lg md:text-xl lg:text-3xl">
             감각적인 제조, 위브먼트
-          </span>
+          </p>
 
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl">
             <RacingFont>WEAVEMENT</RacingFont>
-          </h2>
+          </h1>
         </div>
       </div>
 
@@ -75,7 +75,7 @@ const HomeScreen = () => {
           </div>
         ))}
       </motion.div>
-    </div>
+    </section>
   );
 };
 

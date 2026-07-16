@@ -22,6 +22,9 @@ const Footer = () => {
           </div>
           <div className="flex flex-col-reverse md:flex-row justify-between items-center mt-0 md:mt-6 ">
             <div className="text-neutral-500 text-center md:text-start text-xs md:text-base">
+              <Link href="/faq" target="_blank">
+                <div>자주 묻는 질문 보기 FAQ</div>
+              </Link>
               <div>영업시간 10:00 ~ 18:00 | 토,일 휴무</div>
               <div>경기 고양시 덕양구 향동로 201 GL메트로시티향동, A1410호</div>
               <div>사업자등록번호 313-47-00901</div>

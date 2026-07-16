@@ -144,6 +144,49 @@ const contactMetadata = {
   },
 };
 
+export const faqMetadata = {
+  title: "FAQ | 자주 묻는 질문 | 위브먼트",
+  description:
+    "조형물 제작 기간, 견적, 설치, 소재, 디자인 등 위브먼트 고객들이 가장 많이 문의하는 내용을 한곳에 모았습니다.",
+
+  icons: {
+    icon: "/favicon.png",
+  },
+
+  keywords: [
+    "조형물 FAQ",
+    "조형물 제작 기간",
+    "조형물 견적",
+    "조형물 제작 비용",
+    "FRP 조형물",
+    "캐릭터 조형물",
+    "환경 조형물",
+    "조형물 설치",
+    "조형물 제작 과정",
+    "위브먼트 FAQ",
+  ],
+
+  alternates: {
+    canonical: "https://weavement.co.kr/faq",
+  },
+
+  openGraph: {
+    title: "FAQ | 자주 묻는 질문 | 위브먼트",
+    description:
+      "조형물 제작 기간, 견적, 설치, 소재, 디자인 등 고객들이 가장 궁금해하는 질문과 답변을 확인해보세요.",
+    locale: "ko_KR",
+    type: "website",
+    siteName: "위브먼트",
+    url: "https://weavement.co.kr/faq",
+
+    images: [
+      {
+        url: "/meta_img.png",
+      },
+    ],
+  },
+};
+
 const defaultPortfolioDetailMetadata = {
   title: "위브먼트 | 포트폴리오 상세화면",
   description:
@@ -186,4 +229,5 @@ export default {
   portfolioMetadata,
   contactMetadata,
   defaultPortfolioDetailMetadata,
+  faqMetadata,
 };
