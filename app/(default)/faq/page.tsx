@@ -1,3 +1,5 @@
+import metadataConfig from "@/constants/metadataConfig";
+
 const faqs = [
   {
     question: "디자인 파일이 있어야 하나요?",
@@ -69,6 +71,8 @@ const faqs = [
   },
 ];
 
+export const metadata = metadataConfig.faqMetadata;
+
 export default function FAQPage() {
   return (
     <section className="max-w-6xl mx-auto py-32">
@@ -104,7 +108,12 @@ export default function FAQPage() {
               </span>
             </summary>
 
-            <p className="pb-8 text-zinc-500 leading-relaxed ">{faq.answer}</p>
+            <p
+              className="pb-8 text-zinc-600 font-bold leading-relaxed w-2/3  break-keep
+  whitespace-pre-line"
+            >
+              {faq.answer}
+            </p>
           </details>
         ))}
       </div>
