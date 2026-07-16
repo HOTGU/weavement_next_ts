@@ -50,7 +50,7 @@ const Navbar = ({ currentUser }: CurrentUserProps) => {
     >
       <Container>
         <div className="flex items-center justify-between h-full gap-3 md:gap-0 z-10">
-          <h1 className={` h-full flex items-center justify-center`}>
+          <div className={` h-full flex items-center justify-center`}>
             <span className="hidden">조형물 제작 위브먼트</span>
             <Link
               href="/"
@@ -65,7 +65,7 @@ const Navbar = ({ currentUser }: CurrentUserProps) => {
                 }
               />
             </Link>
-          </h1>
+          </div>
           <div className="block lg:hidden">
             <div onClick={() => setIsSlider(!isSlider)}>
               {isSlider ? <FaTimes size={25} /> : <FaBars size={25} />}

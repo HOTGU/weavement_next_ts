@@ -17,14 +17,17 @@ interface HomePortfolioProps {
 const HomePortfolio = ({ portfolios }: HomePortfolioProps) => {
   return (
     <Container>
-      <div className="flex flex-col items-center justify-center">
-        <SlidingText text="Portfolio" />
-        <div className="w-full columns-2">
+      <div className="flex flex-col items-center">
+        <h2 className="mb-8 sm:mb-10 md:mb-12 lg:mb-14">
+          <SlidingText text="Portfolio" />
+        </h2>
+        <div className="w-full flex flex-wrap gap-4">
           {portfolios.map((portfolio) => (
             <Link
               href={`/portfolio/${portfolio.id}`}
               target="_blank"
               key={portfolio.id}
+              className="w-[calc(50%-8px)]"
             >
               <motion.div
                 initial={{ opacity: 0, y: 50 }}
@@ -38,7 +41,7 @@ const HomePortfolio = ({ portfolios }: HomePortfolioProps) => {
                   },
                 }}
                 viewport={{ once: true }}
-                className="w-full aspect-video relative mb-4"
+                className="w-full aspect-video relative"
               >
                 <Image
                   src={portfolio.thumb}
@@ -58,7 +61,7 @@ const HomePortfolio = ({ portfolios }: HomePortfolioProps) => {
             </Link>
           ))}
         </div>
-        <Link href="/portfolio">
+        <Link href="/portfolio" className="mt-10 sm:mt-14 md:mt-16 lg:mt-20">
           <ScaleBtn text="더 보기" />
         </Link>
       </div>

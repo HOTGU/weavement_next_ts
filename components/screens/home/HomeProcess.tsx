@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 
 import Container from "../../Container";
 import SlidingText from "../../framer/SlidingText";
+import Link from "next/link";
 
 const HomeProcess = () => {
   const photos = [
@@ -36,10 +37,12 @@ const HomeProcess = () => {
   return (
     <Container>
       <div className="flex flex-col items-center justify-center">
-        <SlidingText text="Process" />
-        <div className="flex flex-col md:flex-row gap-12 md:gap-4 mt-8 lg:mt-20">
+        <h2>
+          <SlidingText text="Process" />
+        </h2>
+        <ol className="flex flex-col md:flex-row gap-12 md:gap-4 mt-8 lg:mt-20">
           {photos.map((item, index) => (
-            <motion.div
+            <motion.li
               viewport={{ once: true }}
               initial={{ opacity: 0, y: 100 }}
               whileInView={{
@@ -48,7 +51,7 @@ const HomeProcess = () => {
                 transition: {
                   duration: 0.3,
                   type: "tween",
-                  delay: index * 0.2,
+                  delay: index * 0.1,
                 },
               }}
               key={item.title}
@@ -64,15 +67,19 @@ const HomeProcess = () => {
                   />
                 </div>
               </div>
-              <div className="font-semibold text-lg lg:text-xl mb-2 lg:mb-4 mt-2">
+              <h3 className="font-semibold text-lg lg:text-xl mb-2 lg:mb-4 mt-2">
                 {item.title}
-              </div>
+              </h3>
               <p className=" whitespace-pre-wrap break-keep text-center text-sm lg:text-base">
                 {item.subTitle}
               </p>
-            </motion.div>
+            </motion.li>
           ))}
-        </div>
+        </ol>
+
+        <Link href="/faq" className="underline mt-12 self-end">
+          자주 물어보는 질문이 궁금하신가요?
+        </Link>
       </div>
     </Container>
   );

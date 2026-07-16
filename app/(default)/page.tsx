@@ -15,18 +15,21 @@ export default async function Home() {
   return (
     <>
       <HomeScreen />
-      <div className="homeColumn">
+      <section aria-labelledby="about-title" className="homeColumn">
         <HomeAbout />
-      </div>
-      <div className="homeColumn bg-zinc-100">
+      </section>
+      <section aria-labelledby="portfolio" className="homeColumn bg-zinc-100">
         <HomePortfolio portfolios={data.portfolios} />
-      </div>
-      <div className="homeColumn">
+      </section>
+      <section aria-labelledby="process" className="homeColumn">
         <HomeProcess />
-      </div>
-      <div className="homeColumn relative bg-accent text-white">
+      </section>
+      <section
+        aria-labelledby="contact"
+        className="homeColumn relative bg-accent text-white"
+      >
         <HomeBottom />
-      </div>
+      </section>
     </>
   );
 }
