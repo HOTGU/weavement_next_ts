@@ -2,6 +2,7 @@
 
 import useDeletePortfolioConfirm from "@/hooks/useDeletePortfolioConfirm";
 import { Portfolio } from "@prisma/client";
+import { format } from "date-fns";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React from "react";
@@ -15,7 +16,7 @@ const PortfolioBlock = ({ portfolio }: PortfolioBlockProps) => {
   const router = useRouter();
 
   return (
-    <div className={`flex items-center justify-between px-4 py-3`}>
+    <div className={`flex items-center justify-between px-4 py-3 gap-4`}>
       <Link
         href={`/portfolio/${portfolio.id}`}
         target="_blank"
@@ -23,6 +24,9 @@ const PortfolioBlock = ({ portfolio }: PortfolioBlockProps) => {
       >
         {portfolio.title}
       </Link>
+      <div className="text-neutral-500">
+        {format(portfolio.createdAt, "yyyy-MM-dd")}
+      </div>
       <div className="flex gap-2 text-sm">
         <div
           className="bg-blue-400 text-white px-2 py-1 rounded hover:opacity-70 transition cursor-pointer"

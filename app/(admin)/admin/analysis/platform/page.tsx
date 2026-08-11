@@ -42,6 +42,7 @@ const AnalysisPathPage = async ({ searchParams }: AnalysisParams) => {
         <BarGraph
           categories={barData.categories}
           series={barData.series}
+          total={barData.total}
           stacked
         />
         <PieGraph

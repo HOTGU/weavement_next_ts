@@ -8,18 +8,10 @@ const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 interface IBarGraph {
   categories?: string[];
   series?: any[];
-  stacked?: boolean;
-  setColorByCategory?: boolean;
   total?: number[];
 }
 
-const BarGraph = ({
-  categories,
-  series,
-  stacked = false,
-  setColorByCategory = false,
-  total,
-}: IBarGraph) => {
+const LineGraph = ({ categories, series, total }: IBarGraph) => {
   const hasTotal = total && total.length > 0;
   const tooltip: ApexOptions["tooltip"] = hasTotal
     ? {
@@ -92,59 +84,61 @@ const BarGraph = ({
         },
       };
   const option: ApexOptions = {
+    chart: {
+      type: "line",
+      toolbar: {
+        show: false,
+      },
+      zoom: {
+        enabled: false,
+      },
+    },
+
     series,
-    colors: [
-      "#F97F51",
-      "#1B9CFC",
-      "#F8EFBA",
-      "#58B19F",
-      "#2C3A47",
-      "#6D214F",
-      "#182C61",
-      "#FC427B",
-      "#BDC581",
-      "#82589F",
-      "#25CCF7",
-      "#EAB543",
-      "#CAD3C8",
-      "#9AECDB",
-      "#b7ab3b",
-      "#be0719",
-      "#051a00",
-      "#03f2c2",
-    ],
+
     xaxis: {
       categories,
     },
 
-    chart: {
-      stacked,
-    },
     stroke: {
-      show: true,
-      width: 1,
-      colors: ["#fff"],
+      curve: "straight",
+      width: 3,
     },
-    tooltip,
 
-    plotOptions: {
-      bar: {
-        borderRadius: 2,
-        distributed: setColorByCategory,
-        barHeight: "100%",
-      },
+    markers: {
+      size: 4,
     },
+
+    dataLabels: {
+      enabled: false,
+    },
+
     legend: {
-      show: true,
       position: "top",
     },
+
+    tooltip,
+    colors: [
+      "#F97F51",
+      "#1B9CFC",
+      "#58B19F",
+      "#FC427B",
+      "#82589F",
+      "#25CCF7",
+      "#EAB543",
+      "#2C3A47",
+      "#6D214F",
+      "#182C61",
+      "#BDC581",
+      "#b7ab3b",
+    ],
   };
 
   return (
     <div className="flex-1 w-full">
-      <Chart type="bar" options={option} series={option.series} height={350} />
+      <Chart type="line" options={option} series={option.series} height={350} />
     </div>
   );
 };
 
-export default BarGraph;
+export default LineGraph;
