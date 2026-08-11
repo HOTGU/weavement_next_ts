@@ -3,6 +3,7 @@ import prisma from "@/libs/prismadb";
 interface IChartDataTypes {
   categories: string[];
   series: { name: PlatformKind; data: number[] }[];
+  total: number[];
 }
 
 type PlatformKind =
@@ -37,6 +38,7 @@ export default async (params: IAnalysisParams) => {
       { name: "기타", data: [] },
       { name: "알수없음", data: [] },
     ],
+    total: [],
   } as IChartDataTypes;
 
   const orderByDay = async () => {
@@ -63,6 +65,7 @@ export default async (params: IAnalysisParams) => {
 
       for (let i = 0; i < 7; i++) {
         data.series.map((item) => item.data.push(0));
+        data.total.push(0);
         data.categories.push(daysArr[i]);
       }
 
@@ -75,6 +78,8 @@ export default async (params: IAnalysisParams) => {
             item.data[dayIndex] += 1;
           }
         });
+
+        data.total[dayIndex] += 1;
       });
     } catch (error) {
       if (process.env.NODE_ENV === "development") {
@@ -99,7 +104,7 @@ export default async (params: IAnalysisParams) => {
                       {
                         $dateFromString: {
                           dateString: new Date(
-                            `${year}-01-01T00:59:00.000Z`
+                            `${year}-01-01T00:59:00.000Z`,
                           ).toISOString(),
                         },
                       },
@@ -111,7 +116,7 @@ export default async (params: IAnalysisParams) => {
                       {
                         $dateFromString: {
                           dateString: new Date(
-                            `${year}-12-31T00:59:00.000Z`
+                            `${year}-12-31T00:59:00.000Z`,
                           ).toISOString(),
                         },
                       },
@@ -137,6 +142,7 @@ export default async (params: IAnalysisParams) => {
 
       for (let i = 0; i < 12; i++) {
         data.series.map((item) => item.data.push(0));
+        data.total.push(0);
         data.categories.push(`${i + 1}월`);
       }
 
@@ -145,6 +151,8 @@ export default async (params: IAnalysisParams) => {
         const month = contact._id.month;
         let platform = contact._id.platform;
         const count = contact.count;
+
+        data.total[month - 1] += count;
 
         data.series.map((item) => {
           if (platform === item.name) {
@@ -174,7 +182,7 @@ export default async (params: IAnalysisParams) => {
                     {
                       $dateFromString: {
                         dateString: new Date(
-                          `${year}-01-01T00:59:00.000Z`
+                          `${year}-01-01T00:59:00.000Z`,
                         ).toISOString(),
                       },
                     },
@@ -186,7 +194,7 @@ export default async (params: IAnalysisParams) => {
                     {
                       $dateFromString: {
                         dateString: new Date(
-                          `${year}-12-31T00:59:00.000Z`
+                          `${year}-12-31T00:59:00.000Z`,
                         ).toISOString(),
                       },
                     },
@@ -212,6 +220,7 @@ export default async (params: IAnalysisParams) => {
 
     for (let i = 0; i < 4; i++) {
       data.series.map((item) => item.data.push(0));
+      data.total.push(0);
       data.categories.push(`${i + 1}분기`);
     }
 
@@ -221,23 +230,16 @@ export default async (params: IAnalysisParams) => {
       let platform = contact._id.platform;
       const count = contact.count;
 
-      const quarterArr = [
-        [1, 2, 3],
-        [4, 5, 6],
-        [7, 8, 9],
-        [10, 11, 12],
-      ];
+      const quarter = Math.floor((month - 1) / 3);
 
-      for (let i = 0; i < quarterArr.length; i++) {
-        const checkQuarter = quarterArr[i].includes(month);
-        if (checkQuarter) {
-          data.series.map((item) => {
-            if (platform === item.name) {
-              item.data[i] += count;
-            }
-          });
+      data.total[quarter] += count;
+
+      // 문의경로별 분기 문의 수
+      data.series.forEach((item) => {
+        if (item.name === platform) {
+          item.data[quarter] += count;
         }
-      }
+      });
     });
   };
 

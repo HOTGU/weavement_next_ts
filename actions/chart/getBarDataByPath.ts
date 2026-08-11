@@ -1,88 +1,273 @@
 import prisma from "@/libs/prismadb";
-import getSelectOptions from "../getSelectOptions";
+import { PATH_MAP, PathKind } from "@/constants/contactPath";
 
 interface IChartDataTypes {
   categories: string[];
-  series: { data: number[] }[];
+  series: { name: PathKind; data: number[] }[];
+  total: number[];
 }
 
 interface IAnalysisParams {
+  date: "month" | "day" | "quarter";
   year: number;
 }
 
 export default async (params: IAnalysisParams) => {
-  const { year } = params;
+  const { date, year } = params;
+
+  let data = {
+    categories: [],
+    series: [
+      { name: "홈페이지", data: [] },
+      { name: "대표메일", data: [] },
+      { name: "대표전화", data: [] },
+      { name: "블로그1", data: [] },
+      { name: "블로그2", data: [] },
+      { name: "블로그3", data: [] },
+      { name: "블로그4", data: [] },
+      { name: "카톡채널", data: [] },
+      { name: "인스타", data: [] },
+      { name: "크몽", data: [] },
+      { name: "쇼핑", data: [] },
+      { name: "기타", data: [] },
+    ],
+    total: [],
+  } as IChartDataTypes;
 
   try {
-    const contacts = await prisma.contact.aggregateRaw({
-      pipeline: [
-        {
-          $match: {
-            $expr: {
-              $and: [
-                {
-                  $gte: [
-                    "$createdAt",
-                    {
-                      $dateFromString: {
-                        dateString: new Date(
-                          `${year}-01-01T00:59:00.000Z`
-                        ).toISOString(),
-                      },
-                    },
-                  ],
-                },
-                {
-                  $lte: [
-                    "$createdAt",
-                    {
-                      $dateFromString: {
-                        dateString: new Date(
-                          `${year}-12-31T00:59:00.000Z`
-                        ).toISOString(),
-                      },
-                    },
-                  ],
-                },
-              ],
+    const orderByDay = async () => {
+      try {
+        const contacts = await prisma.contact.findMany({
+          where: {
+            createdAt: {
+              gte: new Date(`${year}-01-01T00:59:00.000Z`).toISOString(),
+              lte: new Date(`${year}-12-31T00:59:00.000Z`).toISOString(),
             },
           },
-        },
-        {
-          $group: {
-            _id: { path: "$contactPath" },
-            count: {
-              $sum: 1,
-            },
-          },
-        },
-      ],
-    });
+          select: { createdAt: true, contactPath: true },
+        });
 
-    const categories = getSelectOptions().contactPathOptions.map(
-      (item) => item.value
-    );
+        const daysArr = [
+          "월요일",
+          "화요일",
+          "수요일",
+          "목요일",
+          "금요일",
+          "토요일",
+          "일요일",
+        ];
 
-    const data = {
-      categories,
-      series: [
-        {
-          data: new Array(categories.length).fill(0),
-        },
-      ],
-    } as IChartDataTypes;
+        for (let i = 0; i < 7; i++) {
+          data.series.map((item) => item.data.push(0));
+          data.total.push(0);
+          data.categories.push(daysArr[i]);
+        }
 
-    //@ts-ignore
-    contacts.map((contact) => {
-      const path = contact._id.path;
-      const count = contact.count;
+        contacts.map((contact) => {
+          const day = new Date(contact.createdAt).getDay();
+          const dayIndex = day === 0 ? 6 : day - 1;
 
-      const index = data.categories.findIndex((value) => value === path);
-      if (index > -1) {
-        data.series[0].data[index] += count;
+          const path = PATH_MAP[contact.contactPath] ?? "기타";
+
+          data.series.map((item) => {
+            if (item.name === path) {
+              item.data[dayIndex] += 1;
+            }
+          });
+
+          data.total[dayIndex] += 1;
+        });
+      } catch (error) {
+        if (process.env.NODE_ENV === "development") {
+          console.log(error);
+        }
+
+        return null;
       }
-    });
+    };
 
+    const orderByMonth = async () => {
+      try {
+        const contacts = await prisma.contact.aggregateRaw({
+          pipeline: [
+            {
+              $match: {
+                $expr: {
+                  $and: [
+                    {
+                      $gte: [
+                        "$createdAt",
+                        {
+                          $dateFromString: {
+                            dateString: new Date(
+                              `${year}-01-01T00:59:00.000Z`,
+                            ).toISOString(),
+                          },
+                        },
+                      ],
+                    },
+                    {
+                      $lte: [
+                        "$createdAt",
+                        {
+                          $dateFromString: {
+                            dateString: new Date(
+                              `${year}-12-31T00:59:00.000Z`,
+                            ).toISOString(),
+                          },
+                        },
+                      ],
+                    },
+                  ],
+                },
+              },
+            },
+            {
+              $group: {
+                _id: {
+                  month: { $month: "$createdAt" },
+                  contactPath: "$contactPath",
+                },
+                count: {
+                  $sum: 1,
+                },
+              },
+            },
+          ],
+        });
+
+        for (let i = 0; i < 12; i++) {
+          data.series.map((item) => item.data.push(0));
+          data.total.push(0);
+
+          data.categories.push(`${i + 1}월`);
+        }
+
+        // @ts-ignore
+        contacts.map((contact) => {
+          const month = contact._id.month;
+          let path = PATH_MAP[contact._id.contactPath] ?? "기타";
+          const count = contact.count;
+
+          data.total[month - 1] += count;
+
+          data.series.map((item) => {
+            if (item.name === path) {
+              item.data[month - 1] += count;
+            }
+          });
+        });
+      } catch (error) {
+        if (process.env.NODE_ENV === "development") {
+          console.log(error);
+        }
+
+        return null;
+      }
+    };
+
+    const orderByQuarter = async () => {
+      const contacts = await prisma.contact.aggregateRaw({
+        pipeline: [
+          {
+            $match: {
+              $expr: {
+                $and: [
+                  {
+                    $gte: [
+                      "$createdAt",
+                      {
+                        $dateFromString: {
+                          dateString: new Date(
+                            `${year}-01-01T00:59:00.000Z`,
+                          ).toISOString(),
+                        },
+                      },
+                    ],
+                  },
+                  {
+                    $lte: [
+                      "$createdAt",
+                      {
+                        $dateFromString: {
+                          dateString: new Date(
+                            `${year}-12-31T00:59:00.000Z`,
+                          ).toISOString(),
+                        },
+                      },
+                    ],
+                  },
+                ],
+              },
+            },
+          },
+          {
+            $group: {
+              _id: {
+                month: { $month: "$createdAt" },
+                contactPath: "$contactPath",
+              },
+              count: {
+                $sum: 1,
+              },
+            },
+          },
+        ],
+      });
+
+      for (let i = 0; i < 4; i++) {
+        data.series.map((item) => item.data.push(0));
+        data.total.push(0);
+
+        data.categories.push(`${i + 1}분기`);
+      }
+
+      // @ts-ignore
+      contacts.map((contact) => {
+        const month = contact._id.month;
+        let path = PATH_MAP[contact._id.contactPath] ?? "기타";
+        const count = contact.count;
+
+        const quarter = Math.floor((month - 1) / 3);
+
+        data.total[quarter] += count;
+
+        // 문의경로별 분기 문의 수
+        data.series.forEach((item) => {
+          if (item.name === path) {
+            item.data[quarter] += count;
+          }
+        });
+
+        // const quarterArr = [
+        //   [1, 2, 3],
+        //   [4, 5, 6],
+        //   [7, 8, 9],
+        //   [10, 11, 12],
+        // ];
+
+        // for (let i = 0; i < quarterArr.length; i++) {
+        //   const checkQuarter = quarterArr[i].includes(month);
+        //   if (checkQuarter) {
+        //     data.series.map((item) => {
+        //       if (item.name === path) {
+        //         item.data[i] += count;
+        //       }
+        //     });
+        //   }
+        // }
+      });
+    };
+
+    if (date === "day") {
+      await orderByDay();
+    }
+    if (date === "month") {
+      await orderByMonth();
+    }
+    if (date === "quarter") {
+      await orderByQuarter();
+    }
     return data;
   } catch (error) {
     if (process.env.NODE_ENV === "development") {
