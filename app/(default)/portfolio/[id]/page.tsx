@@ -49,7 +49,7 @@ export const generateMetadata = async ({
       url: `https://weavement.co.kr/portfolio/${portfolio.id}`,
       images: [
         {
-          url: "/meta_img.png",
+          url: `${portfolio.thumb}`,
         },
       ],
     },
