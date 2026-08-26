@@ -95,6 +95,7 @@ export default () => {
     { value: "인스타(전화)", label: "인스타(전화)" },
     { value: "인스타(문자)", label: "인스타(문자)" },
     { value: "인스타(카톡)", label: "인스타(카톡)" },
+    { value: "인스타(메일)", label: "인스타(메일)" },
     { value: "인스타(DM)", label: "인스타(DM)" },
     { value: "크몽", label: "크몽" },
     { value: "기타", label: "기타" },
