@@ -19,7 +19,7 @@ export async function POST(request: Request) {
         folderName: fd.get("company") as string,
         file: files[index] as File,
         type: "CONTACT",
-        resizeWidth: 600,
+        resizeWidth: 960,
         setWatermark: false,
       });
       imageLocations.push(location);

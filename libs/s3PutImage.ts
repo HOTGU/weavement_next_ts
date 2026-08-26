@@ -26,28 +26,34 @@ export default async ({
   file,
   type,
   resizeWidth,
-  isRep = false,
   setWatermark,
 }: PutImageParams) => {
   let bufferData = (await file.arrayBuffer()) as Buffer;
+
+  const isResize = Boolean(resizeWidth);
 
   if (resizeWidth) {
     bufferData = await sharpResize(
       bufferData,
       resizeWidth,
-      setWatermark ? true : false
+      setWatermark ? true : false,
     );
   }
 
   try {
+    const originalFileName = file.name.replace(/\.[^/.]+$/, "");
+
+    const fileName = isResize ? `${originalFileName}.webp` : file.name;
+
     const input = {
       Bucket: process.env.AWS_S3_BUCKET,
+
       Key: `${type}/${
         process.env.NODE_ENV
-      }/${folderName}/${returnCurrentDate()}${isRep ? "__대표사진__" : "__"}${
-        file.name
-      }`,
-      ContentType: "image/webp",
+      }/${folderName}/${returnCurrentDate()}__${fileName}`,
+
+      ContentType: isResize ? "image/webp" : file.type,
+
       Body: bufferData,
     };
 
