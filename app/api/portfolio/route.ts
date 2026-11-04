@@ -4,6 +4,9 @@ import prisma from "@/libs/prismadb";
 import s3PutImage from "@/libs/s3PutImage";
 import { NextResponse } from "next/server";
 
+export const runtime = "nodejs";
+export const maxDuration = 60;
+
 // 문자열 또는 JSON 배열을 string[]으로 변환
 function parseStringArray(value: FormDataEntryValue | null): string[] {
   if (typeof value !== "string" || !value.trim()) {
