@@ -58,18 +58,40 @@ model Client {
 }
 
 model Portfolio {
-  id              String   @id @default(auto()) @map("_id") @db.ObjectId
-  images          String[]
-  thumb           String
-  blurThumb       String?
-  title           String
-  description     String
-  isRep           Boolean  @default(false)
-  category        String[]
-  metaTitle       String?
-  metaDescription String?
-  metaKeywords    String[]
-  createdAt       DateTime @default(now())
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  // 🔍 SEO 및 URL 라우팅용 (중복 불가)
+  slug String @unique // 예: "nongshim-neoguri-frp"
+
+  // 📝 기본 정보
+  title         String // 프로젝트 제목
+  subtitle      String? // 한 줄 요약 / 부제목
+  thumb         String // 대표 썸네일 URL
+  blurThumb     String? // Blur 썸네일
+  images        String[] // 갤러리 이미지 목록 
+  imageCaptions String[] // 갤러리 이미지 설명 목록 (예: [ {"image-url": "설치 현장 전면모습"}])
+
+  // 🛠️ 제작 스펙 및 전문성 지표
+  material      String[] // 소재 (예: ["FRP", "강관 파이프", "우레탄"])
+  category      String[] // 카테고리 (예: ["캐릭터", "팝업스토어"])
+  size          String? // 규격/크기 (예: "H2,200 * W1,500 (mm)")
+  clientCompany String? // 발주처/클라이언트 (예: "농심")
+  projectDate   String? // 제작 연월 (예: "2024-02")
+  location      String? // 설치 장소 (예: "성수동 팝업스토어")
+
+  // 📖 스토리텔링 (SEO / Helpful Content)
+  description String // 전체 개요 및 상세 설명
+  challenge   String? // 제작 난제 및 요청사항
+  solution    String? // 위브먼트만의 해결책 및 기술 노하우
+
+  // ⚙️ 전시 옵션 및 메타 데이터
+  isRep           Boolean  @default(false) // 대표 포트폴리오 여부 (메인 노출)
+  metaTitle       String? // SEO 전용 타이틀
+  metaDescription String? // SEO 전용 메타 설명
+  metaKeywords    String[] // SEO 태그/키워드
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Attendance {

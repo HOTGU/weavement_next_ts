@@ -61,6 +61,8 @@ export default async ({
 
     return `${process.env.AWS_S3_DOMAIN}/${input.Key}`;
   } catch (error) {
+    console.log(error);
+
     throw new Error("업로드 실패");
   }
 };

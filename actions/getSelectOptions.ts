@@ -11,12 +11,19 @@ export default () => {
   ];
 
   const portfolioCategoryOptions: OptionType[] = [
-    { value: "에어조형물", label: "에어조형물" },
-    { value: "캐릭터조형물", label: "캐릭터조형물" },
-    { value: "패브릭조형물", label: "패브릭조형물" },
-    { value: "FRP조형물", label: "FRP조형물" },
-    { value: "스티로폼조형물", label: "스티로폼조형물" },
+    { value: "캐릭터", label: "캐릭터" },
     { value: "인형탈", label: "인형탈" },
+    { value: "소품", label: "소품" },
+    { value: "기타", label: "기타" },
+  ];
+
+  const portfolioMaterialOptions: OptionType[] = [
+    { value: "FRP", label: "FRP" },
+    { value: "패브릭", label: "패브릭" },
+    { value: "에어", label: "에어" },
+    { value: "EPS", label: "스티로폼" },
+    { value: "종이", label: "종이" },
+    { value: "목재", label: "목재" },
     { value: "기타", label: "기타" },
   ];
 
@@ -130,5 +137,6 @@ export default () => {
     contactPathOptions,
     meterialOptions,
     portfolioCategoryOptions,
+    portfolioMaterialOptions,
   };
 };
